@@ -511,11 +511,31 @@ O conteúdo de cada slide já vem pronto do Eduardo. Sua função é apenas apli
 
 ### Passo 1: Receber o Conteúdo
 
-Eduardo envia o texto de cada slide separado. Interpretar assim:
-- **Slide 1**: é a capa (fundo foto + IMPACT grande)
-- **Slides intermediários**: slides editoriais (fundo cinza + Inter)
-- **Slide final**: é o CTA (fundo foto + IMPACT)
-- Identificar quais slides são candidatos à **Variante D** (frase curta e impactante = bom candidato para fundo verde sólido)
+Eduardo envia **18 textos numerados** (texto 1 a texto 18). Esses textos são **sempre condensados em 9 slides** — NUNCA criar um slide por texto.
+
+**REGRA ABSOLUTA: 18 textos → 9 slides. Sem exceções.**
+
+#### Distribuição fixa dos 18 textos nos 9 slides:
+
+| Slide | Tipo | Textos | Uso no HTML |
+|-------|------|--------|-------------|
+| 1 | CAPA (`slide-capa`) | texto 1 + texto 2 | texto 2 → `capa-pretitle`; texto 1 → `capa-title` |
+| 2 | TIPO A (`slide-tipo-a`) | texto 3 + texto 4 | texto 3 → `ta-title`; texto 4 → `ta-text` |
+| 3 | TIPO B (`slide-tipo-b`) | texto 5 + texto 6 + texto 7 | texto 5 → `tb-title`; textos 6+7 → `tb-text` |
+| 4 | TIPO A (`slide-tipo-a`) | texto 8 + texto 9 | texto 8 → `ta-title`; texto 9 → `ta-text` |
+| 5 | TIPO B (`slide-tipo-b`) | texto 10 + texto 11 + texto 12 | texto 10 → `tb-title`; textos 11+12 → `tb-text` |
+| 6 | TIPO A (`slide-tipo-a`) | texto 13 + texto 14 | texto 13 → `ta-title`; texto 14 → `ta-text` |
+| 7 | TIPO B (`slide-tipo-b`) | texto 15 + texto 16 | texto 15 → `tb-title`; texto 16 → `tb-text` |
+| 8 | TIPO A (`slide-tipo-a`) | texto 17 | texto 17 → `ta-title` + desenvolver em `ta-text` |
+| 9 | TIPO B (`slide-tipo-b`) | texto 18 | texto 18 → `tb-text` direto (sem `tb-title`) |
+
+**Regras de combinação de textos dentro do slide:**
+- `tb-title` / `ta-title`: o texto mais curto e impactante do grupo — serve como gancho
+- `tb-text` / `ta-text`: os demais textos do grupo combinados — desenvolvem o argumento
+- Quando um grupo tem 3 textos, os 2 menores ficam no body/text, separados por `<br><br>`
+- **Slide 9 (texto 18)**: SEMPRE TIPO B com o texto exato do autor em `tb-text`, sem `tb-title`, sem CTA genérico
+
+**Imagens: 9 imagens geradas** (slide_01.jpg a slide_09.jpg), uma por slide.
 
 ### Passo 2: Gerar Imagens via Gemini API (Nano Banana 2)
 

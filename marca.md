@@ -26,7 +26,7 @@
 | `branco-puro` | `#ffffff` | Títulos principais, texto forte |
 | `branco-titulo` | `rgba(255,255,255,0.82)` | Corpo de texto em TIPO B |
 | `branco-body` | `rgba(255,255,255,0.78)` | Corpo de texto em TIPO A |
-| `branco-pretitle` | `rgba(255,255,255,0.68)` | Pre-título da capa |
+| `branco-pretitle` | `#ffffff` | Pre-título da capa |
 | `branco-header` | `rgba(255,255,255,0.50)` | Header/rodapé superior |
 | `preto-slide-a` | `#0d0d0d` | Fundo do slide TIPO A |
 | `preto-slide-b` | `#000000` | Fundo do slide TIPO B e CAPA |
@@ -35,10 +35,10 @@
 
 | Elemento | Valor |
 |----------|-------|
-| Filtro da foto na CAPA | `filter: brightness(0.42)` |
-| Filtro da foto no TIPO B | `filter: brightness(0.40)` |
-| Overlay gradiente da CAPA | `linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.75) 70%, rgba(0,0,0,0.92) 100%)` |
-| Overlay gradiente do TIPO B | `linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.10) 35%, rgba(0,0,0,0.72) 60%, rgba(0,0,0,0.94) 100%)` |
+| Filtro da foto na CAPA | `filter: brightness(0.70)` |
+| Filtro da foto no TIPO D | `filter: brightness(0.58)` |
+| Overlay gradiente da CAPA | `linear-gradient(180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.08) 35%, rgba(0,0,0,0.45) 62%, rgba(0,0,0,0.72) 100%)` |
+| Overlay gradiente do TIPO D | `linear-gradient(180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.55) 58%, rgba(0,0,0,0.80) 100%)` |
 | Fundo do footer | `rgba(0,0,0,0.55)` |
 
 ---
@@ -58,7 +58,7 @@
 | Elemento | Fonte | Tamanho | Peso | Line-height | Outros |
 |----------|-------|---------|------|-------------|--------|
 | `capa-pretitle` | Inter | 28px | 800 | 1.45 | uppercase, letter-spacing 0.5px, max-width 860px |
-| `capa-title` | Impact | 86px | 400 | 0.96 | uppercase, text-shadow 3px 3px 12px rgba(0,0,0,0.95) |
+| `capa-title` | Impact | 96px | 400 | 0.96 | uppercase, text-shadow 3px 3px 12px rgba(0,0,0,0.95) |
 | `capa-btn` | Inter | 20px | 700 | — | uppercase, letter-spacing 1.5px |
 
 ### Escala tipográfica — TIPO A
@@ -66,7 +66,7 @@
 | Elemento | Fonte | Tamanho | Peso | Line-height | Outros |
 |----------|-------|---------|------|-------------|--------|
 | `ta-title` | Inter | 46px | 800 | 1.12 | capitalize natural |
-| `ta-text` | Inter | 27px | 400 | 1.58 | capitalize natural |
+| `ta-text` | Inter | 27px | 300 | 1.58 | capitalize natural |
 | `.hl` inline | Inter | (herda) | 600 | — | cor `#0E9957` |
 | `.hl2` inline | Inter | (herda) | 600 | — | cor `#3CD3A4` |
 | `strong` inline | Inter | (herda) | 700 | — | cor `#ffffff` |
@@ -76,8 +76,8 @@
 | Elemento | Fonte | Tamanho | Peso | Line-height | Outros |
 |----------|-------|---------|------|-------------|--------|
 | `tb-title` | Inter | 46px | 800 | 1.12 | text-shadow 1px 1px 6px rgba(0,0,0,0.8) |
-| `tb-text` | Inter | 27px | 400 | 1.55 | text-shadow 1px 1px 4px rgba(0,0,0,0.7) |
-| `tb-text` no slide 9 | Inter | 30px | 400 | 1.65 | texto do autor, sem `tb-title` |
+| `tb-text` | Inter | 27px | 300 | 1.55 | text-shadow 1px 1px 4px rgba(0,0,0,0.7) |
+| `tb-text` no slide 9 | Inter | 30px | 300 | 1.65 | texto do autor, sem `tb-title` |
 | `.hl` inline | Inter | (herda) | 600 | — | cor `#0E9957` |
 | `.hl2` inline | Inter | (herda) | 600 | — | cor `#3CD3A4` |
 | `strong` inline | Inter | (herda) | 700 | — | cor `#ffffff` |
@@ -124,7 +124,7 @@
 │     + gradiente overlay]    │
 │                             │
 │  ┌─────────────────────┐    │
-│  │  capa-pretitle      │    │  ← Inter 28px 800, opacity 0.68
+│  │  capa-pretitle      │    │  ← Inter 28px 800, #ffffff (100% branco)
 │  │  (texto 2)          │    │
 │  │                     │    │
 │  │  CAPA-TITLE IMPACT  │    │  ← Impact 86px, uppercase
@@ -137,7 +137,7 @@
 
 | Propriedade | Valor |
 |-------------|-------|
-| Fundo | `#000` + `<img>` com `brightness(0.42)` |
+| Fundo | `#000` + `<img>` com `brightness(0.70)` |
 | Overlay | gradiente CAPA (ver seção 2) |
 | `.capa-content` position | `position: absolute; bottom: 90px` |
 | `.capa-content` padding | `0 60px` |
@@ -183,7 +183,7 @@
 
 ---
 
-### Slides 3, 5, 7, 9 — TIPO B (`slide-tipo-b`)
+### Slides 6, 8 — TIPO D (`slide-tipo-d`)
 
 ```
 ┌─────────────────────────────┐
@@ -193,54 +193,54 @@
 │     brightness 0.40         │
 │     + gradiente overlay]    │
 │                             │
-│                             │
-│ ── (divider verde 56px) ─── │  ← #0E9957, 3px
-│  tb-title                   │  ← Inter 46px 800, text-shadow
+│ ── (divider verde 56px) ─── │  ← centralizado verticalmente
+│  td-title                   │  ← Inter 56px 700, text-shadow
 │  (texto gancho)             │
 │                             │
-│  tb-text                    │  ← Inter 27px 400, opacity 0.82
+│  td-text                    │  ← Inter 34px 300, opacity 0.82
 │  (desenvolvimento)          │
+│                             │
 └─────────────────────────────┘
 ```
 
 | Propriedade | Valor |
 |-------------|-------|
 | Fundo | `#000` |
-| `.tb-img` | `position: absolute; top:0; left:0; width:100%; height:100%` + `brightness(0.40)` |
-| `.tb-overlay` | gradiente TIPO B (ver seção 2) + `z-index: 1` |
-| `.tb-content` position | `position: absolute; bottom: 90px` |
-| `.tb-content` padding | `0 56px` |
-| `.tb-content` gap | `20px` |
-| `.tb-content` z-index | `5` |
-| `.tb-divider` tamanho | `56px × 3px`, `border-radius: 2px` |
-| `.tb-divider` cor | `#0E9957` |
+| `.td-img` | `position: absolute; top:0; left:0; width:100%; height:100%` + `brightness(0.58)` |
+| `.td-overlay` | gradiente TIPO D (ver seção 2) + `z-index: 1` |
+| `.td-content` position | `position: absolute; top:0; left:0; right:0; bottom:0` |
+| `.td-content` alinhamento | `justify-content: center` (verticalmente centralizado) |
+| `.td-content` padding | `100px 64px 80px` |
+| `.td-content` gap | `22px` |
+| `.td-content` z-index | `10` |
+| `.td-divider` tamanho | `56px × 4px`, `border-radius: 2px` |
+| `.td-divider` cor | `#0E9957` |
 
 ---
 
-### Slide 9 — Texto 18 do autor (TIPO B especial)
+### Slide 7 — TIPO B (`slide-tipo-b` = SPLIT vertical)
 
-- Usa estrutura TIPO B normalmente
-- **Sem `tb-title`** — apenas `tb-divider` + `tb-text`
-- `tb-text` com `font-size: 30px` e `line-height: 1.65`
-- Exibe o texto exato do autor (texto 18) — sem CTA genérico
+TIPO B usa o mesmo layout SPLIT (divisão vertical 50/50), com:
+- **Esquerda** (`split-left`): fundo `#0d0d0d`, tag de categoria + título em caixa alta + bullets
+- **Direita** (`split-right`): imagem full-cover
 
 ---
 
-## 6. Distribuição dos Textos nos Slides
+## 6. Ordem Canônica e Distribuição dos Textos
 
-**REGRA ABSOLUTA: 18 textos → 9 slides. Nunca 1 slide por texto.**
+**REGRA ABSOLUTA: seguir esta ordem sempre, independente do número de textos.**
 
-| Slide | Tipo HTML | Textos | `ta-title` / `tb-title` | `ta-text` / `tb-text` |
-|-------|-----------|--------|--------------------------|----------------------|
-| 1 | `slide-capa` | 1 + 2 | texto 1 → `capa-title` | texto 2 → `capa-pretitle` |
-| 2 | `slide-tipo-a` | 3 + 4 | texto 3 | texto 4 |
-| 3 | `slide-tipo-b` | 5 + 6 + 7 | texto 5 | textos 6 + 7 (separados por `<br><br>`) |
-| 4 | `slide-tipo-a` | 8 + 9 | texto 8 | texto 9 |
-| 5 | `slide-tipo-b` | 10 + 11 + 12 | texto 10 | textos 11 + 12 (separados por `<br><br>`) |
-| 6 | `slide-tipo-a` | 13 + 14 | texto 13 | texto 14 |
-| 7 | `slide-tipo-b` | 15 + 16 | texto 15 | texto 16 |
-| 8 | `slide-tipo-a` | 17 | texto 17 | desenvolver o argumento |
-| 9 | `slide-tipo-b` | 18 | — (sem título) | texto 18 em 30px/1.65 |
+| Slide | Tipo | Classe CSS | Textos (referência 18 textos) |
+|-------|------|------------|-------------------------------|
+| 1 | CAPA | `slide-capa` | 1 + 2 |
+| 2 | SPLIT | `slide-split` | 3 + 4 |
+| 3 | MINI CTA | `slide-mini-cta` | (texto fixo — não consome textos) |
+| 4 | TIPO C | `slide-tipo-c` | 5 + 6 + 7 |
+| 5 | TIPO A | `slide-tipo-a` | 8 + 9 |
+| 6 | TIPO D | `slide-tipo-d` | 10 + 11 |
+| 7 | TIPO B | `slide-tipo-b` (= SPLIT) | 12 + 13 |
+| 8 | TIPO D | `slide-tipo-d` | 14 + 15 + 16 |
+| 9 | CTA | `slide-cta` | 17 + 18 |
 
 ---
 
@@ -262,7 +262,7 @@
 
 | Parâmetro | Valor |
 |-----------|-------|
-| API | Gemini Image — `gemini-3.1-flash-image-preview` |
+| API | Imagen — `imagen-4.0-ultra-generate-001` |
 | Quantidade | 9 imagens por carrossel (1 por slide) |
 | Formato de saída | `.jpg` em `output/nome-do-carrossel/img/slide_NN.jpg` |
 | Aspect ratio solicitado | `portrait orientation, 4:5 aspect ratio` |
@@ -281,12 +281,17 @@ Cada prompt deve ter as 4 camadas a seguir. Prompts genéricos são proibidos.
 
 ### Templates de prompt por posição do slide
 
-| Slide | Técnica recomendada | Objetivo visual |
-|-------|---------------------|-----------------|
-| 1 — CAPA | Extreme close-up, iluminação chiaroscuro | Parar o scroll imediatamente |
-| 2, 4, 6, 8 — TIPO A | Imagem ambiental com escala ou contraste | Contextualizar o argumento |
-| 3, 5, 7 — TIPO B | Ângulo dramático, luz dura, momento de tensão | Amplificar a emoção do texto |
-| 9 — Slide 18 autor | Contato visual direto, postura de confiança | Conexão e encerramento |
+| Slide | Tipo | Técnica recomendada | Objetivo visual |
+|-------|------|---------------------|-----------------|
+| 1 | CAPA | Extreme close-up, iluminação chiaroscuro | Parar o scroll imediatamente |
+| 2 | SPLIT | Composição com sujeito à direita (para encaixar no split) | Contextualizar abertura |
+| 3 | MINI CTA | — (sem imagem, fundo branco) | — |
+| 4 | TIPO C | — (sem imagem, fundo branco) | — |
+| 5 | TIPO A | Imagem ambiental com escala ou contraste | Contextualizar o argumento |
+| 6 | TIPO D | Ângulo dramático, luz dura, momento de tensão | Amplificar a emoção do texto |
+| 7 | TIPO B (SPLIT) | Composição com sujeito à direita | Sustentar o argumento |
+| 8 | TIPO D | Ângulo dramático, luz dramática, cena de urgência | Criar senso de urgência |
+| 9 | CTA | — (sem imagem, fundo branco) | — |
 
 ### Estilo base (sempre incluir)
 ```

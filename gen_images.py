@@ -1,9 +1,25 @@
 #!/usr/bin/env python3
-import json, base64, urllib.request, urllib.error, sys, time
+import json, base64, urllib.request, urllib.error, sys, time, os
 
-API_KEY = "AIzaSyAVnyir1j5Cg0EKGChiyMeakQoCsruOha0"
-ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent"
-OUT_DIR = "/Users/eduardorolim/Documents/Documentos Atual - MacBook Air de Eduardo/carrossel-v2-edu-99hud/output/amazon-transformer/img"
+def load_dotenv(path=".env"):
+    if not os.path.exists(path):
+        return
+    with open(path) as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            os.environ.setdefault(key.strip(), value.strip())
+
+load_dotenv()
+
+API_KEY = os.environ["OPENAI_API_KEY"]
+ENDPOINT = "https://api.openai.com/v1/images/generations"
+MODEL = "gpt-image-1"
+SIZE = "1024x1536"  # portrait, mais próximo do 4:5 dos slides
+QUALITY = "high"
+OUT_DIR = "/Users/eduardorolim/Documents/Documentos Atual - MacBook Air de Eduardo/carrossel-v2-edu-oficial-ultimo/output/amazon-transformer/img"
 
 PROMPTS = {
     "01": "Cinematic portrait of a person holding a sleek smartphone with glowing screen, dark moody dramatic lighting, deep shadows, photorealistic, no text, no words, portrait orientation",
@@ -26,33 +42,35 @@ PROMPTS = {
 
 def generate_image(slide_num, prompt):
     payload = json.dumps({
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"responseModalities": ["IMAGE"]}
+        "model": MODEL,
+        "prompt": prompt,
+        "size": SIZE,
+        "quality": QUALITY,
+        "n": 1,
     }).encode("utf-8")
 
     req = urllib.request.Request(
         ENDPOINT,
         data=payload,
         headers={
-            "x-goog-api-key": API_KEY,
-            "Content-Type": "application/json"
+            "Authorization": f"Bearer {API_KEY}",
+            "Content-Type": "application/json",
         },
-        method="POST"
+        method="POST",
     )
 
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
+        with urllib.request.urlopen(req, timeout=120) as resp:
             data = json.loads(resp.read())
-        parts = data["candidates"][0]["content"]["parts"]
-        for part in parts:
-            if "inlineData" in part:
-                img_data = base64.b64decode(part["inlineData"]["data"])
-                path = f"{OUT_DIR}/slide_{slide_num}.jpg"
-                with open(path, "wb") as f:
-                    f.write(img_data)
-                print(f"✅ slide_{slide_num}.jpg salvo ({len(img_data)//1024}KB)")
-                return True
-        print(f"❌ slide_{slide_num}: sem inlineData na resposta")
+        b64 = data["data"][0]["b64_json"]
+        img_data = base64.b64decode(b64)
+        path = f"{OUT_DIR}/slide_{slide_num}.jpg"
+        with open(path, "wb") as f:
+            f.write(img_data)
+        print(f"✅ slide_{slide_num}.jpg salvo ({len(img_data)//1024}KB)")
+        return True
+    except urllib.error.HTTPError as e:
+        print(f"❌ slide_{slide_num}: erro HTTP {e.code} — {e.read().decode()[:500]}")
         return False
     except Exception as e:
         print(f"❌ slide_{slide_num}: erro — {e}")

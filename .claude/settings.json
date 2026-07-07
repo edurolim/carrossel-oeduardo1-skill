@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ':*)",
+      "Bash(python3 -c \" import sys, json for line in sys.stdin: try: obj = json.loads\\(line\\) if obj.get\\('type'\\) == 'user': content = obj.get\\('message', {}\\).get\\('content', ''\\) if isinstance\\(content, list\\): for block in content: if isinstance\\(block, dict\\) and block.get\\('type'\\) == 'text': text = block.get\\('text', ''\\) if 'industrial' in text.lower\\(\\) or 'openai' in text.lower\\(\\) or \\('1.' in text and '2.' in text and 'slide' not in text.lower\\(\\)\\): print\\('=== USER MESSAGE ==='\\) print\\(text[:3000]\\) print\\(\\) elif isinstance\\(content, str\\) and \\('industrial' in content.lower\\(\\) or 'openai' in content.lower\\(\\)\\): print\\('=== USER MESSAGE ==='\\) print\\(content[:3000]\\) except: pass \")",
+      "Bash(node capture_openai_industrial.js)",
+      "Bash(ls -lh \"/Users/eduardorolim/Documents/Documentos Atual - MacBook Air de Eduardo/carrossel-v2-edu-99hud/output/openai-industrial/\"*.png)",
+      "Bash(python3 /tmp/gen_custo.py)",
+      "Bash(node capture_custo_invisivel.js)",
+      "Bash(ls -lh \"/Users/eduardorolim/Documents/Documentos Atual - MacBook Air de Eduardo/carrossel-v2-edu-99hud/output/custo-invisivel/\"*.png)"
+    ]
+  }
+}

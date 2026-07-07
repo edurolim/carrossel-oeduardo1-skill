@@ -256,13 +256,13 @@ TIPO B usa o mesmo layout SPLIT (divisão vertical 50/50), com:
 
 ---
 
-## 8. Imagens — Geração via Gemini API
+## 8. Imagens — Geração via OpenAI API
 
 ### Especificações técnicas
 
 | Parâmetro | Valor |
 |-----------|-------|
-| API | Imagen — `imagen-4.0-ultra-generate-001` |
+| API | OpenAI — `gpt-image-1` |
 | Quantidade | 9 imagens por carrossel (1 por slide) |
 | Formato de saída | `.jpg` em `output/nome-do-carrossel/img/slide_NN.jpg` |
 | Aspect ratio solicitado | `portrait orientation, 4:5 aspect ratio` |

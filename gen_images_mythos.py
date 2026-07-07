@@ -1,8 +1,24 @@
 #!/usr/bin/env python3
-import json, base64, urllib.request, time, sys
+import json, base64, urllib.request, time, sys, os
 
-API_KEY = "AIzaSyAVnyir1j5Cg0EKGChiyMeakQoCsruOha0"
-ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent"
+def load_dotenv(path=".env"):
+    if not os.path.exists(path):
+        return
+    with open(path) as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            os.environ.setdefault(key.strip(), value.strip())
+
+load_dotenv()
+
+API_KEY = os.environ["OPENAI_API_KEY"]
+ENDPOINT = "https://api.openai.com/v1/images/generations"
+MODEL = "gpt-image-1"
+SIZE = "1024x1536"
+QUALITY = "high"
 OUT_DIR = "/Users/eduardorolim/Documents/Documentos Atual - MacBook Air de Eduardo/carrossel-v2-edu-99hud/output/claude-mythos/img"
 
 PROMPTS = {
@@ -19,22 +35,18 @@ PROMPTS = {
 
 def generate(num, prompt):
     payload = json.dumps({
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"responseModalities": ["IMAGE"]}
+        "model": MODEL, "prompt": prompt, "size": SIZE, "quality": QUALITY, "n": 1
     }).encode()
     req = urllib.request.Request(ENDPOINT, data=payload,
-        headers={"x-goog-api-key": API_KEY, "Content-Type": "application/json"}, method="POST")
+        headers={"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}, method="POST")
     try:
-        with urllib.request.urlopen(req, timeout=60) as r:
+        with urllib.request.urlopen(req, timeout=120) as r:
             data = json.loads(r.read())
-        for part in data["candidates"][0]["content"]["parts"]:
-            if "inlineData" in part:
-                img = base64.b64decode(part["inlineData"]["data"])
-                path = f"{OUT_DIR}/slide_{num}.jpg"
-                with open(path, "wb") as f: f.write(img)
-                print(f"✅ slide_{num}.jpg ({len(img)//1024}KB)")
-                return True
-        print(f"❌ slide_{num}: sem imagem"); return False
+        img = base64.b64decode(data["data"][0]["b64_json"])
+        path = f"{OUT_DIR}/slide_{num}.jpg"
+        with open(path, "wb") as f: f.write(img)
+        print(f"✅ slide_{num}.jpg ({len(img)//1024}KB)")
+        return True
     except Exception as e:
         print(f"❌ slide_{num}: {e}"); return False
 

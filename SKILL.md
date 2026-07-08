@@ -34,7 +34,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 ### Elementos de Design
 - **SEM glassmorphism** — texto direto sobre a imagem na capa
 - **SEM cards flutuantes** na capa — conteúdo direto sobre a foto
-- **Fotos de pessoas reais** como fundo na capa/CTA — geradas via OpenAI API (ver Passo 2)
+- **Fotos de pessoas reais** como fundo na capa/CTA — geradas via Gemini API (ver Passo 2)
 - **Overlay com gradiente**: `linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%)`
 - **Palavras-chave em verde** `#0E9957` no meio da frase para destaque
 - **Texto grande e bold** ocupando a maior parte do slide
@@ -42,59 +42,36 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 ---
 
-## Layouts dos Slides
+## Layouts dos Slides — PADRÃO FIXO OBRIGATÓRIO
 
-### Slide 1 — Capa (1080x1350px)
-- Foto impactante de pessoa ou cena como fundo (Unsplash)
-- Logo do Instagram + @oeduardo.1 centralizado acima do título
-- Título em CAIXA ALTA, IMPACT 52-64px, com 1-2 palavras em verde `#0E9957`
-- Formato de pergunta provocativa ou afirmação chocante
-- Subtítulo em Inter 22-26px, verde `#3CD3A4` ou branco
-- SEM numeração — a capa não tem número de slide
-- Header topo obrigatório
-- Rodapé com @oeduardo.1, SEM número de página
+**Regra absoluta: sempre gerar seguindo exatamente esta sequência de 9 slides, nesta ordem, com estas classes CSS. Nunca inventar layout novo, nunca usar o template genérico antigo (`.slide` / `.slide-editorial`). Este é o padrão validado nos últimos carrosséis de produção (openai-industrial, custo-invisivel, stack-amuleto, saas-sequoia).**
 
-### Slides Internos 2-N (Fundo Sólido + Foto Contida)
+| # | Tipo (classe) | Fundo | Conteúdo |
+|---|---|---|---|
+| 1 | `slide-capa` | foto full-bleed + overlay gradiente | pretitle + título Impact + botão CTA opcional |
+| 2 | `slide-split` | 50% texto preto / 50% foto | tag + título + 3 bullets |
+| 3 | `slide-mini-cta` | branco | CTA fixo obrigatório (ver Passo 1) |
+| 4 | `slide-tipo-c` | branco | título + fórmula/destaque opcional |
+| 5 | `slide-tipo-a` | preto `#0d0d0d`, foto no topo (580px) | título + texto |
+| 6 | `slide-tipo-d` | foto full-bleed + overlay | título + texto (1-2 blocos) |
+| 7 | `slide-split` | 50/50 (2ª ocorrência) | tag + título + 3 bullets |
+| 8 | `slide-tipo-d` | foto full-bleed + overlay (2ª ocorrência) | título + texto |
+| 9 | `slide-cta` | branco | nome + CTA final + fonte |
 
-Variar entre 4 variantes para criar dinamismo visual:
+**LIMITES DE CARACTERES — OBRIGATÓRIO (evita overflow/corte de texto):**
+- `capa-pretitle`: máx. **110 caracteres** (2-3 linhas em 28px)
+- `capa-title`: máx. **70 caracteres**, sempre **1-2 linhas** (Impact 96px é gigante — texto longo estoura o frame e sobrepõe o botão)
+- `capa-btn`: máx. **3 palavras** (ex: "Entenda o ponto")
+- `split-title` / `td-title` / `tc-title` / `ta-title`: máx. **90 caracteres**, 2-3 linhas
+- Se o texto 1 (headline) enviado for mais longo que 70 caracteres, **condensar** para caber na capa — nunca forçar o texto completo no `capa-title`
 
-**Variante A — Foto no MEIO**: texto grande acima (Inter 36-42px) → foto → texto menor abaixo (Inter 26-30px)
+**Acentuação — OBRIGATÓRIO:** todo texto em português deve manter acentuação, cedilha e til corretos (não → nao é erro, decisões → decisoes é erro). Nunca gerar ou aceitar texto sem acentuação.
 
-**Variante B — Foto na BASE**: textos grandes preenchendo o topo → foto alinhada na base
-
-**Variante C — Foto no TOPO**: foto alinhada no topo → textos preenchendo a parte inferior
-
-**Variante D — Cor Sólida Verde SEM foto**: fundo `#0E9957`, texto branco IMPACT grande, para slides de impacto máximo (usar 1-2 por carrossel)
-
-**Regras dos slides internos:**
-- PREENCHER TODO O ESPAÇO — sem grandes áreas vazias
-- Hierarquia: texto principal 36-42px, texto secundário 26-30px
-- Posição da foto VARIADA entre slides — não repetir
-- Fonte Inter (peso 400-700)
-- Palavras destacadas: cor `#0E9957` ou `#2C7050` + `font-weight: 700` + `font-style: italic`
-- Texto narrativo: storytelling em parágrafos de 3-5 linhas
-- `line-height: 1.45-1.55`
-- Sem `text-transform: uppercase` nos slides internos — capitalize natural
-
-### Slide Final — CTA
-- Foto de fundo impactante (Unsplash)
-- IMPACT para o título da chamada para ação
-- Destaque do @oeduardo.1
-- Ícones de ações (salvar, compartilhar, curtir)
-- Acento do @oeduardo.1 em verde `#0E9957`
-
-### Header Topo (todos os slides)
-- **Posição**: `position: absolute; top: 0; left: 0; right: 0;`
-- **Esquerdo**: `Powered by Postlab` — branco 0.55 opacity, Space Grotesk 400, 14px, uppercase
-- **Centro**: `@oeduardo.1` — branco 0.55 opacity, Space Grotesk 400, 14px, uppercase
-- **Direito**: Mês e ano no formato `Março 2026 ®` — Space Grotesk 400, 14px, uppercase
-- **Padding**: `20px 40px`
-
-### Rodapé (todos os slides)
-- **Esquerdo**: Ícone Instagram SVG + `@oeduardo.1`, peso 600
-- **Direito**: `N/total` — APENAS a partir do slide 2. Capa não tem número
-- Contagem: slide 2 mostra `1/9`, slide 3 mostra `2/9`, até `9/9`
-- **Fundo**: `rgba(0,0,0,0.5)`
+**Elementos obrigatórios em todo slide:**
+- `.top-header`: `Eduardo Rolim` (esq) — `@oeduardo.1` (centro) — `Mês Ano ®` (dir), Space Grotesk 14px uppercase, opacity 0.50 (ou 0.35 em fundo branco)
+- `.progress-bar`: barra fixa no rodapé, `.progress-fill` verde `#0E9957` crescendo por slide: 11.1%, 22.2%, 33.3%... até 100%
+- `.slide-arrow`: seta de continuidade no canto inferior direito (exceto capa e CTA final)
+- Destaque de palavra-chave sempre com `<span class="hl">`, cor `#0E9957`
 
 ---
 
@@ -106,388 +83,408 @@ Variar entre 4 variantes para criar dinamismo visual:
 <head>
   <meta charset="UTF-8">
   <title>Carrossel @oeduardo.1</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500&family=Playfair+Display:wght@400&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; }
 
-    /* ===== CAPA E CTA — FOTO DE FUNDO ===== */
-    .slide {
-      width: 1080px;
-      height: 1350px;
-      position: relative;
-      overflow: hidden;
-      font-family: 'Inter', sans-serif;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 60px 56px 90px;
-      page-break-after: always;
+    .top-header {
+      position: absolute; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 26px 48px; z-index: 20;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px; font-weight: 400;
+      color: rgba(255,255,255,0.50);
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .progress-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 7px; background: rgba(255,255,255,0.12); z-index: 30;
+    }
+    .progress-fill { height: 100%; background: #0E9957; border-radius: 0 3px 3px 0; }
+    .slide-arrow {
+      position: absolute; right: 32px; bottom: 24px;
+      z-index: 25; opacity: 0.55;
     }
 
-    .slide-bg {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-size: cover;
-      background-position: center;
-      filter: brightness(0.5);
-      z-index: 0;
+    /* CAPA */
+    .slide-capa {
+      width: 1080px; height: 1350px;
+      position: relative; overflow: hidden;
+      background: #000; page-break-after: always;
     }
-
-    .slide-overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+    .capa-img {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover; filter: brightness(0.70); z-index: 0;
+    }
+    .capa-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.08) 35%, rgba(0,0,0,0.45) 62%, rgba(0,0,0,0.72) 100%);
       z-index: 1;
     }
-
-    .slide-content {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
+    .capa-content {
+      position: absolute; bottom: 90px; left: 0; right: 0;
+      padding: 0 60px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      gap: 22px; z-index: 10;
     }
-
-    /* TÍTULOS CAPA/CTA — IMPACT */
-    .title {
+    .capa-pretitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 28px; font-weight: 800; line-height: 1.45;
+      color: #ffffff; max-width: 860px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .capa-title {
       font-family: Impact, 'Arial Narrow', sans-serif;
-      font-size: 60px;
-      font-weight: 400;
-      line-height: 1.05;
-      letter-spacing: 0px;
-      text-transform: uppercase;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+      font-size: 96px; font-weight: 400;
+      line-height: 0.96; text-transform: uppercase;
+      color: #ffffff; text-shadow: 3px 3px 12px rgba(0,0,0,0.95);
     }
-
-    .title .highlight {
-      color: #0E9957;
-    }
-
-    .title .highlight-secondary {
-      color: #3CD3A4;
-    }
-
-    /* SUBTÍTULOS CAPA/CTA — Inter */
-    .subtitle {
+    .capa-title .hl { color: #0E9957; }
+    .capa-btn {
       font-family: 'Inter', sans-serif;
-      font-size: 24px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.85);
-      line-height: 1.5;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
-      max-width: 900px;
+      font-size: 20px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: #ffffff; background: #0E9957;
+      padding: 20px 48px; border-radius: 100px; margin-top: 10px;
+      display: flex; align-items: center; gap: 14px;
     }
 
-    .subtitle-green {
-      font-family: 'Inter', sans-serif;
-      font-size: 22px;
-      font-weight: 600;
-      color: #3CD3A4;
-      line-height: 1.5;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
-    }
-
-    /* BRANDING CENTRALIZADO — SLIDE 1 APENAS */
-    .cover-branding {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .cover-branding svg { width: 32px; height: 32px; fill: #ffffff; }
-
-    .cover-branding span {
-      font-family: 'Inter', sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      color: #ffffff;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-    }
-
-    /* HEADER TOPO — TODOS OS SLIDES */
-    .top-header {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 22px 40px;
-      z-index: 10;
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    .top-header span {
-      font-size: 14px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-    }
-
-    /* RODAPÉ — TODOS OS SLIDES */
-    .footer {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 40px;
-      background: rgba(0,0,0,0.5);
-      z-index: 10;
-    }
-
-    .footer-left { display: flex; align-items: center; gap: 10px; }
-    .footer-left svg { width: 22px; height: 22px; fill: #ffffff; }
-    .footer-left span { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 600; color: #ffffff; }
-    .footer-right { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.6); }
-
-    /* ===== SLIDES INTERNOS — FUNDO SÓLIDO ===== */
-    .slide-editorial {
-      width: 1080px;
-      height: 1350px;
-      position: relative;
-      overflow: hidden;
-      font-family: 'Inter', sans-serif;
-      color: #ffffff;
-      background: #292A25;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 80px 56px 90px;
+    /* SPLIT */
+    .slide-split {
+      width: 1080px; height: 1350px;
+      display: flex; flex-direction: row;
+      position: relative; overflow: hidden;
       page-break-after: always;
     }
-
-    /* Variante cor sólida verde (impacto máximo) */
-    .slide-editorial.accent-bg {
-      background: #0E9957;
+    .split-left {
+      width: 50%; height: 100%; background: #0d0d0d;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 60px 44px; gap: 20px; z-index: 2;
     }
-
-    .slide-editorial .editorial-content {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-      z-index: 2;
-      flex: 1;
-      justify-content: center;
-    }
-
-    /* Texto principal — GRANDE, impactante — Inter */
-    .slide-editorial .narrative-text {
+    .split-tag {
+      display: inline-block; background: #0E9957; color: #ffffff;
       font-family: 'Inter', sans-serif;
-      font-size: 38px;
-      font-weight: 400;
-      line-height: 1.45;
-      color: #ffffff;
+      font-size: 20px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      padding: 8px 18px; border-radius: 4px; align-self: flex-start;
     }
-
-    /* Texto secundário — menor, complementar */
-    .slide-editorial .narrative-text.secondary {
-      font-size: 28px;
-      font-weight: 400;
-      line-height: 1.5;
-    }
-
-    /* Destaques inline — verde primário */
-    .slide-editorial .narrative-text .highlight {
-      color: #0E9957;
-      font-weight: 700;
-      font-style: italic;
-    }
-
-    .slide-editorial .narrative-text .highlight-secondary {
-      color: #2C7050;
-      font-weight: 700;
-      font-style: italic;
-    }
-
-    .slide-editorial .narrative-text strong { font-weight: 700; }
-
-    /* Na variante accent-bg, destaques ficam em branco */
-    .slide-editorial.accent-bg .narrative-text .highlight {
-      color: #ffffff;
-      text-decoration: underline;
-      text-decoration-thickness: 3px;
-    }
-
-    .slide-editorial.accent-bg .narrative-text .highlight-secondary {
-      color: rgba(255,255,255,0.8);
-      font-weight: 700;
-      font-style: italic;
-    }
-
-    /* Foto contida nos slides internos */
-    .slide-editorial .editorial-photo-container {
-      width: 100%;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .slide-editorial .editorial-photo-container img {
-      width: 100%;
-      height: 380px;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* CTA — ícone de ação */
-    .cta-actions {
-      display: flex;
-      gap: 32px;
-      margin-top: 20px;
-    }
-
-    .cta-action-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .cta-follow-box {
-      margin-top: 40px;
-      padding: 24px 48px;
-      background: rgba(14,153,87,0.2);
-      border: 1px solid rgba(14,153,87,0.5);
-      border-radius: 8px;
-    }
-
-    .cta-follow-box span {
+    .split-title {
       font-family: 'Inter', sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      color: #3CD3A4;
+      font-size: 54px; font-weight: 800;
+      text-transform: uppercase; line-height: 1.0; color: #ffffff;
+    }
+    .split-title .hl { color: #0E9957; }
+    .split-divider { width: 48px; height: 3px; background: #0E9957; border: none; margin: 4px 0; }
+    .split-item {
+      font-family: 'Inter', sans-serif;
+      font-size: 28px; font-weight: 300;
+      line-height: 1.45; color: rgba(255,255,255,0.88);
+      display: flex; gap: 12px;
+    }
+    .split-bullet { color: #0E9957; font-weight: 700; flex-shrink: 0; }
+    .split-right { width: 50%; height: 100%; position: relative; }
+    .split-right img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); }
+
+    /* MINI CTA */
+    .slide-mini-cta {
+      width: 1080px; height: 1350px;
+      position: relative; overflow: hidden;
+      background: #ffffff; display: flex; flex-direction: column;
+      page-break-after: always;
+    }
+    .mini-cta-body {
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: center; padding: 60px 64px; gap: 32px;
+    }
+    .mini-cta-accent { width: 56px; height: 5px; background: #0E9957; border-radius: 2px; }
+    .mini-cta-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 62px; font-weight: 800; line-height: 1.1; color: #0d0d0d;
+    }
+    .mini-cta-title .hl { color: #0E9957; }
+
+    /* TIPO C */
+    .slide-tipo-c {
+      width: 1080px; height: 1350px;
+      position: relative; overflow: hidden;
+      background: #ffffff; display: flex; flex-direction: column;
+      page-break-after: always;
+    }
+    .slide-tipo-c .top-header { color: rgba(0,0,0,0.35); }
+    .tc-body {
+      flex: 1; padding: 56px 64px 80px;
+      display: flex; flex-direction: column; justify-content: center; gap: 28px;
+    }
+    .tc-divider { width: 56px; height: 4px; background: #0E9957; border-radius: 2px; }
+    .tc-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 52px; font-weight: 800; line-height: 1.12; color: #0d0d0d;
+    }
+    .tc-title .hl { color: #0E9957; }
+    .tc-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 34px; font-weight: 300; line-height: 1.55;
+      color: rgba(0,0,0,0.72);
+    }
+    .tc-text .hl { color: #0E9957; font-weight: 600; }
+    .tc-text strong { font-weight: 700; color: #0d0d0d; }
+    .tc-formula {
+      font-family: 'Inter', sans-serif;
+      font-size: 30px; font-weight: 700; line-height: 1.5;
+      color: #0d0d0d;
+      background: #f5f5f5; border-left: 5px solid #0E9957;
+      padding: 20px 24px; border-radius: 0 8px 8px 0;
+    }
+    .tc-divider-line { border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 0; }
+    .slide-tipo-c .progress-bar { background: rgba(0,0,0,0.08); }
+
+    /* TIPO A */
+    .slide-tipo-a {
+      width: 1080px; height: 1350px;
+      position: relative; overflow: hidden;
+      background: #0d0d0d; display: flex; flex-direction: column;
+      page-break-after: always;
+    }
+    .ta-img { width: 100%; height: 580px; overflow: hidden; flex-shrink: 0; }
+    .ta-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.95); }
+    .ta-body {
+      flex: 1; padding: 40px 56px 90px;
+      display: flex; flex-direction: column; justify-content: flex-start; gap: 22px;
+    }
+    .ta-divider { width: 60px; height: 3px; background: #0E9957; border-radius: 2px; }
+    .slide-divider { border: none; border-top: 1px solid rgba(255,255,255,0.18); margin: 0; }
+    .ta-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 46px; font-weight: 800; line-height: 1.12; color: #ffffff;
+    }
+    .ta-title .hl { color: #0E9957; }
+    .ta-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 27px; font-weight: 300; line-height: 1.58;
+      color: rgba(255,255,255,0.78);
+    }
+    .ta-text .hl { color: #0E9957; font-weight: 600; }
+    .ta-text strong { font-weight: 700; color: #ffffff; }
+
+    /* TIPO D */
+    .slide-tipo-d {
+      width: 1080px; height: 1350px;
+      position: relative; overflow: hidden;
+      background: #000; page-break-after: always;
+    }
+    .td-img {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover; filter: brightness(0.58); z-index: 0;
+    }
+    .td-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.55) 58%, rgba(0,0,0,0.80) 100%);
+      z-index: 1;
+    }
+    .td-content {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 100px 64px 80px; gap: 24px; z-index: 10;
+    }
+    .td-divider { width: 56px; height: 4px; background: #0E9957; border-radius: 2px; }
+    .td-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 56px; font-weight: 700; line-height: 1.1; color: #ffffff;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.8);
+    }
+    .td-title .hl { color: #0E9957; }
+    .td-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 33px; font-weight: 300; line-height: 1.55;
+      color: rgba(255,255,255,0.82);
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+    }
+    .td-text .hl { color: #0E9957; font-weight: 600; }
+    .td-text strong { font-weight: 700; color: #ffffff; }
+
+    /* CTA */
+    .slide-cta {
+      width: 1080px; height: 1350px;
+      position: relative; overflow: hidden;
+      background: #ffffff; display: flex; flex-direction: column;
+      page-break-after: always;
+    }
+    .cta-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 26px 48px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px; font-weight: 400;
+      color: rgba(0,0,0,0.35); letter-spacing: 1px; text-transform: uppercase;
+    }
+    .cta-body {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 0 64px;
+    }
+    .cta-inner { display: flex; flex-direction: column; gap: 28px; align-items: flex-start; }
+    .cta-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px; font-weight: 400; color: #0f0f0f; line-height: 1;
+    }
+    .cta-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 30px; font-weight: 700; line-height: 1.45; color: #0f0f0f;
+    }
+    .cta-text .hl { color: #0E9957; }
+    .cta-source {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px; font-weight: 300; line-height: 1.6;
+      color: rgba(0,0,0,0.55); margin-top: 4px;
     }
   </style>
 </head>
 <body>
 
-  <!-- ===================== SLIDE 1 — CAPA ===================== -->
-  <div class="slide">
-    <div class="slide-bg" style="background-image: url('URL_UNSPLASH_AQUI')"></div>
-    <div class="slide-overlay"></div>
-    <div class="top-header">
-      <span>Powered by Postlab</span>
-      <span>@oeduardo.1</span>
-      <span>Março 2026 ®</span>
-    </div>
-    <div class="slide-content">
-      <div class="cover-branding">
-        <!-- SVG Instagram inline aqui -->
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        <span>@oeduardo.1</span>
-      </div>
-      <h1 class="title">
-        POR QUE A <span class="highlight">IA</span> ESTÁ MUDANDO TUDO E NINGUÉM TE CONTA?
-      </h1>
-      <p class="subtitle">Investigamos o impacto real da inteligência artificial no mercado de trabalho e na vida das pessoas</p>
-    </div>
-    <div class="footer">
-      <div class="footer-left">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        <span>@oeduardo.1</span>
-      </div>
-      <!-- SEM número de página na capa -->
-    </div>
+<!-- SLIDE 1 — CAPA (textos 1+2) -->
+<div class="slide-capa">
+  <img class="capa-img" src="img/slide_N.jpg" alt="">
+  <div class="capa-overlay"></div>
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Mês Ano ®</span>
   </div>
+  <div class="capa-content">
+    <p class="capa-pretitle">[texto 2 — pretitle: frase de contexto/apoio ao título]</p>
+    <h1 class="capa-title">[texto 1 — título com <span class="hl">palavra-chave</span> em destaque]</h1>
+    <div class="capa-btn">[CTA opcional] <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:11.1%"></div></div>
+</div>
 
-  <!-- ====== SLIDE INTERNO — VARIANTE A (FOTO NO MEIO) ====== -->
-  <div class="slide-editorial">
-    <div class="top-header">
-      <span>Powered by Postlab</span>
-      <span>@oeduardo.1</span>
-      <span>Março 2026 ®</span>
-    </div>
-    <div class="editorial-content">
-      <p class="narrative-text" style="font-size: 38px;">
-        Texto narrativo GRANDE contando a história. Desenvolva o ponto com <span class="highlight">palavras destacadas em verde</span> inline. Preencha bem o espaço acima da foto.
-      </p>
-      <div class="editorial-photo-container">
-        <img src="URL_UNSPLASH_AQUI" alt="Foto contextual">
-      </div>
-      <p class="narrative-text secondary">
-        Texto menor complementando. <strong>Frases importantes em bold.</strong> Dados como <span class="highlight-secondary">40% de crescimento</span> em destaque.
-      </p>
-    </div>
-    <div class="footer">
-      <div class="footer-left">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        <span>@oeduardo.1</span>
-      </div>
-      <div class="footer-right">1/9</div>
-    </div>
+<!-- SLIDE 2 — SPLIT (textos 3+4) -->
+<div class="slide-split">
+  <div class="split-left">
+    <span class="split-tag">[tag curta]</span>
+    <p class="split-title">[texto 3 — título do split com <span class="hl">destaque</span>]</p>
+    <hr class="split-divider">
+    <div class="split-item"><span class="split-bullet">•</span><span>[texto 4, bullet 1 — pode usar <strong>negrito</strong>]</span></div>
+    <div class="split-item"><span class="split-bullet">•</span><span>[bullet 2 — pode usar <span class="hl">destaque</span>]</span></div>
+    <div class="split-item"><span class="split-bullet">•</span><span>[bullet 3]</span></div>
   </div>
+  <div class="split-right">
+    <img src="img/slide_N.jpg" alt="">
+  </div>
+  <div class="slide-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+  <div class="progress-bar"><div class="progress-fill" style="width:22.2%"></div></div>
+</div>
 
-  <!-- ====== SLIDE IMPACTO — VARIANTE D (COR SÓLIDA VERDE) ====== -->
-  <div class="slide-editorial accent-bg">
-    <div class="top-header">
-      <span>Powered by Postlab</span>
-      <span>@oeduardo.1</span>
-      <span>Março 2026 ®</span>
-    </div>
-    <div class="editorial-content">
-      <p class="narrative-text" style="font-size: 42px; font-weight: 600; line-height: 1.3; font-family: Impact, sans-serif; text-transform: uppercase;">
-        A IA não está substituindo pessoas. Ela está <span class="highlight">substituindo pessoas que não usam IA.</span>
-      </p>
-      <p class="narrative-text" style="font-size: 28px; font-weight: 400; line-height: 1.5;">
-        Texto complementar com mais detalhes, explicando o contexto e adicionando profundidade ao argumento principal do slide.
-      </p>
-    </div>
-    <div class="footer">
-      <div class="footer-left">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        <span>@oeduardo.1</span>
-      </div>
-      <div class="footer-right">5/9</div>
-    </div>
+<!-- SLIDE 3 — MINI CTA (fixo) -->
+<div class="slide-mini-cta">
+  <div class="top-header" style="color:rgba(0,0,0,0.35);">
+    <span style="color:rgba(0,0,0,0.35);">Eduardo Rolim</span><span style="color:rgba(0,0,0,0.35);">@oeduardo.1</span><span style="color:rgba(0,0,0,0.35);">Mês Ano ®</span>
   </div>
+  <div class="mini-cta-body">
+    <div class="mini-cta-accent"></div>
+    <p class="mini-cta-title">Antes de continuar: Quer mais conteúdos como esse? Toca <span class="hl">2 vezes</span> na tela e depois me segue.</p>
+  </div>
+  <div class="slide-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0E9957" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+  <div class="progress-bar" style="background:rgba(0,0,0,0.08);"><div class="progress-fill" style="width:33.3%"></div></div>
+</div>
 
-  <!-- ====== SLIDE FINAL — CTA ====== -->
-  <div class="slide">
-    <div class="slide-bg" style="background-image: url('URL_UNSPLASH_AQUI')"></div>
-    <div class="slide-overlay"></div>
-    <div class="top-header">
-      <span>Powered by Postlab</span>
-      <span>@oeduardo.1</span>
-      <span>Março 2026 ®</span>
-    </div>
-    <span style="position:absolute;top:32px;right:40px;font-size:20px;font-weight:600;color:rgba(255,255,255,0.7);z-index:3;">9/9</span>
-    <div class="slide-content">
-      <h1 class="title" style="font-size: 52px;">
-        GOSTOU? <span class="highlight">SALVE</span> ESTE POST!
-      </h1>
-      <p class="subtitle">Compartilhe com alguém que precisa entender o impacto da IA</p>
-      <div class="cta-actions">
-        <div class="cta-action-item">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0E9957" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          <span style="font-size:16px;color:#0E9957;font-weight:600;font-family:'Inter',sans-serif;">SALVAR</span>
-        </div>
-        <div class="cta-action-item">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          <span style="font-size:16px;color:#ffffff;font-weight:600;font-family:'Inter',sans-serif;">ENVIAR</span>
-        </div>
-        <div class="cta-action-item">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3CD3A4" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <span style="font-size:16px;color:#3CD3A4;font-weight:600;font-family:'Inter',sans-serif;">CURTIR</span>
-        </div>
-      </div>
-      <div class="cta-follow-box">
-        <span>SIGA @oeduardo.1</span>
-      </div>
-    </div>
-    <div class="footer">
-      <div class="footer-left">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        <span>@oeduardo.1</span>
-      </div>
-      <div class="footer-right">9/9</div>
+<!-- SLIDE 4 — TIPO C (textos 5+6) -->
+<div class="slide-tipo-c">
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Mês Ano ®</span>
+  </div>
+  <div class="tc-body">
+    <div class="tc-divider"></div>
+    <p class="tc-title">[texto 5 — título tipo-c com <span class="hl">destaques</span>]</p>
+    <hr class="tc-divider-line">
+    <p class="tc-text">[texto 6 — texto de apoio]</p>
+    <div class="tc-formula">[opcional — tc-formula: dado/fórmula em destaque, remover a div se não houver]</div>
+    <p class="tc-text">[texto 7 — fechamento, pode usar <strong>negrito</strong>]</p>
+  </div>
+  <div class="slide-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0E9957" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+  <div class="progress-bar" style="background:rgba(0,0,0,0.08);"><div class="progress-fill" style="width:44.4%"></div></div>
+</div>
+
+<!-- SLIDE 5 — TIPO A (texto 7) -->
+<div class="slide-tipo-a">
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Mês Ano ®</span>
+  </div>
+  <div class="ta-img"><img src="img/slide_N.jpg" alt=""></div>
+  <div class="ta-body">
+    <div class="ta-divider"></div>
+    <p class="ta-title">[texto 8 — título tipo-a com <span class="hl">destaque</span>]</p>
+    <hr class="slide-divider">
+    <p class="ta-text">[texto 9 — texto de apoio, pode usar <strong>negrito</strong>]</p>
+  </div>
+  <div class="slide-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+  <div class="progress-bar"><div class="progress-fill" style="width:55.6%"></div></div>
+</div>
+
+<!-- SLIDE 6 — TIPO D (texto 8) -->
+<div class="slide-tipo-d">
+  <img class="td-img" src="img/slide_N.jpg" alt="">
+  <div class="td-overlay"></div>
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Mês Ano ®</span>
+  </div>
+  <div class="td-content">
+    <div class="td-divider"></div>
+    <p class="td-title">[texto 10 — título tipo-d com <span class="hl">destaque</span>]</p>
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.18);margin:0;">
+    <p class="td-text">[texto 11 — texto de apoio]</p>
+  </div>
+  <div class="slide-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+  <div class="progress-bar"><div class="progress-fill" style="width:66.7%"></div></div>
+</div>
+
+<!-- SLIDE 7 — TIPO B / SPLIT (texto 9) -->
+<div class="slide-split">
+  <div class="split-left">
+    <span class="split-tag">Solução</span>
+    <p class="split-title">[texto 12 — título do 2º split com <span class="hl">destaque</span>]</p>
+    <hr class="split-divider">
+    <div class="split-item"><span class="split-bullet">•</span><span>[texto 13, bullet 1]</span></div>
+    <div class="split-item"><span class="split-bullet">•</span><span>[bullet 2]</span></div>
+    <div class="split-item"><span class="split-bullet">•</span><span>[texto 14, bullet 3]</span></div>
+  </div>
+  <div class="split-right">
+    <img src="img/slide_N.jpg" alt="">
+  </div>
+  <div class="slide-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+  <div class="progress-bar"><div class="progress-fill" style="width:77.8%"></div></div>
+</div>
+
+<!-- SLIDE 8 — TIPO D (texto 10) -->
+<div class="slide-tipo-d">
+  <img class="td-img" src="img/slide_N.jpg" alt="">
+  <div class="td-overlay"></div>
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Mês Ano ®</span>
+  </div>
+  <div class="td-content">
+    <div class="td-divider"></div>
+    <p class="td-title">[texto 15 — título do 2º tipo-d]</p>
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.18);margin:0;">
+    <p class="td-text">[texto 16, parte 1]</p>
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.18);margin:0;">
+    <p class="td-text">[texto 16, parte 2 — frase-martelo]</p>
+  </div>
+  <div class="slide-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+  <div class="progress-bar"><div class="progress-fill" style="width:88.9%"></div></div>
+</div>
+
+<!-- SLIDE 9 — CTA (texto 11) -->
+<div class="slide-cta">
+  <div class="cta-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Mês Ano ®</span>
+  </div>
+  <div class="cta-body">
+    <div class="cta-inner">
+      <span class="cta-name">Eduardo Rolim</span>
+      <p class="cta-text"><span class="hl">[texto 17 — CTA final]</span></p>
+      <p class="cta-source">[texto 18 — fonte/gancho de fechamento]</p>
     </div>
   </div>
+  <div class="progress-bar" style="background:rgba(0,0,0,0.08);"><div class="progress-fill" style="width:100%"></div></div>
+</div>
 
 </body>
 </html>
@@ -499,11 +496,13 @@ Variar entre 4 variantes para criar dinamismo visual:
 
 O conteúdo de cada slide já vem pronto do Eduardo. Sua função é apenas aplicar o estilo visual correto:
 
-- Texto em **CAIXA ALTA** só nos títulos da capa e CTA (IMPACT)
-- **1-2 palavras em verde** `#0E9957` por slide para destaque — identificar as palavras-chave do texto enviado
-- Slides internos: capitalize natural, Inter, sem uppercase
-- Cada slide deve ter uma **foto diferente**
-- **Variante D** (cor sólida verde): usar em 1-2 slides para impacto máximo, idealmente no slide mais "frase de efeito"
+- Título da capa (`capa-title`): CSS já força `text-transform: uppercase` — digitar o texto em caixa normal, o navegador renderiza maiúsculo automaticamente. Impact, com `<span class="hl">` na palavra-chave
+- `split-title` também é uppercase por CSS (mesma lógica: digitar normal, renderiza maiúsculo)
+- 1-2 palavras em verde `#0E9957` por slide para destaque — identificar as palavras-chave do texto enviado
+- `tc-title`/`ta-title`/`td-title`/`cta-text`/`cta-name`: capitalize natural, Inter, SEM uppercase — não forçar caixa alta nesses
+- Cada slide com foto deve ter uma **foto diferente**
+- `slide-tipo-d` (fundo foto full-bleed) é o slide de maior impacto — reservar para a frase-martelo mais forte do bloco
+- Nunca usar o template genérico antigo (`.slide`/`.slide-editorial`) — sempre as 7 classes fixas da seção "Layouts dos Slides"
 
 ---
 
@@ -520,49 +519,59 @@ Eduardo envia **18 textos numerados** (texto 1 a texto 18). Esses textos são **
 | Slide | Tipo | Textos | Uso no HTML |
 |-------|------|--------|-------------|
 | 1 | CAPA (`slide-capa`) | texto 1 + texto 2 | texto 2 → `capa-pretitle`; texto 1 → `capa-title` |
-| 2 | TIPO A (`slide-tipo-a`) | texto 3 + texto 4 | texto 3 → `ta-title`; texto 4 → `ta-text` |
-| 3 | TIPO B (`slide-tipo-b`) | texto 5 + texto 6 + texto 7 | texto 5 → `tb-title`; textos 6+7 → `tb-text` |
-| 4 | TIPO A (`slide-tipo-a`) | texto 8 + texto 9 | texto 8 → `ta-title`; texto 9 → `ta-text` |
-| 5 | TIPO B (`slide-tipo-b`) | texto 10 + texto 11 + texto 12 | texto 10 → `tb-title`; textos 11+12 → `tb-text` |
-| 6 | TIPO A (`slide-tipo-a`) | texto 13 + texto 14 | texto 13 → `ta-title`; texto 14 → `ta-text` |
-| 7 | TIPO B (`slide-tipo-b`) | texto 15 + texto 16 | texto 15 → `tb-title`; texto 16 → `tb-text` |
-| 8 | TIPO A (`slide-tipo-a`) | texto 17 | texto 17 → `ta-title` + desenvolver em `ta-text` |
-| 9 | TIPO B (`slide-tipo-b`) | texto 18 | texto 18 → `tb-text` direto (sem `tb-title`) |
+| 2 | SPLIT (`slide-split`) | texto 3 + texto 4 | texto 3 → `split-title`; texto 4 → 1º `split-item` (bullets extras podem derivar do mesmo texto) |
+| 3 | MINI CTA (`slide-mini-cta`) | fixo — não numerado | CTA fixo obrigatório em `mini-cta-title` |
+| 4 | TIPO C (`slide-tipo-c`) | texto 5 + texto 6 + texto 7 | texto 5 → `tc-title`; textos 6+7 → `tc-text` (ou `tc-formula` se for dado/fórmula) |
+| 5 | TIPO A (`slide-tipo-a`) | texto 8 + texto 9 | texto 8 → `ta-title`; texto 9 → `ta-text` |
+| 6 | TIPO D (`slide-tipo-d`) | texto 10 + texto 11 | texto 10 → `td-title`; texto 11 → `td-text` |
+| 7 | SPLIT (`slide-split`) | texto 12 + texto 13 + texto 14 | texto 12 → `split-title`; textos 13+14 → `split-item`s |
+| 8 | TIPO D (`slide-tipo-d`) | texto 15 + texto 16 | texto 15 → `td-title`; texto 16 → `td-text` |
+| 9 | CTA (`slide-cta`) | texto 17 + texto 18 | texto 17 → `cta-text`; texto 18 → `cta-source` |
 
 **Regras de combinação de textos dentro do slide:**
-- `tb-title` / `ta-title`: o texto mais curto e impactante do grupo — serve como gancho
-- `tb-text` / `ta-text`: os demais textos do grupo combinados — desenvolvem o argumento
-- Quando um grupo tem 3 textos, os 2 menores ficam no body/text, separados por `<br><br>`
-- **Slide 9 (texto 18)**: SEMPRE TIPO B com o texto exato do autor em `tb-text`, sem `tb-title`, sem CTA genérico
+- `*-title`: o texto mais curto e impactante do grupo — serve como gancho
+- `*-text`: os demais textos do grupo combinados — desenvolvem o argumento
+- `split-item`: cada bullet é uma frase curta com `<span class="split-bullet">•</span>` na frente
+- **Slide 3 (mini-cta)**: SEMPRE o CTA fixo obrigatório (`Quer mais conteúdos como esse? Toca 2 vezes na tela e depois me segue.`), nunca um texto numerado do usuário
+- **Slide 9 (CTA)**: `cta-name` é sempre "Eduardo Rolim"; `cta-text` carrega o texto 17 com `<span class="hl">`; `cta-source` é o texto 18
 
 **Imagens: 9 imagens geradas** (slide_01.jpg a slide_09.jpg), uma por slide.
 
-### Passo 2: Gerar Imagens via OpenAI API (gpt-image-1)
+### Passo 2: Gerar Imagens via Gemini API (gemini-2.5-flash-image)
 
-Usar o modelo `gpt-image-1` da OpenAI para gerar uma imagem por slide (capa, internos e CTA).
+Usar o modelo `gemini-2.5-flash-image` do Google para gerar uma imagem por slide (capa, internos e CTA).
+
+**REGRA ABSOLUTA DE CUSTO: modelo é SEMPRE `gemini-2.5-flash-image`. NUNCA usar variantes `-pro` (mais caras) nem depender de tiers `-preview` sem quota garantida.**
+- `flash` é o tier de equilíbrio custo/qualidade da família Gemini — nem o mais avançado (`pro`), nem o mais fraco
+- Se algum script, exemplo ou template antigo mostrar `gpt-image-1` / OpenAI, é erro — corrigir para `gemini-2.5-flash-image`
+- Requer billing habilitado no projeto do Google AI Studio/Cloud — tier free tem quota 0 pra geração de imagem
 
 **Endpoint:**
 ```
-POST https://api.openai.com/v1/images/generations
-Header: Authorization: Bearer [OPENAI_API_KEY]
+POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent
+Header: x-goog-api-key: [GEMINI_API_KEY]
 ```
 
 **Exemplo de chamada:**
 ```bash
 curl -s -X POST \
-  "https://api.openai.com/v1/images/generations" \
-  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent" \
+  -H "x-goog-api-key: $GEMINI_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "gpt-image-1",
-    "prompt": "Extreme close-up portrait of a 40-year-old man, jaw clenched, eyes wide with sudden realization, harsh single side light casting half his face in shadow, cinematic, photorealistic, 35mm film grain, high contrast, portrait orientation, no text, no words",
-    "size": "1024x1536",
-    "quality": "high",
-    "n": 1
+    "contents": [{
+      "parts": [{
+        "text": "Extreme close-up portrait of a 40-year-old man, jaw clenched, eyes wide with sudden realization, harsh single side light casting half his face in shadow, cinematic, photorealistic, 35mm film grain, high contrast, portrait orientation, no text, no words"
+      }]
+    }],
+    "generationConfig": {
+      "responseModalities": ["IMAGE"],
+      "imageConfig": {"aspectRatio": "4:5"}
+    }
   }'
 ```
 
-**A resposta retorna a imagem em base64** dentro de `data[0].b64_json`. Salvar como `.jpg` e referenciar no HTML.
+**A resposta retorna a imagem em base64** dentro de `candidates[0].content.parts[0].inlineData.data`. Salvar como `.jpg` e referenciar no HTML.
 
 **Diretrizes de prompt para imagens — MÁXIMO IMPACTO VIRAL:**
 
@@ -623,7 +632,7 @@ O prompt de cada imagem deve ser construído especificamente para o conteúdo do
 - Orientação: `portrait orientation, 4:5 aspect ratio`
 - Base de estilo: `cinematic, photorealistic, high contrast, moody lighting`
 
-**Fallback**: se a chamada à OpenAI API falhar (erro de quota, timeout, etc.), interromper e avisar Eduardo — não usar Unsplash.
+**Fallback**: se a chamada à Gemini API falhar (erro de quota, billing, timeout, etc.), interromper e avisar Eduardo — não usar Unsplash.
 
 ### Passo 3: Gerar o HTML Completo
 
@@ -724,11 +733,11 @@ Siga @oeduardo.1 para mais conteúdo sobre IA.
 
 ## APIs e Credenciais
 
-### OpenAI API — Geração de Imagens
-- **Modelo**: `gpt-image-1`
-- **Endpoint**: `https://api.openai.com/v1/images/generations`
-- **Auth**: header `Authorization: Bearer $OPENAI_API_KEY` (variável lida do `.env`, nunca hardcoded)
-- **Resposta**: imagem base64 em `data[0].b64_json`
+### Gemini API — Geração de Imagens
+- **Modelo**: `gemini-2.5-flash-image` (tier flash, equilíbrio custo/qualidade — nunca `-pro`)
+- **Endpoint**: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent`
+- **Auth**: header `x-goog-api-key: $GEMINI_API_KEY` (variável lida do `.env`, nunca hardcoded)
+- **Resposta**: imagem base64 em `candidates[0].content.parts[0].inlineData.data`
 - Salvar como `.jpg` na pasta `output/nome-do-carrossel/img/slide_N.jpg`
 
 ### Playwright MCP
@@ -743,7 +752,7 @@ output/
 └── nome-do-carrossel/
     ├── carrossel.html
     ├── img/
-    │   ├── slide_01.jpg   ← gerada via OpenAI API
+    │   ├── slide_01.jpg   ← gerada via Gemini API
     │   ├── slide_02.jpg
     │   └── ...
     ├── slide_01.png       ← screenshot final
@@ -759,7 +768,7 @@ output/
 Quando Eduardo enviar o conteúdo dos slides:
 
 1. **Ler os slides** recebidos — identificar capa, internos e CTA
-2. **Gerar imagens** via OpenAI API (`gpt-image-1`) — 1 por slide
+2. **Gerar imagens** via Gemini API (`gemini-2.5-flash-image`) — 1 por slide
 3. **Salvar imagens** em `output/nome-do-carrossel/img/`
 4. **Montar o HTML** com os textos exatos recebidos, seguindo o template desta skill
 5. **Capturar PNGs** via Playwright MCP

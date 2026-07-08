@@ -496,9 +496,10 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 O conteúdo de cada slide já vem pronto do Eduardo. Sua função é apenas aplicar o estilo visual correto:
 
-- Título da capa (`capa-title`): caixa normal (não uppercase), Impact, com `<span class="hl">` na palavra-chave
+- Título da capa (`capa-title`): CSS já força `text-transform: uppercase` — digitar o texto em caixa normal, o navegador renderiza maiúsculo automaticamente. Impact, com `<span class="hl">` na palavra-chave
+- `split-title` também é uppercase por CSS (mesma lógica: digitar normal, renderiza maiúsculo)
 - 1-2 palavras em verde `#0E9957` por slide para destaque — identificar as palavras-chave do texto enviado
-- Slides `tipo-a`/`tipo-c`/`tipo-d`/`split`/`cta`: capitalize natural, Inter, sem uppercase (exceto tags como `split-tag`)
+- `tc-title`/`ta-title`/`td-title`/`cta-text`/`cta-name`: capitalize natural, Inter, SEM uppercase — não forçar caixa alta nesses
 - Cada slide com foto deve ter uma **foto diferente**
 - `slide-tipo-d` (fundo foto full-bleed) é o slide de maior impacto — reservar para a frase-martelo mais forte do bloco
 - Nunca usar o template genérico antigo (`.slide`/`.slide-editorial`) — sempre as 7 classes fixas da seção "Layouts dos Slides"

@@ -531,6 +531,11 @@ Eduardo envia **18 textos numerados** (texto 1 a texto 18). Esses textos são **
 
 Usar o modelo `gpt-image-1` da OpenAI para gerar uma imagem por slide (capa, internos e CTA).
 
+**REGRA ABSOLUTA DE CUSTO: `quality` é SEMPRE `"medium"`. NUNCA usar `"high"`.**
+- `high` custa ~4x mais que `medium` por imagem — gasto desnecessário de token/crédito
+- `medium` já entrega nitidez e fidelidade ao prompt suficientes pro padrão de produção
+- Se algum script, exemplo ou template antigo mostrar `"quality": "high"`, é erro — corrigir para `"medium"`
+
 **Endpoint:**
 ```
 POST https://api.openai.com/v1/images/generations

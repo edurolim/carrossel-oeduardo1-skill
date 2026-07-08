@@ -329,8 +329,8 @@ Para mudar qualquer parâmetro visual, altere neste arquivo e replique nas 3 fon
 
 | O que mudar | Onde replicar |
 |-------------|---------------|
-| Cores, tipografia, tamanhos | `skill-extracted/carrossel-investigativo-edurolim/SKILL.md` → seção "Identidade Visual" |
+| Cores, tipografia, tamanhos | `skill-extracted/carrossel-edurolim-2026-julho/SKILL.md` → seção "Identidade Visual" |
 | CSS dos slides | Template HTML da skill (seção "Template HTML Base") |
 | Regras de imagem | SKILL.md → seção "Diretrizes de prompt para imagens" |
-| Empacotado na skill | Reempacotar `carrossel-investigativo-edurolim.skill` (ZIP) |
+| Empacotado na skill | Reempacotar `carrossel-edurolim-2026-julho.skill` (ZIP) |
 | Versionar | Commit e push em `github.com/edurolim/carrossel-claudecode-skill-edurolim` |

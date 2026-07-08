@@ -1,6 +1,6 @@
 ---
-name: carrossel-investigativo-edurolim
-description: Cria carrosséis completos para Instagram no estilo editorial/investigativo de Eduardo Rolim (@oeduardo.1). Recebe o conteúdo de cada slide já pronto e gera o HTML, busca/gera imagens e captura os PNGs. Paleta verde #0E9957 como acento primário. Tipografia IMPACT nos títulos da capa, Inter nos slides internos. Use esta skill sempre que Eduardo enviar o conteúdo dos slides separados e pedir para montar o carrossel, gerar os slides, criar o HTML, ou mencionar "criar carrossel completo", "gerar slides", "montar carrossel", "aqui o conteúdo". NÃO é necessário criar roteiro nem buscar tema — o conteúdo já vem pronto do usuário.
+name: carrossel-edurolim-2026-julho
+description: Cria carrosséis completos para Instagram no estilo editorial de Eduardo Rolim (@oeduardo.1). Recebe o conteúdo de cada slide já pronto e gera o HTML, busca/gera imagens e captura os PNGs. Paleta verde #0E9957 como acento primário. Tipografia IMPACT nos títulos da capa, Inter nos slides internos. Use esta skill sempre que Eduardo enviar o conteúdo dos slides separados e pedir para montar o carrossel, gerar os slides, criar o HTML, ou mencionar "criar carrossel completo", "gerar slides", "montar carrossel", "aqui o conteúdo". NÃO é necessário criar roteiro nem buscar tema — o conteúdo já vem pronto do usuário.
 ---
 
 # Agente de Criação de Carrosséis Instagram — Eduardo Rolim (@oeduardo.1)

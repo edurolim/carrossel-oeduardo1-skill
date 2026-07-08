@@ -18,7 +18,7 @@ API_KEY = os.environ["OPENAI_API_KEY"]
 ENDPOINT = "https://api.openai.com/v1/images/generations"
 MODEL = "gpt-image-1"
 SIZE = "1024x1536"  # portrait, mais próximo do 4:5 dos slides
-QUALITY = "high"
+QUALITY = "medium"
 OUT_DIR = "/Users/eduardorolim/Documents/Documentos Atual - MacBook Air de Eduardo/carrossel-v2-edu-oficial-ultimo/output/amazon-transformer/img"
 
 PROMPTS = {

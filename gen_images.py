@@ -14,11 +14,10 @@ def load_dotenv(path=".env"):
 
 load_dotenv()
 
-API_KEY = os.environ["OPENAI_API_KEY"]
-ENDPOINT = "https://api.openai.com/v1/images/generations"
-MODEL = "gpt-image-1"
-SIZE = "1024x1536"  # portrait, mais próximo do 4:5 dos slides
-QUALITY = "medium"
+API_KEY = os.environ["GEMINI_API_KEY"]
+MODEL = "gemini-2.5-flash-image"
+ENDPOINT = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent"
+ASPECT_RATIO = "4:5"  # mais próximo do formato dos slides (1080x1350)
 OUT_DIR = "/Users/eduardorolim/Documents/Documentos Atual - MacBook Air de Eduardo/carrossel-v2-edu-oficial-ultimo/output/amazon-transformer/img"
 
 PROMPTS = {
@@ -42,18 +41,18 @@ PROMPTS = {
 
 def generate_image(slide_num, prompt):
     payload = json.dumps({
-        "model": MODEL,
-        "prompt": prompt,
-        "size": SIZE,
-        "quality": QUALITY,
-        "n": 1,
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "responseModalities": ["IMAGE"],
+            "imageConfig": {"aspectRatio": ASPECT_RATIO},
+        },
     }).encode("utf-8")
 
     req = urllib.request.Request(
         ENDPOINT,
         data=payload,
         headers={
-            "Authorization": f"Bearer {API_KEY}",
+            "x-goog-api-key": API_KEY,
             "Content-Type": "application/json",
         },
         method="POST",
@@ -62,25 +61,25 @@ def generate_image(slide_num, prompt):
     try:
         with urllib.request.urlopen(req, timeout=120) as resp:
             data = json.loads(resp.read())
-        b64 = data["data"][0]["b64_json"]
+        b64 = data["candidates"][0]["content"]["parts"][0]["inlineData"]["data"]
         img_data = base64.b64decode(b64)
         path = f"{OUT_DIR}/slide_{slide_num}.jpg"
         with open(path, "wb") as f:
             f.write(img_data)
-        print(f"✅ slide_{slide_num}.jpg salvo ({len(img_data)//1024}KB)")
+        print(f"OK slide_{slide_num}.jpg salvo ({len(img_data)//1024}KB)")
         return True
     except urllib.error.HTTPError as e:
-        print(f"❌ slide_{slide_num}: erro HTTP {e.code} — {e.read().decode()[:500]}")
+        print(f"ERRO slide_{slide_num}: HTTP {e.code} - {e.read().decode()[:500]}")
         return False
     except Exception as e:
-        print(f"❌ slide_{slide_num}: erro — {e}")
+        print(f"ERRO slide_{slide_num}: {e}")
         return False
 
 for num, prompt in PROMPTS.items():
-    print(f"🔄 Gerando imagem {num}...")
+    print(f"gerando imagem {num}...")
     ok = generate_image(num, prompt)
     if not ok:
         sys.exit(1)
     time.sleep(0.5)
 
-print("\n✅ Todas as imagens geradas!")
+print("\ntodas as imagens geradas!")

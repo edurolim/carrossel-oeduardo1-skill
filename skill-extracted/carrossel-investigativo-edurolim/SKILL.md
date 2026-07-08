@@ -34,7 +34,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 ### Elementos de Design
 - **SEM glassmorphism** — texto direto sobre a imagem na capa
 - **SEM cards flutuantes** na capa — conteúdo direto sobre a foto
-- **Fotos de pessoas reais** como fundo na capa/CTA — geradas via OpenAI API (ver Passo 2)
+- **Fotos de pessoas reais** como fundo na capa/CTA — geradas via Gemini API (ver Passo 2)
 - **Overlay com gradiente**: `linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%)`
 - **Palavras-chave em verde** `#0E9957` no meio da frase para destaque
 - **Texto grande e bold** ocupando a maior parte do slide
@@ -537,37 +537,41 @@ Eduardo envia **18 textos numerados** (texto 1 a texto 18). Esses textos são **
 
 **Imagens: 9 imagens geradas** (slide_01.jpg a slide_09.jpg), uma por slide.
 
-### Passo 2: Gerar Imagens via OpenAI API (gpt-image-1)
+### Passo 2: Gerar Imagens via Gemini API (gemini-2.5-flash-image)
 
-Usar o modelo `gpt-image-1` da OpenAI para gerar uma imagem por slide (capa, internos e CTA).
+Usar o modelo `gemini-2.5-flash-image` do Google para gerar uma imagem por slide (capa, internos e CTA).
 
-**REGRA ABSOLUTA DE CUSTO: `quality` é SEMPRE `"medium"`. NUNCA usar `"high"`.**
-- `high` custa ~4x mais que `medium` por imagem — gasto desnecessário de token/crédito
-- `medium` já entrega nitidez e fidelidade ao prompt suficientes pro padrão de produção
-- Se algum script, exemplo ou template antigo mostrar `"quality": "high"`, é erro — corrigir para `"medium"`
+**REGRA ABSOLUTA DE CUSTO: modelo é SEMPRE `gemini-2.5-flash-image`. NUNCA usar variantes `-pro` (mais caras) nem depender de tiers `-preview` sem quota garantida.**
+- `flash` é o tier de equilíbrio custo/qualidade da família Gemini — nem o mais avançado (`pro`), nem o mais fraco
+- Se algum script, exemplo ou template antigo mostrar `gpt-image-1` / OpenAI, é erro — corrigir para `gemini-2.5-flash-image`
+- Requer billing habilitado no projeto do Google AI Studio/Cloud — tier free tem quota 0 pra geração de imagem
 
 **Endpoint:**
 ```
-POST https://api.openai.com/v1/images/generations
-Header: Authorization: Bearer [OPENAI_API_KEY]
+POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent
+Header: x-goog-api-key: [GEMINI_API_KEY]
 ```
 
 **Exemplo de chamada:**
 ```bash
 curl -s -X POST \
-  "https://api.openai.com/v1/images/generations" \
-  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent" \
+  -H "x-goog-api-key: $GEMINI_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "gpt-image-1",
-    "prompt": "Extreme close-up portrait of a 40-year-old man, jaw clenched, eyes wide with sudden realization, harsh single side light casting half his face in shadow, cinematic, photorealistic, 35mm film grain, high contrast, portrait orientation, no text, no words",
-    "size": "1024x1536",
-    "quality": "medium",
-    "n": 1
+    "contents": [{
+      "parts": [{
+        "text": "Extreme close-up portrait of a 40-year-old man, jaw clenched, eyes wide with sudden realization, harsh single side light casting half his face in shadow, cinematic, photorealistic, 35mm film grain, high contrast, portrait orientation, no text, no words"
+      }]
+    }],
+    "generationConfig": {
+      "responseModalities": ["IMAGE"],
+      "imageConfig": {"aspectRatio": "4:5"}
+    }
   }'
 ```
 
-**A resposta retorna a imagem em base64** dentro de `data[0].b64_json`. Salvar como `.jpg` e referenciar no HTML.
+**A resposta retorna a imagem em base64** dentro de `candidates[0].content.parts[0].inlineData.data`. Salvar como `.jpg` e referenciar no HTML.
 
 **Diretrizes de prompt para imagens — MÁXIMO IMPACTO VIRAL:**
 
@@ -628,7 +632,7 @@ O prompt de cada imagem deve ser construído especificamente para o conteúdo do
 - Orientação: `portrait orientation, 4:5 aspect ratio`
 - Base de estilo: `cinematic, photorealistic, high contrast, moody lighting`
 
-**Fallback**: se a chamada à OpenAI API falhar (erro de quota, timeout, etc.), interromper e avisar Eduardo — não usar Unsplash.
+**Fallback**: se a chamada à Gemini API falhar (erro de quota, billing, timeout, etc.), interromper e avisar Eduardo — não usar Unsplash.
 
 ### Passo 3: Gerar o HTML Completo
 
@@ -729,11 +733,11 @@ Siga @oeduardo.1 para mais conteúdo sobre IA.
 
 ## APIs e Credenciais
 
-### OpenAI API — Geração de Imagens
-- **Modelo**: `gpt-image-1`
-- **Endpoint**: `https://api.openai.com/v1/images/generations`
-- **Auth**: header `Authorization: Bearer $OPENAI_API_KEY` (variável lida do `.env`, nunca hardcoded)
-- **Resposta**: imagem base64 em `data[0].b64_json`
+### Gemini API — Geração de Imagens
+- **Modelo**: `gemini-2.5-flash-image` (tier flash, equilíbrio custo/qualidade — nunca `-pro`)
+- **Endpoint**: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent`
+- **Auth**: header `x-goog-api-key: $GEMINI_API_KEY` (variável lida do `.env`, nunca hardcoded)
+- **Resposta**: imagem base64 em `candidates[0].content.parts[0].inlineData.data`
 - Salvar como `.jpg` na pasta `output/nome-do-carrossel/img/slide_N.jpg`
 
 ### Playwright MCP
@@ -748,7 +752,7 @@ output/
 └── nome-do-carrossel/
     ├── carrossel.html
     ├── img/
-    │   ├── slide_01.jpg   ← gerada via OpenAI API
+    │   ├── slide_01.jpg   ← gerada via Gemini API
     │   ├── slide_02.jpg
     │   └── ...
     ├── slide_01.png       ← screenshot final
@@ -764,7 +768,7 @@ output/
 Quando Eduardo enviar o conteúdo dos slides:
 
 1. **Ler os slides** recebidos — identificar capa, internos e CTA
-2. **Gerar imagens** via OpenAI API (`gpt-image-1`) — 1 por slide
+2. **Gerar imagens** via Gemini API (`gemini-2.5-flash-image`) — 1 por slide
 3. **Salvar imagens** em `output/nome-do-carrossel/img/`
 4. **Montar o HTML** com os textos exatos recebidos, seguindo o template desta skill
 5. **Capturar PNGs** via Playwright MCP

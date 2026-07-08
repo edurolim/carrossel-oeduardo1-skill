@@ -58,6 +58,15 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 | 8 | `slide-tipo-d` | foto full-bleed + overlay (2ª ocorrência) | título + texto |
 | 9 | `slide-cta` | branco | nome + CTA final + fonte |
 
+**LIMITES DE CARACTERES — OBRIGATÓRIO (evita overflow/corte de texto):**
+- `capa-pretitle`: máx. **110 caracteres** (2-3 linhas em 28px)
+- `capa-title`: máx. **70 caracteres**, sempre **1-2 linhas** (Impact 96px é gigante — texto longo estoura o frame e sobrepõe o botão)
+- `capa-btn`: máx. **3 palavras** (ex: "Entenda o ponto")
+- `split-title` / `td-title` / `tc-title` / `ta-title`: máx. **90 caracteres**, 2-3 linhas
+- Se o texto 1 (headline) enviado for mais longo que 70 caracteres, **condensar** para caber na capa — nunca forçar o texto completo no `capa-title`
+
+**Acentuação — OBRIGATÓRIO:** todo texto em português deve manter acentuação, cedilha e til corretos (não → nao é erro, decisões → decisoes é erro). Nunca gerar ou aceitar texto sem acentuação.
+
 **Elementos obrigatórios em todo slide:**
 - `.top-header`: `Eduardo Rolim` (esq) — `@oeduardo.1` (centro) — `Mês Ano ®` (dir), Space Grotesk 14px uppercase, opacity 0.50 (ou 0.35 em fundo branco)
 - `.progress-bar`: barra fixa no rodapé, `.progress-fill` verde `#0E9957` crescendo por slide: 11.1%, 22.2%, 33.3%... até 100%

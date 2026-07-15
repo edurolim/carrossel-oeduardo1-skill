@@ -44,13 +44,13 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 ## Layouts dos Slides — PADRÃO FIXO OBRIGATÓRIO
 
-**Regra absoluta: sempre gerar seguindo exatamente esta sequência de 9 slides, nesta ordem, com estas classes CSS. Nunca inventar layout novo, nunca usar o template genérico antigo (`.slide` / `.slide-editorial`). Este é o padrão validado nos últimos carrosséis de produção (openai-industrial, custo-invisivel, stack-amuleto, saas-sequoia).**
+**Regra absoluta: sempre usar estas classes CSS, nunca inventar layout novo, nunca usar o template genérico antigo (`.slide` / `.slide-editorial`). Este é o padrão validado nos últimos carrosséis de produção (openai-industrial, custo-invisivel, stack-amuleto, saas-sequoia). A tabela abaixo mostra a sequência MÁXIMA (9 slides, 18 textos) — o número real de slides é adaptável, ver "Passo 1: Receber o Conteúdo".**
 
 | # | Tipo (classe) | Fundo | Conteúdo |
 |---|---|---|---|
 | 1 | `slide-capa` | foto full-bleed + overlay gradiente | pretitle + título Impact + botão CTA opcional |
 | 2 | `slide-split` | 50% texto preto / 50% foto | tag + título + 3 bullets |
-| 3 | `slide-mini-cta` | branco | CTA fixo obrigatório (ver Passo 1) |
+| 3 | `slide-mini-cta` | branco | CTA fixo obrigatório (ver Passo 1) — só entra em carrosséis com 8+ slides |
 | 4 | `slide-tipo-c` | branco | título + fórmula/destaque opcional |
 | 5 | `slide-tipo-a` | preto `#0d0d0d`, foto no topo (580px) | título + texto |
 | 6 | `slide-tipo-d` | foto full-bleed + overlay | título + texto (1-2 blocos) |
@@ -69,7 +69,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 **Elementos obrigatórios em todo slide:**
 - `.top-header`: `Eduardo Rolim` (esq) — `@oeduardo.1` (centro) — `Mês Ano ®` (dir), Space Grotesk 14px uppercase, opacity 0.50 (ou 0.35 em fundo branco)
-- `.progress-bar`: barra fixa no rodapé, `.progress-fill` verde `#0E9957` crescendo por slide: 11.1%, 22.2%, 33.3%... até 100%
+- `.progress-bar`: barra fixa no rodapé, `.progress-fill` verde `#0E9957` crescendo por slide: `(número do slide ÷ total de slides) × 100%` — ex. num carrossel de 7, o slide 3 mostra 42.8%, não um valor fixo de tabela
 - `.slide-arrow`: seta de continuidade no canto inferior direito (exceto capa e CTA final)
 - Destaque de palavra-chave sempre com `<span class="hl">`, cor `#0E9957`
 
@@ -510,32 +510,33 @@ O conteúdo de cada slide já vem pronto do Eduardo. Sua função é apenas apli
 
 ### Passo 1: Receber o Conteúdo
 
-Eduardo envia **18 textos numerados** (texto 1 a texto 18). Esses textos são **sempre condensados em 9 slides** — NUNCA criar um slide por texto.
+Eduardo envia **N textos numerados** (texto 1 a texto N — N é variável, não precisa ser 18). Esses textos são **condensados em slides**, NUNCA um slide por texto — o número final de slides se adapta à quantidade de texto recebida.
 
-**REGRA ABSOLUTA: 18 textos → 9 slides. Sem exceções.**
+**REGRA: número de slides é ADAPTÁVEL. 9 slides (18 textos) é o teto/exemplo completo, não uma obrigação — carrosséis menores (6, 7, 8 slides) são igualmente válidos.**
 
-#### Distribuição fixa dos 18 textos nos 9 slides:
+#### Algoritmo de distribuição (qualquer quantidade de texto):
 
-| Slide | Tipo | Textos | Uso no HTML |
-|-------|------|--------|-------------|
-| 1 | CAPA (`slide-capa`) | texto 1 + texto 2 | texto 2 → `capa-pretitle`; texto 1 → `capa-title` |
-| 2 | SPLIT (`slide-split`) | texto 3 + texto 4 | texto 3 → `split-title`; texto 4 → 1º `split-item` (bullets extras podem derivar do mesmo texto) |
-| 3 | MINI CTA (`slide-mini-cta`) | fixo — não numerado | CTA fixo obrigatório em `mini-cta-title` |
-| 4 | TIPO C (`slide-tipo-c`) | texto 5 + texto 6 + texto 7 | texto 5 → `tc-title`; textos 6+7 → `tc-text` (ou `tc-formula` se for dado/fórmula) |
-| 5 | TIPO A (`slide-tipo-a`) | texto 8 + texto 9 | texto 8 → `ta-title`; texto 9 → `ta-text` |
-| 6 | TIPO D (`slide-tipo-d`) | texto 10 + texto 11 | texto 10 → `td-title`; texto 11 → `td-text` |
-| 7 | SPLIT (`slide-split`) | texto 12 + texto 13 + texto 14 | texto 12 → `split-title`; textos 13+14 → `split-item`s |
-| 8 | TIPO D (`slide-tipo-d`) | texto 15 + texto 16 | texto 15 → `td-title`; texto 16 → `td-text` |
-| 9 | CTA (`slide-cta`) | texto 17 + texto 18 | texto 17 → `cta-text`; texto 18 → `cta-source` |
+1. **Slide 1 = sempre CAPA** (`slide-capa`): texto 1 → `capa-title`; texto 2 → `capa-pretitle`
+2. **Último slide = sempre CTA** (`slide-cta`): penúltimo texto → `cta-text`; último texto → `cta-source`
+3. **MINI-CTA** (`slide-mini-cta`, fixo, não consome texto do usuário): incluir **somente se o total de slides for 8 ou mais**. Carrosséis de 7 slides ou menos pulam esse slide — vai direto de capa pro primeiro slide de conteúdo.
+4. **Slides do meio**: todo texto que sobrar entre a capa e o CTA (descontando os 2 já usados em cada) é distribuído nos slides de conteúdo, ciclando pelos 4 tipos "variados" **nesta ordem fixa, repetindo do início se precisar de mais**: `slide-split → slide-tipo-c → slide-tipo-a → slide-tipo-d`
+5. Cada slide do meio recebe **1 a 3 textos**: o mais curto e impactante vira `*-title`, o(s) resto vira(m) `*-text` (ou `split-item`s no caso do split). Distribuir o texto restante o mais equilibrado possível entre os slides do meio definidos — não empilhar tudo num slide só e deixar outro vazio.
+
+**Exemplo com 7 slides (menos texto, ex. 10-12 textos):**
+`slide-capa → slide-split → slide-tipo-c → slide-tipo-a → slide-tipo-d → slide-split → slide-cta`
+(sem mini-cta, porque total < 8)
+
+**Exemplo com 9 slides (18 textos, máximo):**
+`slide-capa → slide-split → slide-mini-cta → slide-tipo-c → slide-tipo-a → slide-tipo-d → slide-split → slide-tipo-d → slide-cta`
 
 **Regras de combinação de textos dentro do slide:**
 - `*-title`: o texto mais curto e impactante do grupo — serve como gancho
 - `*-text`: os demais textos do grupo combinados — desenvolvem o argumento
 - `split-item`: cada bullet é uma frase curta com `<span class="split-bullet">•</span>` na frente
-- **Slide 3 (mini-cta)**: SEMPRE o CTA fixo obrigatório (`Quer mais conteúdos como esse? Toca 2 vezes na tela e depois me segue.`), nunca um texto numerado do usuário
-- **Slide 9 (CTA)**: `cta-name` é sempre "Eduardo Rolim"; `cta-text` carrega o texto 17 com `<span class="hl">`; `cta-source` é o texto 18
+- **Mini-cta (quando presente)**: SEMPRE o CTA fixo obrigatório (`Quer mais conteúdos como esse? Toca 2 vezes na tela e depois me segue.`), nunca um texto numerado do usuário
+- **CTA final**: `cta-name` é sempre "Eduardo Rolim"; `cta-text` carrega o penúltimo texto com `<span class="hl">`; `cta-source` é o último texto
 
-**Imagens: 9 imagens geradas** (slide_01.jpg a slide_09.jpg), uma por slide.
+**Imagens: uma por slide gerado** (slide_01.jpg a slide_0N.jpg, N = total real de slides).
 
 ### Passo 2: Gerar Imagens via Gemini API (gemini-2.5-flash-image)
 

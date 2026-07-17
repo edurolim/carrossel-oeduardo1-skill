@@ -333,7 +333,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
     .cta-text .hl { color: #0E9957; }
     .cta-source {
       font-family: 'Inter', sans-serif;
-      font-size: 18px; font-weight: 300; line-height: 1.6;
+      font-size: 24px; font-weight: 300; line-height: 1.6;
       color: rgba(0,0,0,0.55); margin-top: 4px;
     }
   </style>
@@ -535,6 +535,7 @@ Eduardo envia **N textos numerados** (texto 1 a texto N — N é variável, não
 - `split-item`: cada bullet é uma frase curta com `<span class="split-bullet">•</span>` na frente
 - **Mini-cta (quando presente)**: SEMPRE o CTA fixo obrigatório (`Quer mais conteúdos como esse? Toca 2 vezes na tela e depois me segue.`), nunca um texto numerado do usuário
 - **CTA final**: `cta-name` é sempre "Eduardo Rolim"; `cta-text` carrega o penúltimo texto com `<span class="hl">`; `cta-source` é o último texto
+- **Ordem de impacto — OBRIGATÓRIO em qualquer slide com 2+ blocos de texto**: o texto de maior impacto vem sempre ACIMA do texto de menor impacto/complementar. No CTA final isso significa `cta-text` (bold, preto, maior) sempre antes de `cta-source` (leve, cinza, menor) no HTML — nunca inverter essa ordem
 
 **Imagens: uma por slide gerado** (slide_01.jpg a slide_0N.jpg, N = total real de slides).
 

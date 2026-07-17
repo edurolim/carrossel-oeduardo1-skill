@@ -34,7 +34,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 ### Elementos de Design
 - **SEM glassmorphism** — texto direto sobre a imagem na capa
 - **SEM cards flutuantes** na capa — conteúdo direto sobre a foto
-- **Fotos de pessoas reais** como fundo na capa/CTA — geradas via Gemini API (ver Passo 2)
+- **Fotos temáticas** como fundo na capa/CTA, sempre ligadas ao assunto do título (pessoa só quando o tema for humano/comportamental — ver "Diretrizes de prompt") — geradas via Gemini API (ver Passo 2)
 - **Overlay com gradiente**: `linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%)`
 - **Palavras-chave em verde** `#0E9957` no meio da frase para destaque
 - **Texto grande e bold** ocupando a maior parte do slide
@@ -600,9 +600,13 @@ O prompt de cada imagem deve ser construído especificamente para o conteúdo do
 
 **Templates por tipo de slide:**
 
-- **Capa (slide 1)** — deve parar o scroll imediatamente:
-  Rosto dominando 70%+ do frame com expressão extrema + iluminação chiaroscuro.
-  Ex: `"Extreme close-up portrait of a 40-year-old woman, one side of face in complete shadow, single harsh side light catching her eye and jaw, expression of quiet fury mixed with certainty, 35mm film grain, cinematic, photorealistic, no text, no words"`
+- **Capa (slide 1)** — deve parar o scroll imediatamente E ter ligação direta com o tema/título/headline. Retrato de rosto NÃO é obrigatório — escolher o sujeito da imagem baseado no que o título 1 realmente fala:
+  - **Título centrado em comportamento/decisão/emoção humana** → retrato dramático continua válido: rosto dominando 70%+ do frame, expressão extrema, chiaroscuro.
+    Ex: `"Extreme close-up portrait of a 40-year-old woman, one side of face in complete shadow, single harsh side light catching her eye and jaw, expression of quiet fury mixed with certainty, 35mm film grain, cinematic, photorealistic, no text, no words"`
+  - **Título centrado em produto/tecnologia/empresa/dado/evento** → a imagem representa **literalmente o assunto do título**, não um rosto genérico. Ex: título fala de um modelo de IA reconstruído do zero → servidor/infraestrutura sendo desmontada, não uma pessoa aleatória.
+    Ex: `"Close-up of a massive server rack being stripped down to bare components by robotic arms, sparks and cold blue light, moment of demolition and rebuild, cinematic, photorealistic, no text, no words"`
+  - Em qualquer um dos dois casos: manter iluminação dramática, alto contraste, `no text, no words`, `portrait orientation, 4:5 aspect ratio` — a única coisa que muda é o sujeito, não o padrão técnico/fotográfico
+  - **Nunca** usar imagem genérica/decorativa desconectada do título (ex: capa sobre "Google reconstruiu modelo" com foto de pessoa sorrindo aleatória) — o teste é: "alguém que só visse a foto entenderia do que o post fala?"
 
 - **Slides de dado chocante / revelação**:
   Contraste de escala ou perspectiva que choca.

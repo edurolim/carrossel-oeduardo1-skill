@@ -348,8 +348,8 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
     <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Mês Ano ®</span>
   </div>
   <div class="capa-content">
-    <p class="capa-pretitle">[texto 2 — pretitle: frase de contexto/apoio ao título]</p>
     <h1 class="capa-title">[texto 1 — título com <span class="hl">palavra-chave</span> em destaque]</h1>
+    <p class="capa-pretitle">[texto 2 — pretitle: frase de contexto/apoio ao título]</p>
     <div class="capa-btn">[CTA opcional] <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
   </div>
   <div class="progress-bar"><div class="progress-fill" style="width:11.1%"></div></div>
@@ -496,6 +496,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 O conteúdo de cada slide já vem pronto do Eduardo. Sua função é apenas aplicar o estilo visual correto:
 
+- **Ordem de impacto — OBRIGATÓRIO em qualquer slide com 2+ blocos de texto**: o texto de maior impacto vem sempre ACIMA do texto de menor impacto/complementar no HTML (topo visual). Na capa: `capa-title` (grande, Impact) sempre ANTES de `capa-pretitle` (pequeno, contexto) — nunca o pretitle acima do título. No CTA final: `cta-text` (bold, maior) sempre antes de `cta-source` (leve, cinza, menor)
 - Título da capa (`capa-title`): CSS já força `text-transform: uppercase` — digitar o texto em caixa normal, o navegador renderiza maiúsculo automaticamente. Impact, com `<span class="hl">` na palavra-chave
 - `split-title` também é uppercase por CSS (mesma lógica: digitar normal, renderiza maiúsculo)
 - 1-2 palavras em verde `#0E9957` por slide para destaque — identificar as palavras-chave do texto enviado
@@ -534,8 +535,7 @@ Eduardo envia **N textos numerados** (texto 1 a texto N — N é variável, não
 - `*-text`: os demais textos do grupo combinados — desenvolvem o argumento
 - `split-item`: cada bullet é uma frase curta com `<span class="split-bullet">•</span>` na frente
 - **Mini-cta (quando presente)**: SEMPRE o CTA fixo obrigatório (`Quer mais conteúdos como esse? Toca 2 vezes na tela e depois me segue.`), nunca um texto numerado do usuário
-- **CTA final**: `cta-name` é sempre "Eduardo Rolim"; `cta-text` carrega o penúltimo texto com `<span class="hl">`; `cta-source` é o último texto
-- **Ordem de impacto — OBRIGATÓRIO em qualquer slide com 2+ blocos de texto**: o texto de maior impacto vem sempre ACIMA do texto de menor impacto/complementar. No CTA final isso significa `cta-text` (bold, preto, maior) sempre antes de `cta-source` (leve, cinza, menor) no HTML — nunca inverter essa ordem
+- **CTA final**: `cta-name` é sempre "Eduardo Rolim"; `cta-text` carrega o penúltimo texto com `<span class="hl">`; `cta-source` é o último texto (ordem de impacto: ver "Regras de Design do Conteúdo")
 
 **Imagens: uma por slide gerado** (slide_01.jpg a slide_0N.jpg, N = total real de slides).
 

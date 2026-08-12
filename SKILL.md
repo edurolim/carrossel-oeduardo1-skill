@@ -496,6 +496,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 O conteúdo de cada slide já vem pronto do Eduardo. Sua função é apenas aplicar o estilo visual correto:
 
+- **PROIBIDO usar travessão (—) dentro do texto gerado pros slides** (títulos, textos, bullets, CTA, pretitle). Travessão soa robótico/gerado por IA e mata a humanização do texto. Trocar por ponto final, vírgula, dois-pontos, ou reformular a frase em duas orações curtas. Isso vale pra texto criado/parafraseado por quem monta o carrossel — não se aplica a travessão que já vier literal dentro do texto original enviado pelo Eduardo
 - **Ordem de impacto — OBRIGATÓRIO em qualquer slide com 2+ blocos de texto**: o texto de maior impacto vem sempre ACIMA do texto de menor impacto/complementar no HTML (topo visual). Na capa: `capa-title` (grande, Impact) sempre ANTES de `capa-pretitle` (pequeno, contexto) — nunca o pretitle acima do título. No CTA final: `cta-text` (bold, maior) sempre antes de `cta-source` (leve, cinza, menor)
 - Título da capa (`capa-title`): CSS já força `text-transform: uppercase` — digitar o texto em caixa normal, o navegador renderiza maiúsculo automaticamente. Impact, com `<span class="hl">` na palavra-chave
 - `split-title` também é uppercase por CSS (mesma lógica: digitar normal, renderiza maiúsculo)

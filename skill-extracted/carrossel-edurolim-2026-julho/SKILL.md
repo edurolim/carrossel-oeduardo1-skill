@@ -34,7 +34,8 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 ### Elementos de Design
 - **SEM glassmorphism** — texto direto sobre a imagem na capa
 - **SEM cards flutuantes** na capa — conteúdo direto sobre a foto
-- **Fotos temáticas** como fundo na capa/CTA, sempre ligadas ao assunto do título (pessoa só quando o tema for humano/comportamental — ver "Diretrizes de prompt") — geradas via Gemini API (ver Passo 2)
+- **Capa**: fundo branco sólido é o padrão (logo pequeno + título alinhado à esquerda, ver "Layouts dos Slides"). Foto de fundo é opcional, só quando o carrossel pedir algo mais visual/narrativo — nesse caso a foto sempre liga ao assunto do título (pessoa só quando o tema for humano/comportamental — ver "Diretrizes de prompt")
+- **CTA**: sempre fundo branco, sem foto
 - **Overlay com gradiente**: `linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%)`
 - **Palavras-chave em verde** `#0E9957` no meio da frase para destaque
 - **Texto grande e bold** ocupando a maior parte do slide
@@ -48,7 +49,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 | # | Tipo (classe) | Fundo | Conteúdo |
 |---|---|---|---|
-| 1 | `slide-capa` | foto full-bleed + overlay gradiente | pretitle + título Impact + botão CTA opcional |
+| 1 | `slide-capa` | branco sólido (padrão) | logo pequeno (se houver) + título alinhado à esquerda, quebrado em linhas curtas + pretitle colado embaixo |
 | 2 | `slide-split` | 50% texto preto / 50% foto | tag + título + 3 bullets |
 | 3 | `slide-mini-cta` | branco | CTA fixo obrigatório (ver Passo 1) — só entra em carrosséis com 8+ slides |
 | 4 | `slide-tipo-c` | branco | título + fórmula/destaque opcional |
@@ -59,11 +60,9 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 | 9 | `slide-cta` | branco | nome + CTA final + fonte |
 
 **LIMITES DE CARACTERES — OBRIGATÓRIO (evita overflow/corte de texto):**
-- `capa-pretitle`: máx. **110 caracteres** (2-3 linhas em 28px)
-- `capa-title`: máx. **70 caracteres**, sempre **1-2 linhas** (Impact 96px é gigante — texto longo estoura o frame e sobrepõe o botão)
-- `capa-btn`: máx. **3 palavras** (ex: "Entenda o ponto")
+- `capa-title`: sem limite rígido de caracteres, mas **quebrar em frases/palavras curtas com `<br>`, uma por linha** (Impact 76px, alinhado à esquerda — mesma fonte de sempre, só mudou o alinhamento) — cada linha deve ser curta o bastante pra ficar 100% legível de relance. Se o texto 1 vier como frase corrida longa, o trabalho é *quebrar em linhas escaneáveis*, não forçar numa linha só
+- `capa-pretitle`: máx. **140 caracteres** (cola direto embaixo do título, sem respiro grande)
 - `split-title` / `td-title` / `tc-title` / `ta-title`: máx. **90 caracteres**, 2-3 linhas
-- Se o texto 1 (headline) enviado for mais longo que 70 caracteres, **condensar** para caber na capa — nunca forçar o texto completo no `capa-title`
 
 **Acentuação — OBRIGATÓRIO:** todo texto em português deve manter acentuação, cedilha e til corretos (não → nao é erro, decisões → decisoes é erro). Nunca gerar ou aceitar texto sem acentuação.
 
@@ -107,47 +106,36 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
       z-index: 25; opacity: 0.55;
     }
 
-    /* CAPA */
+    /* CAPA — logo pequeno no topo, título alinhado à esquerda, fundo branco (padrão desde ago/2026) */
     .slide-capa {
       width: 1080px; height: 1350px;
       position: relative; overflow: hidden;
-      background: #000; page-break-after: always;
+      background: #ffffff; page-break-after: always;
     }
-    .capa-img {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover; filter: brightness(0.70); z-index: 0;
-    }
-    .capa-overlay {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.08) 35%, rgba(0,0,0,0.45) 62%, rgba(0,0,0,0.72) 100%);
-      z-index: 1;
-    }
+    .slide-capa .top-header { color: rgba(0,0,0,0.40); }
     .capa-content {
-      position: absolute; bottom: 90px; left: 0; right: 0;
-      padding: 0 60px;
-      display: flex; flex-direction: column; align-items: center; text-align: center;
-      gap: 22px; z-index: 10;
+      position: relative;
+      padding: 150px 64px 0;
+      display: flex; flex-direction: column; align-items: flex-start; text-align: left;
+      z-index: 10;
     }
-    .capa-pretitle {
-      font-family: 'Inter', sans-serif;
-      font-size: 28px; font-weight: 800; line-height: 1.45;
-      color: #ffffff; max-width: 860px;
-      text-transform: uppercase; letter-spacing: 0.5px;
+    .capa-logo-small {
+      width: 108px; height: 108px; object-fit: contain;
+      margin-bottom: 30px;
     }
     .capa-title {
       font-family: Impact, 'Arial Narrow', sans-serif;
-      font-size: 96px; font-weight: 400;
-      line-height: 0.96; text-transform: uppercase;
-      color: #ffffff; text-shadow: 3px 3px 12px rgba(0,0,0,0.95);
+      font-size: 76px; font-weight: 400;
+      line-height: 1.0; text-transform: uppercase;
+      color: #0d0d0d;
     }
     .capa-title .hl { color: #0E9957; }
-    .capa-btn {
+    .capa-pretitle {
       font-family: 'Inter', sans-serif;
-      font-size: 20px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1.5px;
-      color: #ffffff; background: #0E9957;
-      padding: 20px 48px; border-radius: 100px; margin-top: 10px;
-      display: flex; align-items: center; gap: 14px;
+      font-size: 24px; font-weight: 700; line-height: 1.5;
+      color: #0E9957; max-width: 780px;
+      text-transform: uppercase; letter-spacing: 0.4px;
+      margin-top: 18px;
     }
 
     /* SPLIT */
@@ -342,15 +330,13 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 <!-- SLIDE 1 — CAPA (textos 1+2) -->
 <div class="slide-capa">
-  <img class="capa-img" src="img/slide_N.jpg" alt="">
-  <div class="capa-overlay"></div>
   <div class="top-header">
     <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Mês Ano ®</span>
   </div>
   <div class="capa-content">
-    <h1 class="capa-title">[texto 1 — título com <span class="hl">palavra-chave</span> em destaque]</h1>
-    <p class="capa-pretitle">[texto 2 — pretitle: frase de contexto/apoio ao título]</p>
-    <div class="capa-btn">[CTA opcional] <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    <img class="capa-logo-small" src="img/logo_N.png" alt="[logo do tema, se houver — omitir a tag inteira se não houver logo relevante]">
+    <h1 class="capa-title">[texto 1 — quebrar em frases curtas com &lt;br&gt;, uma por linha, <span class="hl">2-3 palavras-chave</span> em destaque espalhadas pelas linhas]</h1>
+    <p class="capa-pretitle">[texto 2 — pretitle: frase de contexto/apoio ao título, cola direto embaixo do título]</p>
   </div>
   <div class="progress-bar"><div class="progress-fill" style="width:11.1%"></div></div>
 </div>
@@ -498,7 +484,8 @@ O conteúdo de cada slide já vem pronto do Eduardo. Sua função é apenas apli
 
 - **PROIBIDO usar travessão (—) dentro do texto gerado pros slides** (títulos, textos, bullets, CTA, pretitle). Travessão soa robótico/gerado por IA e mata a humanização do texto. Trocar por ponto final, vírgula, dois-pontos, ou reformular a frase em duas orações curtas. Isso vale pra texto criado/parafraseado por quem monta o carrossel — não se aplica a travessão que já vier literal dentro do texto original enviado pelo Eduardo
 - **Ordem de impacto — OBRIGATÓRIO em qualquer slide com 2+ blocos de texto**: o texto de maior impacto vem sempre ACIMA do texto de menor impacto/complementar no HTML (topo visual). Na capa: `capa-title` (grande, Impact) sempre ANTES de `capa-pretitle` (pequeno, contexto) — nunca o pretitle acima do título. No CTA final: `cta-text` (bold, maior) sempre antes de `cta-source` (leve, cinza, menor)
-- Título da capa (`capa-title`): CSS já força `text-transform: uppercase` — digitar o texto em caixa normal, o navegador renderiza maiúsculo automaticamente. Impact, com `<span class="hl">` na palavra-chave
+- Título da capa (`capa-title`): CSS já força `text-transform: uppercase` — digitar o texto em caixa normal, o navegador renderiza maiúsculo automaticamente. Impact (mesma fonte de sempre), alinhado à esquerda, quebrado em linhas curtas com `<br>`, com `<span class="hl">` em 2-3 palavras-chave espalhadas pelas linhas (verde `#0E9957`, cor de marca — nunca usar a cor de outra marca/produto mesmo se o tema for sobre ela)
+- Logo no topo da capa (`capa-logo-small`, 108px): incluir só quando o carrossel tem ligação direta com uma marca/produto específico (ex: carrossel sobre Claude usa o logo do Claude). Sem logo relevante, omitir a tag — não forçar um logo genérico
 - `split-title` também é uppercase por CSS (mesma lógica: digitar normal, renderiza maiúsculo)
 - 1-2 palavras em verde `#0E9957` por slide para destaque — identificar as palavras-chave do texto enviado
 - `tc-title`/`ta-title`/`td-title`/`cta-text`/`cta-name`: capitalize natural, Inter, SEM uppercase — não forçar caixa alta nesses

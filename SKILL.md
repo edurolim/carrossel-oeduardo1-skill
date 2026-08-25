@@ -49,7 +49,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 | # | Tipo (classe) | Fundo | Conteúdo |
 |---|---|---|---|
-| 1 | `slide-capa` | branco sólido (padrão) | logo pequeno (se houver) + título alinhado à esquerda, quebrado em linhas curtas + pretitle colado embaixo |
+| 1 | `slide-capa` | branco sólido (padrão) | logo (se houver) + título (número + ferramenta/tema) + linha de atrito + CTA com a palavra do gate — ver "4 elementos obrigatórios da capa" |
 | 2 | `slide-split` | 50% texto preto / 50% foto | tag + título + 3 bullets |
 | 3 | `slide-mini-cta` | branco | CTA fixo obrigatório (ver Passo 1) — só entra em carrosséis com 8+ slides |
 | 4 | `slide-tipo-c` | branco | título + fórmula/destaque opcional |
@@ -62,7 +62,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 **LIMITES DE CARACTERES — OBRIGATÓRIO (evita overflow/corte de texto):**
 - `capa-title`: sem limite rígido de caracteres, mas **quebrar em frases/palavras curtas com `<br>`, uma por linha** (Impact **104px**, grande o bastante pra dominar a tela, alinhado à esquerda — mesma fonte de sempre, só mudou alinhamento e tamanho) — cada linha deve ser curta o bastante pra ficar 100% legível de relance. Se o texto 1 vier como frase corrida longa, o trabalho é *quebrar em linhas escaneáveis*, não forçar numa linha só
 - **Bloco inteiro da capa (logo + título + pretitle) é centralizado verticalmente no frame de 1350px** (`.capa-content` com `justify-content: center`, não ancorado no topo nem embaixo) — nunca deixar sobrando um bloco grande de espaço vazio abaixo do texto
-- `capa-pretitle`: máx. **140 caracteres** (cola direto embaixo do título, sem respiro grande)
+- `capa-friction`: máx. **60 caracteres** (linha curta entre parênteses, cola direto embaixo do título)
 - `split-title` / `td-title` / `tc-title` / `ta-title`: máx. **90 caracteres**, 2-3 linhas
 
 **Acentuação — OBRIGATÓRIO:** todo texto em português deve manter acentuação, cedilha e til corretos (não → nao é erro, decisões → decisoes é erro). Nunca gerar ou aceitar texto sem acentuação.
@@ -72,6 +72,26 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 - `.progress-bar`: barra fixa no rodapé, `.progress-fill` verde `#0E9957` crescendo por slide: `(número do slide ÷ total de slides) × 100%` — ex. num carrossel de 7, o slide 3 mostra 42.8%, não um valor fixo de tabela
 - `.slide-arrow`: seta de continuidade no canto inferior direito (exceto capa e CTA final)
 - Destaque de palavra-chave sempre com `<span class="hl">`, cor `#0E9957`
+
+---
+
+## 4 elementos obrigatórios da capa — REGRA GERAL, TODA CAPA
+
+Toda capa de carrossel precisa ter os 4 elementos abaixo. Sem um deles, a capa não para o scroll.
+
+1. **NÚMERO como primeira palavra do título** (`capa-title`) — ex: "5 SKILLS...", "3 ERROS...", "10 HORAS...". Número seco é mais forte que "mais de X" — nunca usar "mais de" antes do número se o valor exato já é impactante sozinho
+2. **NOME DA FERRAMENTA/TEMA** dentro do título — deixa claro do que se trata antes mesmo da linha de atrito
+3. **Linha de atrito** (`capa-friction`, entre parênteses, direto embaixo do título, preto, corpo médio — maior que o CTA, menor que o título) — cria a tensão que faz a pessoa continuar. Benefício puro, sem atrito, NÃO é linha de atrito. Tipos válidos:
+   - **Acesso proibido/secreto**: "que quase ninguém ativou", "que deveriam ser proibidas"
+   - **Grátis quando deveria ser pago**
+   - **Contra a ferramenta querida**: desafia algo que o público já ama/confia
+   - **Substituição de trabalho humano**
+   - **Tempo ou desempenho absurdo**
+4. **CTA com a palavra do gate em destaque** (`capa-btn`, pill verde, embaixo da linha de atrito) — a palavra exata que a pessoa vai comentar, sempre entre aspas (ex: `Comenta "PALAVRA"`)
+
+**Se a capa faz uma promessa numérica quantificável** (ex: "10 horas", "3x mais rápido"), o **slide 2** deve provar de onde vem esse número — lista curta tipo recibo (`hours-list`/`hours-row`, ver Template HTML Base) com cada parte + total batendo com o número da capa. Sem essa prova, o número vira promessa vazia e o comentário que a capa gera é "prova?" em vez da palavra do gate.
+
+**Gate repetido no meio**: em carrosséis com CTA de comentário (gate word) e 7+ slides, repetir a palavra do gate num slide do meio (por volta do slide 5 ou 6, dentro de um `gate-reminder` — pill verde igual ao `capa-btn`, inserido no conteúdo do slide sem atrapalhar o texto principal). Quem sai do carrossel antes do fim precisa ter visto a palavra pelo menos duas vezes.
 
 ---
 
@@ -131,13 +151,42 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
       color: #0d0d0d;
     }
     .capa-title .hl { color: #0E9957; }
-    .capa-pretitle {
+    .capa-friction {
       font-family: 'Inter', sans-serif;
-      font-size: 28px; font-weight: 700; line-height: 1.5;
-      color: #0E9957; max-width: 820px;
-      text-transform: uppercase; letter-spacing: 0.4px;
-      margin-top: 26px;
+      font-size: 34px; font-weight: 800; line-height: 1.4;
+      color: #0d0d0d; max-width: 820px;
+      margin-top: 22px;
     }
+    .capa-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: #ffffff; background: #0E9957;
+      padding: 18px 40px; border-radius: 100px; margin-top: 30px;
+      display: inline-flex; align-items: center;
+    }
+    .gate-reminder {
+      display: inline-flex; align-items: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 18px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: #ffffff; background: #0E9957;
+      padding: 14px 26px; border-radius: 100px; margin-top: 24px;
+    }
+    .hours-list { display: flex; flex-direction: column; }
+    .hours-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.10);
+      font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 600;
+      color: #0d0d0d;
+    }
+    .hours-row .hours-value { color: #0E9957; font-weight: 800; }
+    .hours-row.total {
+      border-bottom: none; border-top: 2px solid #0d0d0d;
+      margin-top: 6px; padding-top: 22px;
+      font-size: 32px; font-weight: 800;
+    }
+    .hours-row.total .hours-value { font-size: 34px; }
 
     /* SPLIT */
     .slide-split {
@@ -315,15 +364,19 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
       font-family: 'Playfair Display', serif;
       font-size: 72px; font-weight: 400; color: #0f0f0f; line-height: 1;
     }
-    .cta-text {
+    .cta-gate {
       font-family: 'Inter', sans-serif;
-      font-size: 30px; font-weight: 700; line-height: 1.45; color: #0f0f0f;
+      font-size: 56px; font-weight: 800; line-height: 1.1; color: #0E9957;
     }
-    .cta-text .hl { color: #0E9957; }
+    .cta-detail {
+      font-family: 'Inter', sans-serif;
+      font-size: 26px; font-weight: 400; line-height: 1.5; color: #0d0d0d;
+      margin-top: 14px; max-width: 700px;
+    }
     .cta-source {
       font-family: 'Inter', sans-serif;
-      font-size: 24px; font-weight: 300; line-height: 1.6;
-      color: rgba(0,0,0,0.55); margin-top: 4px;
+      font-size: 20px; font-weight: 300; line-height: 1.6;
+      color: rgba(0,0,0,0.50); margin-top: 24px;
     }
   </style>
 </head>
@@ -335,9 +388,10 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
     <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Mês Ano ®</span>
   </div>
   <div class="capa-content">
-    <img class="capa-logo-small" src="img/logo_N.png" alt="[logo do tema, se houver — omitir a tag inteira se não houver logo relevante]">
-    <h1 class="capa-title">[texto 1 — quebrar em frases curtas com &lt;br&gt;, uma por linha, <span class="hl">2-3 palavras-chave</span> em destaque espalhadas pelas linhas]</h1>
-    <p class="capa-pretitle">[texto 2 — pretitle: frase de contexto/apoio ao título, cola direto embaixo do título]</p>
+    <img class="capa-logo-small" src="img/logo_N.png" alt="[logo do tema/ferramenta, se houver — omitir a tag inteira se não houver logo relevante]">
+    <h1 class="capa-title">[NÚMERO como primeira palavra + NOME DA FERRAMENTA/TEMA — quebrar em frases curtas com &lt;br&gt;, uma por linha, <span class="hl">2-3 palavras-chave</span> em destaque espalhadas pelas linhas]</h1>
+    <p class="capa-friction">[linha de atrito entre parênteses — ver "4 elementos obrigatórios da capa"]</p>
+    <div class="capa-btn">[CTA curto com a palavra do gate, ex: Comenta "PALAVRA"]</div>
   </div>
   <div class="progress-bar"><div class="progress-fill" style="width:11.1%"></div></div>
 </div>
@@ -466,8 +520,9 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
   <div class="cta-body">
     <div class="cta-inner">
       <span class="cta-name">Eduardo Rolim</span>
-      <p class="cta-text"><span class="hl">[texto 17 — CTA final]</span></p>
-      <p class="cta-source">[texto 18 — fonte/gancho de fechamento]</p>
+      <p class="cta-gate">[palavra do gate em destaque — ex: Comenta "PALAVRA"]</p>
+      <p class="cta-detail">[complemento do CTA — o que a pessoa recebe/o que acontece depois]</p>
+      <p class="cta-source">[texto 18 — fonte/gancho de fechamento, opcional]</p>
     </div>
   </div>
   <div class="progress-bar" style="background:rgba(0,0,0,0.08);"><div class="progress-fill" style="width:100%"></div></div>
@@ -484,12 +539,12 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 O conteúdo de cada slide já vem pronto do Eduardo. Sua função é apenas aplicar o estilo visual correto:
 
 - **PROIBIDO usar travessão (—) dentro do texto gerado pros slides** (títulos, textos, bullets, CTA, pretitle). Travessão soa robótico/gerado por IA e mata a humanização do texto. Trocar por ponto final, vírgula, dois-pontos, ou reformular a frase em duas orações curtas. Isso vale pra texto criado/parafraseado por quem monta o carrossel — não se aplica a travessão que já vier literal dentro do texto original enviado pelo Eduardo
-- **Ordem de impacto — OBRIGATÓRIO em qualquer slide com 2+ blocos de texto**: o texto de maior impacto vem sempre ACIMA do texto de menor impacto/complementar no HTML (topo visual). Na capa: `capa-title` (grande, Impact) sempre ANTES de `capa-pretitle` (pequeno, contexto) — nunca o pretitle acima do título. No CTA final: `cta-text` (bold, maior) sempre antes de `cta-source` (leve, cinza, menor)
+- **Ordem de impacto — OBRIGATÓRIO em qualquer slide com 2+ blocos de texto**: o texto de maior impacto vem sempre ACIMA do texto de menor impacto/complementar no HTML (topo visual). Na capa: `capa-title` (grande, Impact) sempre ANTES de `capa-friction` (linha de atrito, menor) — nunca a linha de atrito acima do título. No CTA final: `cta-gate` (a palavra do gate, grande e verde) sempre antes de `cta-detail`/`cta-source` (menores)
 - Título da capa (`capa-title`): CSS já força `text-transform: uppercase` — digitar o texto em caixa normal, o navegador renderiza maiúsculo automaticamente. Impact (mesma fonte de sempre), alinhado à esquerda, quebrado em linhas curtas com `<br>`, com `<span class="hl">` em 2-3 palavras-chave espalhadas pelas linhas (verde `#0E9957`, cor de marca — nunca usar a cor de outra marca/produto mesmo se o tema for sobre ela)
 - Logo no topo da capa (`capa-logo-small`, 130px): incluir só quando o carrossel tem ligação direta com uma marca/produto específico (ex: carrossel sobre Claude usa o logo do Claude). Sem logo relevante, omitir a tag — não forçar um logo genérico
 - `split-title` também é uppercase por CSS (mesma lógica: digitar normal, renderiza maiúsculo)
 - 1-2 palavras em verde `#0E9957` por slide para destaque — identificar as palavras-chave do texto enviado
-- `tc-title`/`ta-title`/`td-title`/`cta-text`/`cta-name`: capitalize natural, Inter, SEM uppercase — não forçar caixa alta nesses
+- `tc-title`/`ta-title`/`td-title`/`cta-gate`/`cta-detail`/`cta-name`: capitalize natural, Inter, SEM uppercase — não forçar caixa alta nesses
 - Cada slide com foto deve ter uma **foto diferente**
 - `slide-tipo-d` (fundo foto full-bleed) é o slide de maior impacto — reservar para a frase-martelo mais forte do bloco
 - Nunca usar o template genérico antigo (`.slide`/`.slide-editorial`) — sempre as 7 classes fixas da seção "Layouts dos Slides"
@@ -506,8 +561,8 @@ Eduardo envia **N textos numerados** (texto 1 a texto N — N é variável, não
 
 #### Algoritmo de distribuição (qualquer quantidade de texto):
 
-1. **Slide 1 = sempre CAPA** (`slide-capa`): texto 1 → `capa-title`; texto 2 → `capa-pretitle`
-2. **Último slide = sempre CTA** (`slide-cta`): penúltimo texto → `cta-text`; último texto → `cta-source`
+1. **Slide 1 = sempre CAPA** (`slide-capa`): texto 1 → `capa-title` (número + ferramenta/tema); texto 2 → `capa-friction` (linha de atrito, ver "4 elementos obrigatórios da capa"); `capa-btn` sempre presente com a palavra do gate
+2. **Último slide = sempre CTA** (`slide-cta`): penúltimo texto → `cta-gate` (a palavra do gate, isolada e em destaque) + `cta-detail` (complemento); último texto → `cta-source`
 3. **MINI-CTA** (`slide-mini-cta`, fixo, não consome texto do usuário): incluir **somente se o total de slides for 8 ou mais**. Carrosséis de 7 slides ou menos pulam esse slide — vai direto de capa pro primeiro slide de conteúdo.
 4. **Slides do meio**: todo texto que sobrar entre a capa e o CTA (descontando os 2 já usados em cada) é distribuído nos slides de conteúdo, ciclando pelos 4 tipos "variados" **nesta ordem fixa, repetindo do início se precisar de mais**: `slide-split → slide-tipo-c → slide-tipo-a → slide-tipo-d`
 5. Cada slide do meio recebe **1 a 3 textos**: o mais curto e impactante vira `*-title`, o(s) resto vira(m) `*-text` (ou `split-item`s no caso do split). Distribuir o texto restante o mais equilibrado possível entre os slides do meio definidos — não empilhar tudo num slide só e deixar outro vazio.
@@ -524,7 +579,7 @@ Eduardo envia **N textos numerados** (texto 1 a texto N — N é variável, não
 - `*-text`: os demais textos do grupo combinados — desenvolvem o argumento
 - `split-item`: cada bullet é uma frase curta com `<span class="split-bullet">•</span>` na frente
 - **Mini-cta (quando presente)**: SEMPRE o CTA fixo obrigatório (`Quer mais conteúdos como esse? Toca 2 vezes na tela e depois me segue.`), nunca um texto numerado do usuário
-- **CTA final**: `cta-name` é sempre "Eduardo Rolim"; `cta-text` carrega o penúltimo texto com `<span class="hl">`; `cta-source` é o último texto (ordem de impacto: ver "Regras de Design do Conteúdo")
+- **CTA final**: `cta-name` é sempre "Eduardo Rolim"; `cta-gate` carrega a palavra do gate isolada (ex: `Comenta "PALAVRA"`), verde, grande; `cta-detail` complementa em corpo normal; `cta-source` é opcional (ordem de impacto: ver "Regras de Design do Conteúdo")
 
 **Imagens: uma por slide gerado** (slide_01.jpg a slide_0N.jpg, N = total real de slides).
 

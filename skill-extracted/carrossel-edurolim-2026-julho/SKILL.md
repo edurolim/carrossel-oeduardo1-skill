@@ -119,6 +119,8 @@ Categoria **Educativo** do Passo 0. Estrutura hook → contexto → itens → re
 
 **`slide-branco`** — de cima pra baixo: cabeçalho → **título Impact VERDE no topo** → **imagem no centro** (470px) → régua preta 2px → texto preto.
 
+**Quebra de linha nos títulos de slide interno — só quando necessário.** Diferente da capa (onde a quebra em linhas curtas é proposital), aqui o título fica em **1 linha por padrão**: ocupando a largura toda ele tem mais impacto e lê mais rápido. Só usar `<br>` quando o texto realmente não couber. A largura útil é **992px** (1080 menos os 44px de padding de cada lado) em Impact 76px — na prática, títulos até ~26 caracteres cabem em uma linha. Na dúvida, medir antes de quebrar em vez de quebrar por precaução.
+
 **Regras de conteúdo dos slides de item:**
 - Um item por slide, sempre
 - 1 a 2 parágrafos curtos por slide, em tom de conversa. `<strong>` só no que é informação dura (o formato do entregável, o número, o diferencial) — nunca a frase inteira em bold

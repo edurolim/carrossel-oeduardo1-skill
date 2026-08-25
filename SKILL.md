@@ -70,9 +70,11 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 ---
 
-## 7 elementos obrigatórios da capa — REGRA GERAL, TODA CAPA
+## 7 elementos obrigatórios da capa — CAPA SOBRE FUNDO BRANCO
 
-Toda capa de carrossel precisa ter os 7 elementos abaixo, **nesta ordem vertical**. Sem eles, a capa não para o scroll. **A capa nunca pode ser 100% texto** — precisa de pelo menos um elemento figurativo (asterisco grande de fundo, print de tela, ou foto recortada).
+**Escopo**: vale pra capa do Template Educativo e de qualquer categoria que use capa em fundo branco. A capa do **Template Notícia é a exceção** — ela é foto full-bleed com título centralizado na base, e segue as regras da própria seção, não estas.
+
+A capa branca precisa ter os 7 elementos abaixo, **nesta ordem vertical**. Sem eles, a capa não para o scroll. **A capa nunca pode ser 100% texto** — precisa de pelo menos um elemento figurativo (asterisco grande de fundo, print de tela, ou foto recortada).
 
 1. **Cabeçalho fino** (`.top-header`, já padrão em todo slide): `Eduardo Rolim · @oeduardo.1 · Mês Ano ®`
 2. **Elemento gráfico grande ao fundo** (`capa-bg-asterisk`): o asterisco/logo da marca no canto (~480px), **opacidade alta (~0.9)** — precisa ser bem visível, não um watermark apagado — posicionado no espaço vazio da capa (ex: canto superior direito), **sem encostar nas palavras do título**. É o elemento figurativo obrigatório quando não há foto/print maior
@@ -136,6 +138,32 @@ Categoria **Educativo** do Passo 0. Estrutura hook → contexto → itens → re
 
 ---
 
+## Template NOTÍCIA — fato recente, notícia quente, movimento de empresa
+
+Categoria **Notícia viral** do Passo 0. É o oposto do educativo: **não tem título de slide**. O texto grande em bold É o conteúdo, e a imagem entra no meio dele como prova jornalística.
+
+**Estrutura de cada slide interno: texto → imagem → texto** (sanduíche). O primeiro bloco de texto entrega o fato, a imagem prova, o segundo bloco vira a chave pro próximo slide. Nunca começar um slide interno com imagem.
+
+| # | Classe | Estrutura |
+|---|---|---|
+| 1 | `n-capa` | foto full-bleed + título gigante Impact centralizado na base + assinatura com handle |
+| 2..N-1 | `n-branco` / `n-escuro` alternando | texto → imagem → texto |
+| N | `n-cta` | frase de fechamento + pergunta que puxa comentário |
+
+**`n-capa`** — foto ocupa o frame inteiro (sem margem), overlay em gradiente escurecendo de cima pra baixo pro texto ler. Título Impact 88px, caixa alta, **centralizado**, com 2-4 palavras em `hl` (verde claro). Embaixo, a assinatura: ícone + `@oeduardo.1` + selo verificado. É a única capa do sistema que é centralizada e sobre foto — as outras categorias usam texto à esquerda sobre branco.
+
+**`n-branco`** — texto Inter **800, 38px**, quase preto, `letter-spacing: -0.4px`. Destaque inline em `hl` verde.
+
+**`n-escuro`** (fundo `#0d0d0d`) — é o slide de respiro do carrossel, e usa **variação tipográfica**: o parágrafo principal vai em **Playfair Display 50px** (`n-serif`), não em Inter. Abaixo, um bloco `n-sub` em Inter 700 verde-claro com os dados duros (números, nomes, cifras). Essa troca de serifada no meio de um carrossel sem serifa é o que dá cara de veículo de imprensa.
+
+**Contraste no escuro**: o verde da marca `#0E9957` não tem contraste suficiente em fundo preto. Existe um token `--verde-claro: #2FD37E` — mesma cor ajustada — usado **só** nos slides escuros. Em fundo branco, sempre o `--verde` normal.
+
+**Imagens** — fotojornalísticas, `border-radius: 8px`, altura fixa 430px com `object-fit: cover`. Diferente do educativo, aqui nunca é mockup de UI: é foto de cena real. Quando a resposta do Passo 0 for "prints", este template é o menos indicado — avisar Eduardo.
+
+**Sem contador de itens e sem page-count** — notícia não é lista, não tem "quanto falta". O cabeçalho mantém os 3 slots fixos (`EDUARDO ROLIM · @OEDUARDO.1 · INTELIGÊNCIA ARTIFICIAL`) em todos os slides.
+
+**`n-cta`** — sem pill, sem gate word obrigatório: notícia converte por **pergunta**, não por palavra-chave. Handle grande em Playfair + frase de fechamento em verde + a pergunta que puxa o comentário.
+
 ## Template HTML Base
 
 ```html
@@ -155,6 +183,8 @@ Categoria **Educativo** do Passo 0. Estrutura hook → contexto → itens → re
       --verde-fundo: #1A6047;   /* fundo dos slides verdes */
       --preto: #0d0d0d;
       --laranja-claude: #D97757;
+      /* verde da marca nao contrasta em fundo preto: mesma cor ajustada, so pros slides escuros do Template Noticia */
+      --verde-claro: #2FD37E;
     }
 
     /* destaque universal — regra GLOBAL, vale em qualquer slide */
@@ -543,6 +573,99 @@ Categoria **Educativo** do Passo 0. Estrutura hook → contexto → itens → re
       color: #ffffff; background: #0E9957;
       padding: 20px 44px; border-radius: 100px; margin-top: 34px;
     }
+
+    /* ============ TEMPLATE NOTÍCIA ============ */
+    /* CAPA de noticia — foto full-bleed + titulo centralizado na base */
+    .n-capa {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      background: var(--preto); page-break-after: always;
+    }
+    .n-capa-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .n-capa-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(180deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.18) 32%,
+        rgba(0,0,0,0.62) 62%, rgba(0,0,0,0.88) 100%);
+    }
+    .n-capa .top-header, .n-escuro .top-header { color: rgba(255,255,255,0.68); }
+    .n-capa-content {
+      position: absolute; left: 0; right: 0; bottom: 128px;
+      padding: 0 52px; z-index: 10; text-align: center;
+    }
+    .n-capa-title {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 88px; line-height: 0.98; font-weight: 400;
+      text-transform: uppercase; color: #ffffff;
+      text-shadow: 2px 3px 14px rgba(0,0,0,0.7);
+    }
+    .n-capa-title .hl { color: var(--verde-claro); }
+    .n-capa-footer {
+      position: absolute; left: 0; right: 0; bottom: 44px; z-index: 10;
+      display: flex; align-items: center; justify-content: center; gap: 11px;
+      font-family: 'Inter', sans-serif; font-size: 23px; font-weight: 700; color: #ffffff;
+    }
+    .n-capa-footer .mark {
+      width: 34px; height: 34px; border-radius: 50%; background: var(--verde);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .n-capa-footer .mark svg { width: 19px; height: 19px; fill: #fff; }
+    .n-capa-footer .check { width: 24px; height: 24px; flex-shrink: 0; }
+
+    /* SLIDE BRANCO de noticia — texto -> imagem -> texto */
+    .n-branco {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      background: #ffffff; page-break-after: always;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 104px 52px 96px;
+    }
+    .n-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 38px; font-weight: 800; line-height: 1.26;
+      color: var(--preto); letter-spacing: -0.4px;
+    }
+    .n-text .hl { color: var(--verde); }
+    .n-img { width: 100%; border-radius: 8px; overflow: hidden; margin: 34px 0; flex-shrink: 0; }
+    .n-img img { width: 100%; height: 430px; object-fit: cover; display: block; }
+
+    /* SLIDE ESCURO de noticia — variacao tipografica (serifada) */
+    .n-escuro {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      background: var(--preto); page-break-after: always;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 104px 52px 96px;
+    }
+    .n-serif {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 50px; font-weight: 400; line-height: 1.22; color: #ffffff;
+    }
+    .n-serif .hl { color: var(--verde-claro); font-weight: 500; }
+    .n-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 30px; font-weight: 700; line-height: 1.42;
+      color: var(--verde-claro); margin-top: 30px;
+    }
+    .n-escuro .n-text { color: #ffffff; }
+    .n-escuro .n-text .hl { color: var(--verde-claro); }
+
+    /* CTA de noticia — converte por pergunta, sem pill e sem gate word */
+    .n-cta {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      background: #ffffff; page-break-after: always;
+      display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+      padding: 0 60px;
+    }
+    .n-cta-handle {
+      font-family: 'Playfair Display', serif;
+      font-size: 78px; font-weight: 400; color: var(--preto); line-height: 1;
+    }
+    .n-cta-gate {
+      font-family: 'Inter', sans-serif;
+      font-size: 56px; font-weight: 800; color: var(--verde); line-height: 1.1; margin-top: 22px;
+    }
+    .n-cta-detail {
+      font-family: 'Inter', sans-serif;
+      font-size: 28px; font-weight: 400; line-height: 1.45;
+      color: var(--preto); margin-top: 16px; max-width: 760px;
+    }
   </style>
 </head>
 <body>
@@ -767,6 +890,53 @@ Categoria **Educativo** do Passo 0. Estrutura hook → contexto → itens → re
   </div>
 </div>
 
+<!-- ===== TEMPLATE NOTÍCIA — exemplos ===== -->
+
+<!-- CAPA de noticia: foto full-bleed + titulo centralizado na base -->
+<div class="n-capa">
+  <img class="n-capa-img" src="img/slide_01.jpg" alt="">
+  <div class="n-capa-overlay"></div>
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span>
+  </div>
+  <div class="n-capa-content">
+    <h1 class="n-capa-title">[fato em uma frase, com <span class="hl">2-4 palavras em destaque</span>]</h1>
+  </div>
+  <div class="n-capa-footer">
+    <span class="mark">[svg instagram]</span><span>@oeduardo.1</span><svg class="check">[selo verificado]</svg>
+  </div>
+</div>
+
+<!-- SLIDE BRANCO de noticia: texto -> imagem -> texto -->
+<div class="n-branco">
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span>
+  </div>
+  <p class="n-text">[o fato, com <span class="hl">o essencial em destaque</span>]</p>
+  <div class="n-img"><img src="img/NOME.jpg" alt=""></div>
+  <p class="n-text">[o desdobramento, que puxa o proximo slide]</p>
+</div>
+
+<!-- SLIDE ESCURO de noticia: serifada + dados duros + imagem -->
+<div class="n-escuro">
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span>
+  </div>
+  <p class="n-serif">[paragrafo de respiro em Playfair, com <span class="hl">o ponto de virada em destaque</span>]</p>
+  <p class="n-sub">[os dados duros: numeros, nomes, cifras]</p>
+  <div class="n-img"><img src="img/NOME.jpg" alt=""></div>
+</div>
+
+<!-- CTA de noticia: converte por pergunta -->
+<div class="n-cta">
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span>
+  </div>
+  <span class="n-cta-handle">@oeduardo.1</span>
+  <p class="n-cta-gate">[frase de fechamento, a tese]</p>
+  <p class="n-cta-detail">[a pergunta que puxa o comentario]</p>
+</div>
+
 </body>
 </html>
 ```
@@ -804,7 +974,7 @@ Usar `AskUserQuestion` com as 5 opções:
 | **Opinião** | Posicionamento/tese do Eduardo sobre um tema | *a definir* |
 | **Cultura** | Comportamento, tendência, leitura de mercado | *a definir* |
 | **Case** | História real de um cliente/experimento, com antes e depois | *a definir* |
-| **Notícia viral** | Fato recente, notícia quente, movimento de empresa | Padrão narrativo (ver "Layouts dos Slides") |
+| **Notícia viral** | Fato recente, notícia quente, movimento de empresa | Template Notícia (ver seção própria) |
 
 Cada categoria tem um padrão visual/estrutural próprio. Enquanto uma categoria estiver marcada como *a definir*, perguntar a Eduardo qual template usar em vez de escolher por conta própria.
 

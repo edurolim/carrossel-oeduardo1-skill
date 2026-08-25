@@ -166,6 +166,32 @@ Serve a **duas categorias** do Passo 0: **Notícia viral** (fato recente, movime
 
 **`n-cta`** — sem pill, sem gate word obrigatório: notícia converte por **pergunta**, não por palavra-chave. Handle grande em Playfair + frase de fechamento em verde + a pergunta que puxa o comentário.
 
+## Template OPINIÃO — tese contrarian
+
+Categoria **Opinião** do Passo 0. Não informa nem ensina: **defende uma tese**. A espinha é sempre a mesma, e é ela que faz o formato funcionar:
+
+**declaração controversa → pista de que algo mudou → provas em contraste → punchline → insight que fecha**
+
+| # | Classe | Papel na narrativa |
+|---|---|---|
+| 1 | `o-capa` | **Declaração controversa** em cor sólida: a frase que faz parar o scroll por discordância |
+| 2 | `o-branco` | **Pista**: o que mudou, ainda sem entregar a tese |
+| 3 a N-4 | `o-contraste` | **Contexto/prova**: bloco repetido "você podia X / OU / Y" |
+| N-3 | `o-escuro` | **"Você entendeu o ponto"**: fecha o bloco de provas |
+| N-2 | `o-punchline` | **Setup da virada**: concede o argumento do outro lado, depois vira |
+| N-1 | `o-comparacao` | Duas colunas lado a lado, a segunda em destaque |
+| N | `o-insight` | **A tese**, na MESMA cor da capa |
+
+**Capa e insight na mesma cor sólida** (`--verde`, sem foto de fundo): é o *bookend* do formato. Abre com a provocação, fecha com a resposta, e a repetição da cor amarra as duas pontas. Título Impact 150px na capa, 96px no insight, ambos brancos.
+
+**`o-contraste` — o bloco que se repete** (3 a 4 vezes): frase do jeito antigo em preto (`o-antes`) → badge preto `OU` (`o-ou`) → frase do jeito novo com o ganho em verde (`o-depois`). A repetição literal da estrutura é o que constrói o argumento por acúmulo. **Não variar a fórmula entre os slides** — a monotonia aqui é proposital.
+
+**`o-punchline` — a regra que faz a opinião não soar arrogante**: primeiro CONCEDE o ponto do outro lado com sinceridade ("e eu não culpo quem faz assim, é mais rápido e honestamente melhor que a maioria"), só DEPOIS vira, com a virada em Impact verde. Sem a concessão, o carrossel vira sermão e perde o leitor que discorda — que é justamente quem comenta.
+
+**`o-comparacao`** — duas colunas com imagem, label e 3 linhas cada. A coluna da direita leva `.destaque` (label verde, texto mais forte). As duas primeiras linhas de cada coluna devem ser **quase idênticas**: o contraste tem que estar só na última linha, que é onde mora a tese.
+
+**Sem gate word e sem pill.** Opinião converte por concordância e compartilhamento, não por comentário de palavra-chave. O fechamento é a própria tese + handle.
+
 ## Template HTML Base
 
 ```html
@@ -668,6 +694,135 @@ Serve a **duas categorias** do Passo 0: **Notícia viral** (fato recente, movime
       font-size: 28px; font-weight: 400; line-height: 1.45;
       color: var(--preto); margin-top: 16px; max-width: 760px;
     }
+
+    /* ============ TEMPLATE OPINIÃO ============ */
+    .o-capa .top-header, .o-escuro .top-header, .o-insight .top-header { color: rgba(255,255,255,0.72); }
+
+    /* CAPA — declaracao controversa em cor solida (mesma cor do insight final) */
+    .o-capa {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      background: var(--verde); page-break-after: always;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      padding: 104px 56px 56px;
+    }
+    .o-capa-title {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 150px; line-height: 0.9; font-weight: 400;
+      text-transform: uppercase; color: #ffffff; letter-spacing: -1px;
+    }
+    .o-capa-img { flex: 1; margin-top: 34px; border-radius: 10px; overflow: hidden; min-height: 0; }
+    .o-capa-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* SLIDE BRANCO de opiniao (pista / "voce entendeu o ponto") */
+    .o-branco {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      background: #ffffff; page-break-after: always;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 104px 56px 96px;
+    }
+    .o-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 40px; font-weight: 800; line-height: 1.24;
+      color: var(--preto); letter-spacing: -0.4px;
+    }
+    .o-text .hl { color: var(--verde); }
+    .o-img { width: 100%; border-radius: 8px; overflow: hidden; margin: 36px 0; flex-shrink: 0; }
+    .o-img img { width: 100%; height: 440px; object-fit: cover; display: block; }
+
+    /* CONTRASTE — bloco repetido "voce podia X / OU / Y" */
+    .o-contraste {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      background: #ffffff; page-break-after: always;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 104px 56px 96px;
+    }
+    .o-antes {
+      font-family: 'Inter', sans-serif; font-size: 52px; font-weight: 800;
+      line-height: 1.16; color: var(--preto); letter-spacing: -0.6px;
+    }
+    .o-ou {
+      display: inline-flex; align-self: flex-start; align-items: center;
+      font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: #ffffff; background: var(--preto);
+      padding: 12px 26px; border-radius: 6px; margin: 40px 0;
+    }
+    .o-depois {
+      font-family: 'Inter', sans-serif; font-size: 52px; font-weight: 800;
+      line-height: 1.16; color: var(--verde); letter-spacing: -0.6px;
+    }
+    .o-depois .neutro { color: var(--preto); }
+
+    /* ESCURO de opiniao */
+    .o-escuro {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      background: var(--preto); page-break-after: always;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 104px 56px 96px;
+    }
+    .o-escuro .o-text { color: #ffffff; }
+    .o-escuro .o-text .hl { color: var(--verde-claro); }
+
+    /* PUNCHLINE — concede o ponto do outro lado, depois vira */
+    .o-punchline {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      background: #ffffff; page-break-after: always;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 104px 56px 96px;
+    }
+    .o-punch-text {
+      font-family: 'Inter', sans-serif; font-size: 46px; font-weight: 800;
+      line-height: 1.22; color: var(--preto); letter-spacing: -0.5px;
+    }
+    .o-punch-virada {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 88px; line-height: 0.96; text-transform: uppercase;
+      color: var(--verde); margin-top: 44px;
+    }
+
+    /* COMPARACAO — duas colunas, a segunda em destaque */
+    .o-comparacao {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      background: #ffffff; page-break-after: always;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 104px 56px 96px;
+    }
+    .o-comp-grid { display: flex; gap: 28px; }
+    .o-comp-col { flex: 1; display: flex; flex-direction: column; }
+    .o-comp-img { width: 100%; border-radius: 8px; overflow: hidden; }
+    .o-comp-img img { width: 100%; height: 340px; object-fit: cover; display: block; }
+    .o-comp-label {
+      font-family: 'Inter', sans-serif; font-size: 30px; font-weight: 800;
+      color: var(--preto); margin: 22px 0 14px; letter-spacing: -0.3px;
+    }
+    .o-comp-col.destaque .o-comp-label { color: var(--verde); }
+    .o-comp-item {
+      font-family: 'Inter', sans-serif; font-size: 23px; font-weight: 500;
+      line-height: 1.4; color: rgba(0,0,0,0.7); padding: 11px 0;
+      border-top: 1px solid rgba(0,0,0,0.12);
+    }
+    .o-comp-col.destaque .o-comp-item { color: var(--preto); font-weight: 700; }
+
+    /* INSIGHT — fecha na mesma cor da capa */
+    .o-insight {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      background: var(--verde); page-break-after: always;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 104px 56px 96px;
+    }
+    .o-insight-text {
+      font-family: 'Inter', sans-serif; font-size: 52px; font-weight: 800;
+      line-height: 1.2; color: #ffffff; letter-spacing: -0.5px;
+    }
+    .o-insight-frase {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 96px; line-height: 0.94; text-transform: uppercase;
+      color: #ffffff; margin-top: 40px;
+    }
+    .o-insight-handle {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px; color: rgba(255,255,255,0.9); margin-top: 56px;
+    }
   </style>
 </head>
 <body>
@@ -939,6 +1094,68 @@ Serve a **duas categorias** do Passo 0: **Notícia viral** (fato recente, movime
   <p class="n-cta-detail">[a pergunta que puxa o comentario]</p>
 </div>
 
+<!-- ===== TEMPLATE OPINIÃO — exemplos ===== -->
+
+<!-- CAPA: declaracao controversa em cor solida -->
+<div class="o-capa">
+  <div class="top-header"><span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span></div>
+  <h1 class="o-capa-title">[a frase que faz discordar, 2-4 palavras por linha]</h1>
+  <div class="o-capa-img"><img src="img/capa.jpg" alt=""></div>
+</div>
+
+<!-- PISTA / "voce entendeu o ponto": texto -> imagem -> texto -->
+<!-- (trocar o-branco por o-escuro pro slide de fechamento do bloco de provas) -->
+<div class="o-branco">
+  <div class="top-header"><span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span></div>
+  <p class="o-text">[o que mudou, sem entregar a tese ainda]</p>
+  <div class="o-img"><img src="img/hint.jpg" alt=""></div>
+  <p class="o-text"><span class="hl">[a virada da frase]</span>, e boa parte do mercado ainda nao percebeu.</p>
+</div>
+
+<!-- CONTRASTE: bloco repetido 3-4x, sem variar a formula -->
+<div class="o-contraste">
+  <div class="top-header"><span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span></div>
+  <p class="o-antes">[o jeito antigo, com o custo em tempo]</p>
+  <span class="o-ou">Ou</span>
+  <p class="o-depois"><span class="neutro">[o novo jeito]</span> [o ganho, em verde]</p>
+</div>
+
+<!-- PUNCHLINE: concede primeiro, so depois vira -->
+<div class="o-punchline">
+  <div class="top-header"><span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span></div>
+  <p class="o-punch-text">[concessao sincera ao outro lado — sem isso vira sermao]</p>
+  <p class="o-punch-virada">[a virada]</p>
+</div>
+
+<!-- COMPARACAO: duas colunas, contraste so na ultima linha -->
+<div class="o-comparacao">
+  <div class="top-header"><span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span></div>
+  <div class="o-comp-grid">
+    <div class="o-comp-col">
+      <div class="o-comp-img"><img src="img/compA.jpg" alt=""></div>
+      <p class="o-comp-label">[lado A]</p>
+      <p class="o-comp-item">[igual ao B]</p>
+      <p class="o-comp-item">[igual ao B]</p>
+      <p class="o-comp-item">[aqui mora a diferenca]</p>
+    </div>
+    <div class="o-comp-col destaque">
+      <div class="o-comp-img"><img src="img/compB.jpg" alt=""></div>
+      <p class="o-comp-label">[lado B]</p>
+      <p class="o-comp-item">[igual ao A]</p>
+      <p class="o-comp-item">[igual ao A]</p>
+      <p class="o-comp-item">[a tese]</p>
+    </div>
+  </div>
+</div>
+
+<!-- INSIGHT: fecha na MESMA cor da capa -->
+<div class="o-insight">
+  <div class="top-header"><span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span></div>
+  <p class="o-insight-text">[preparacao da tese]</p>
+  <p class="o-insight-frase">[a tese, em Impact]</p>
+  <p class="o-insight-handle">@oeduardo.1</p>
+</div>
+
 </body>
 </html>
 ```
@@ -973,7 +1190,7 @@ Usar `AskUserQuestion` com as 5 opções:
 | Categoria | Quando é | Template |
 |---|---|---|
 | **Educativo** | Ensina algo prático, lista numerada de itens (X skills, X erros, X ferramentas, X passos) | Template Educativo (ver seção própria) |
-| **Opinião** | Posicionamento/tese do Eduardo sobre um tema | *a definir* |
+| **Opinião** | Posicionamento/tese do Eduardo sobre um tema | Template Opinião (ver seção própria) |
 | **Cultura** | Comportamento, tendência, leitura de mercado | Template Notícia/Cultura (mesmo do editorial) |
 | **Case** | História real de um cliente/experimento, com antes e depois | *a definir* |
 | **Notícia viral** | Fato recente, notícia quente, movimento de empresa | Template Notícia/Cultura (ver seção própria) |

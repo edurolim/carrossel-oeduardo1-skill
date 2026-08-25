@@ -60,7 +60,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 | 9 | `slide-cta` | branco | nome + CTA final + fonte |
 
 **LIMITES DE CARACTERES — OBRIGATÓRIO (evita overflow/corte de texto):**
-- `capa-title`: sem limite rígido de caracteres, mas **quebrar em frases/palavras curtas com `<br>`, uma por linha** (Impact **96px**, grande o bastante pra dominar a tela, alinhado à esquerda — mesma fonte de sempre, só mudou alinhamento e tamanho; caiu de 104px pra 96px pra abrir espaço pros outros elementos obrigatórios da capa: linha de atrito, linha de redução, gate em 2 níveis, screenshot) — cada linha deve ser curta o bastante pra ficar 100% legível de relance. Se o texto 1 vier como frase corrida longa, o trabalho é *quebrar em linhas escaneáveis*, não forçar numa linha só
+- `capa-title`: sem limite rígido de caracteres, mas **quebrar em frases/palavras curtas com `<br>`, uma por linha** (Impact **132px**, tem que DOMINAR a tela — é o que dá chance de viralizar; alinhado à esquerda). Com título de 5 linhas + os outros elementos obrigatórios, 132px é o limite prático: acima disso o título encosta no `capa-bg-asterisk`. Se precisar de mais linhas, reduzir o asterisco antes de reduzir o título — cada linha deve ser curta o bastante pra ficar 100% legível de relance. Se o texto 1 vier como frase corrida longa, o trabalho é *quebrar em linhas escaneáveis*, não forçar numa linha só
 - **Bloco inteiro da capa (logo + título + pretitle) é centralizado verticalmente no frame de 1350px** (`.capa-content` com `justify-content: center`, não ancorado no topo nem embaixo) — nunca deixar sobrando um bloco grande de espaço vazio abaixo do texto
 - `capa-friction`: máx. **60 caracteres** (linha curta entre parênteses, cola direto embaixo do título)
 - `split-title` / `td-title` / `tc-title` / `ta-title`: máx. **90 caracteres**, 2-3 linhas
@@ -101,29 +101,33 @@ Toda capa de carrossel precisa ter os 7 elementos abaixo, **nesta ordem vertical
 
 ---
 
-## Template Lista — carrosséis de item numerado (X skills, X erros, X ferramentas, X passos)
+## Template EDUCATIVO — carrosséis de item numerado (X skills, X erros, X ferramentas, X passos)
 
-Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progressiva), usar este padrão em vez do ciclo `split/tipo-c/tipo-a/tipo-d` da seção "Layouts dos Slides". Sequência:
+Categoria **Educativo** do Passo 0. Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progressiva), usar este padrão em vez do ciclo `split/tipo-c/tipo-a/tipo-d` da seção "Layouts dos Slides". Sequência (formato hook → contexto → itens → resumo → CTA):
 
 | # | Tipo | Conteúdo |
 |---|---|---|
-| 1 | `slide-capa` | os 7 elementos acima |
-| 2 | `slide-proof` | contexto curto ou demonstração do número prometido na capa (`hours-list`) — nunca o primeiro item da lista |
-| 3 a N-1 | `slide-item` | um item por slide |
-| N | `slide-cta` | handle grande + CTA reforçado |
+| 1 | `slide-capa` | HOOK: os 7 elementos da capa |
+| 2 | `slide-proof` | CONTEXTO: prova do número prometido na capa (`hours-list`) ou enquadramento curto — **nunca o primeiro item da lista** |
+| 3 a N-2 | `slide-item` | ITENS: um item por slide |
+| N-1 | `slide-item` + `summary-body` | RESUMO: todos os itens recapitulados numa tela só |
+| N | `slide-cta` | CTA: handle grande + CTA reforçado |
 
-**Regras dos `slide-item` (slide 3 até o penúltimo):**
+**Regras dos `slide-item` (slide 3 até N-2):**
 - Um item por slide, sempre dentro de `item-box` (borda preta 3px, cantos arredondados) — nunca dois itens no mesmo slide
 - Cada item tem ícone próprio (`item-icon-wrap`, fundo preto ou verde alternando — nunca mais de 2 cores de fundo de ícone no carrossel inteiro) e título (`item-title`)
+- **Contador do item dentro do card** (`item-head` com `item-tag` à esquerda e `item-count` à direita, formato `1/5`, `2/5`) — mostra ao leitor quanto falta e é o que segura o swipe até o fim. Não confundir com o `page-count` do topo: `item-count` conta ITENS, `page-count` conta PÁGINAS
 - **Zero parágrafo corrido** — só `item-bullets` (frases curtas, uma ideia por linha, nunca período com múltiplas orações encadeadas)
-- Indicador de progresso numérico no canto superior direito (`page-count`, formato `0X/0N`, substitui o slot de mês/ano no `.top-header` nos slides de item — a capa mantém mês/ano, os demais mostram página) — capa nunca conta como página, a contagem começa do slide 2
-- Handle no rodapé (`footer-handle`, ícone do Instagram + `@oeduardo.1`), **mesma posição em todos os slides de item**
+- Indicador de progresso numérico no canto superior direito (`page-count`, formato `0X/0N`, substitui o slot de mês/ano no `.top-header` nos slides internos — a capa mantém mês/ano) — capa nunca conta como página, a contagem começa do slide 2
+- Handle no rodapé (`footer-handle`, ícone do Instagram + `@oeduardo.1`), **mesma posição em todos os slides internos**
 - **Pelo menos 2 `slide-item` com print de tela real** (`item-screenshot`) — mockup flat de UI, `object-fit: cover` com altura fixa (~280px) pra não estourar o box (imagens geradas em 4:5 são muito altas pra caber inteiras)
 - O item no **meio da sequência de itens** leva o `gate-reminder` (repetição do CTA — ver regra "Gate repetido no meio")
 
+**Slide de RESUMO (N-1) — OBRIGATÓRIO no educativo:** recapitula TODOS os itens numa tela só (`summary-body` + `summary-list`/`summary-row`, cada linha = número verde + nome do item em bold + o que faz em texto leve). É o slide que a pessoa printa/salva, então o título deve pedir isso explicitamente (ex: "As 5 numa tela só. Salva essa."). **Não repetir a mesma informação do slide 2**: se o slide 2 mostrou os números/tempos, o resumo mostra a AÇÃO de cada item (o que faz), não os números de novo.
+
 **Último slide** (`slide-cta`): handle grande (`cta-handle-big`, Playfair Display) + `cta-gate` (a palavra do gate, grande e verde) + `cta-detail` + `cta-reinforce` (pill verde reforçando o mesmo CTA, redundância proposital)
 
-**Quando usar Template Lista vs. padrão narrativo**: conteúdo é uma lista numerada de itens (skills, erros, ferramentas, passos) → Template Lista. Conteúdo é uma narrativa/notícia com desenvolvimento progressivo (ex: "Google reconstruiu o modelo do zero") → padrão fixo de 7 classes em "Layouts dos Slides".
+**Quando usar Template Educativo vs. padrão narrativo**: conteúdo é uma lista numerada de itens (skills, erros, ferramentas, passos) → Template Educativo. Conteúdo é uma narrativa/notícia com desenvolvimento progressivo (ex: "Google reconstruiu o modelo do zero") → padrão fixo de 7 classes em "Layouts dos Slides".
 
 ---
 
@@ -159,7 +163,7 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
       z-index: 25; opacity: 0.55;
     }
 
-    /* CABEÇALHO/RODAPÉ auxiliares — Template Lista */
+    /* CABEÇALHO/RODAPÉ auxiliares — Template Educativo */
     .page-count {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 14px; font-weight: 500;
@@ -181,8 +185,8 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
     }
     .slide-capa .top-header { color: rgba(0,0,0,0.40); }
     .capa-bg-asterisk {
-      position: absolute; top: -20px; right: -60px;
-      width: 480px; height: 480px; object-fit: contain;
+      position: absolute; top: -80px; right: -40px;
+      width: 400px; height: 400px; object-fit: contain;
       opacity: 0.9; z-index: 5;
     }
     .capa-content {
@@ -197,7 +201,7 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
     }
     .capa-title {
       font-family: Impact, 'Arial Narrow', sans-serif;
-      font-size: 96px; font-weight: 400;
+      font-size: 132px; font-weight: 400;
       line-height: 1.0; text-transform: uppercase;
       color: #0d0d0d;
     }
@@ -274,7 +278,7 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
     }
     .hours-row.total .hours-value { font-size: 32px; }
 
-    /* SLIDES 3 A N-1 — ITEM (Template Lista: um item por slide) */
+    /* SLIDES 3 A N-1 — ITEM (Template Educativo: um item por slide) */
     .slide-item {
       width: 1080px; height: 1350px;
       position: relative; overflow: hidden;
@@ -296,10 +300,41 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
     }
     .item-icon-wrap.accent-bg { background: #0E9957; }
     .item-icon-wrap svg { width: 32px; height: 32px; }
+    .item-head {
+      display: flex; justify-content: space-between; align-items: center;
+    }
     .item-tag {
       font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 500;
       color: rgba(0,0,0,0.45); text-transform: uppercase; letter-spacing: 1.5px;
     }
+    /* contador de ITENS dentro do card (1/5, 2/5) — nao confundir com page-count do topo */
+    .item-count {
+      font-family: 'Inter', sans-serif; font-size: 30px; font-weight: 800;
+      color: rgba(0,0,0,0.16);
+    }
+
+    /* SLIDE DE RESUMO (N-1) — recap de todos os itens numa tela so */
+    .summary-body {
+      flex: 1; padding: 130px 56px 100px;
+      display: flex; flex-direction: column; justify-content: center; gap: 26px;
+    }
+    .summary-divider { width: 56px; height: 4px; background: #0E9957; border-radius: 2px; }
+    .summary-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 46px; font-weight: 800; line-height: 1.14; color: #0d0d0d;
+    }
+    .summary-title .hl { color: #0E9957; }
+    .summary-list { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+    .summary-row {
+      display: flex; align-items: baseline; gap: 16px;
+      padding: 15px 0; border-bottom: 1px solid rgba(0,0,0,0.10);
+      font-family: 'Inter', sans-serif;
+    }
+    .summary-row .num {
+      font-size: 26px; font-weight: 800; color: #0E9957; flex-shrink: 0; min-width: 34px;
+    }
+    .summary-row .what { font-size: 25px; font-weight: 800; color: #0d0d0d; flex-shrink: 0; }
+    .summary-row .does { font-size: 23px; font-weight: 400; color: rgba(0,0,0,0.62); }
     .item-title {
       font-family: 'Inter', sans-serif; font-size: 40px; font-weight: 800;
       color: #0d0d0d; line-height: 1.15;
@@ -510,7 +545,7 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
       color: rgba(0,0,0,0.50); margin-top: 24px;
     }
 
-    /* CTA final — Template Lista (handle grande + gate + reforço) */
+    /* CTA final — Template Educativo (handle grande + gate + reforço) */
     .cta-handle-big {
       font-family: 'Playfair Display', serif;
       font-size: 76px; font-weight: 400; color: #0d0d0d; line-height: 1;
@@ -678,7 +713,7 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
 
 <!-- ===== TEMPLATE LISTA — exemplos alternativos (carrosséis de item numerado) ===== -->
 
-<!-- SLIDE 2 do Template Lista — PROVA (demonstração do número da capa, nunca o 1º item) -->
+<!-- SLIDE 2 do Template Educativo — PROVA (demonstração do número da capa, nunca o 1º item) -->
 <div class="slide-proof">
   <div class="top-header">
     <span>Eduardo Rolim</span><span>@oeduardo.1</span><span class="page-count">01/0N</span>
@@ -695,7 +730,7 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
   <div class="footer-handle"><span>@oeduardo.1</span></div>
 </div>
 
-<!-- SLIDE 3 a N-1 do Template Lista — ITEM (um por slide, dentro de item-box) -->
+<!-- SLIDE 3 a N-1 do Template Educativo — ITEM (um por slide, dentro de item-box) -->
 <div class="slide-item">
   <div class="top-header">
     <span>Eduardo Rolim</span><span>@oeduardo.1</span><span class="page-count">0X/0N</span>
@@ -703,7 +738,10 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
   <div class="item-body">
     <div class="item-box">
       <div class="item-icon-wrap accent-bg"><svg><!-- ícone do item, 24x24 --></svg></div>
-      <span class="item-tag">[Skill/Item N]</span>
+      <div class="item-head">
+        <span class="item-tag">[Skill/Item N]</span>
+        <span class="item-count">[X/N itens, ex: 1/5]</span>
+      </div>
       <p class="item-title">[título curto com <span class="hl">palavra-chave</span>]</p>
       <div class="item-bullets">
         <div class="item-bullet"><span class="dot">•</span><span>[frase curta, zero parágrafo corrido]</span></div>
@@ -716,7 +754,23 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
   <div class="footer-handle"><span>@oeduardo.1</span></div>
 </div>
 
-<!-- SLIDE N do Template Lista — CTA final (handle grande + gate + reforço) -->
+<!-- SLIDE N-1 do Template Educativo — RESUMO (obrigatório: todos os itens numa tela só) -->
+<div class="slide-item">
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span class="page-count">0X/0N</span>
+  </div>
+  <div class="summary-body">
+    <div class="summary-divider"></div>
+    <p class="summary-title">[titulo que PEDE o salvamento, ex: "As 5 numa <span class="hl">tela so</span>. Salva essa."]</p>
+    <div class="summary-list">
+      <div class="summary-row"><span class="num">1</span><span class="what">[nome curto]</span><span class="does">[o que faz, texto leve]</span></div>
+      <div class="summary-row"><span class="num">2</span><span class="what">[nome curto]</span><span class="does">[o que faz]</span></div>
+    </div>
+  </div>
+  <div class="footer-handle"><span>@oeduardo.1</span></div>
+</div>
+
+<!-- SLIDE N do Template Educativo — CTA final (handle grande + gate + reforço) -->
 <div class="slide-cta">
   <div class="top-header">
     <span>Eduardo Rolim</span><span>@oeduardo.1</span><span class="page-count">0N/0N</span>
@@ -753,6 +807,22 @@ O conteúdo de cada slide já vem pronto do Eduardo. Sua função é apenas apli
 ---
 
 ## Fluxo de Trabalho
+
+### Passo 0 (OBRIGATÓRIO, SEMPRE): perguntar a categoria do conteúdo
+
+**Antes de gerar QUALQUER carrossel, perguntar em qual das 5 categorias o conteúdo se encaixa.** Perguntar **toda vez**, sem exceção — inclusive quando Eduardo já enviar todos os textos prontos, inclusive quando parecer óbvio pelo assunto, inclusive quando o carrossel anterior foi da mesma categoria. Nunca inferir a categoria sozinho e seguir direto pra geração.
+
+Usar `AskUserQuestion` com as 5 opções:
+
+| Categoria | Quando é | Template |
+|---|---|---|
+| **Educativo** | Ensina algo prático, lista numerada de itens (X skills, X erros, X ferramentas, X passos) | Template Educativo (ver seção própria) |
+| **Opinião** | Posicionamento/tese do Eduardo sobre um tema | *a definir* |
+| **Cultura** | Comportamento, tendência, leitura de mercado | *a definir* |
+| **Case** | História real de um cliente/experimento, com antes e depois | *a definir* |
+| **Notícia viral** | Fato recente, notícia quente, movimento de empresa | Padrão narrativo (ver "Layouts dos Slides") |
+
+Cada categoria tem um padrão visual/estrutural próprio. Enquanto uma categoria estiver marcada como *a definir*, perguntar a Eduardo qual template usar em vez de escolher por conta própria.
 
 ### Passo 1: Receber o Conteúdo
 

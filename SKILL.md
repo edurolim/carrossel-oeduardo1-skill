@@ -72,6 +72,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 - `.progress-bar`: barra fixa no rodapé, `.progress-fill` verde `#0E9957` crescendo por slide: `(número do slide ÷ total de slides) × 100%` — ex. num carrossel de 7, o slide 3 mostra 42.8%, não um valor fixo de tabela
 - `.slide-arrow`: seta de continuidade no canto inferior direito (exceto capa e CTA final)
 - Destaque de palavra-chave sempre com `<span class="hl">`, cor `#0E9957`
+- **Exceção obrigatória**: toda vez que a palavra "Claude" aparecer em destaque (título, CTA, gate-reminder, em qualquer slide), usar `<span class="hl-claude">`, cor `#D97757` (laranja de marca do Claude/Anthropic) — nunca o verde do projeto nesse caso específico
 
 ---
 
@@ -80,8 +81,8 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 Toda capa de carrossel precisa ter os 7 elementos abaixo, **nesta ordem vertical**. Sem eles, a capa não para o scroll. **A capa nunca pode ser 100% texto** — precisa de pelo menos um elemento figurativo (asterisco grande de fundo, print de tela, ou foto recortada).
 
 1. **Cabeçalho fino** (`.top-header`, já padrão em todo slide): `Eduardo Rolim · @oeduardo.1 · Mês Ano ®`
-2. **Elemento gráfico grande ao fundo** (`capa-bg-asterisk`): o asterisco/logo da marca em 25-30% do frame, opacidade reduzida (~0.10-0.15), posicionado atrás do texto sem atrapalhar a leitura — é o elemento figurativo obrigatório quando não há foto/print maior
-3. **Título** (`capa-title`): **NÚMERO por extenso ou dígito** como primeira palavra em destaque (`hl`, verde) + **NOME DA FERRAMENTA/TEMA** + **RESULTADO CONCRETO**. Número seco é mais forte que "mais de X" — nunca usar "mais de" antes do número se o valor exato já é impactante sozinho
+2. **Elemento gráfico grande ao fundo** (`capa-bg-asterisk`): o asterisco/logo da marca ocupando boa parte do canto (~660px), **opacidade alta (~0.9)** — precisa ser bem visível, não um watermark apagado — posicionado no espaço vazio da capa (ex: canto superior direito) sem cobrir o texto. É o elemento figurativo obrigatório quando não há foto/print maior
+3. **Título** (`capa-title`): **NÚMERO em dígito** (preferir "5" a "cinco") como primeira palavra em destaque (`hl`, verde) + **NOME DA FERRAMENTA/TEMA** + **RESULTADO CONCRETO**. Número seco é mais forte que "mais de X" — nunca usar "mais de" antes do número se o valor exato já é impactante sozinho
 4. **Linha de atrito** (`capa-friction`, entre parênteses, direto embaixo do título, preto, corpo médio — maior que a linha de redução, menor que o título) — cria a tensão que faz a pessoa continuar. Benefício puro, sem atrito, NÃO é linha de atrito. Tipos válidos:
    - **Acesso proibido/secreto**: "que quase ninguém ativou", "que deveriam ser proibidas"
    - **Grátis quando deveria ser pago**
@@ -180,9 +181,9 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
     }
     .slide-capa .top-header { color: rgba(0,0,0,0.40); }
     .capa-bg-asterisk {
-      position: absolute; top: -120px; right: -160px;
-      width: 720px; height: 720px; object-fit: contain;
-      opacity: 0.12; z-index: 0;
+      position: absolute; top: -50px; right: -70px;
+      width: 660px; height: 660px; object-fit: contain;
+      opacity: 0.9; z-index: 5;
     }
     .capa-content {
       position: absolute; top: 0; left: 0; right: 0; bottom: 0;
@@ -201,6 +202,7 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
       color: #0d0d0d;
     }
     .capa-title .hl { color: #0E9957; }
+    .hl-claude { color: #D97757; }
     .capa-friction {
       font-family: 'Inter', sans-serif;
       font-size: 32px; font-weight: 800; line-height: 1.35;
@@ -532,7 +534,7 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
   </div>
   <div class="capa-content">
     <img class="capa-logo-small" src="img/logo_N.png" alt="[logo do tema/ferramenta, se houver — omitir a tag inteira se não houver logo relevante e usar só o capa-bg-asterisk como elemento figurativo]">
-    <h1 class="capa-title">[NÚMERO como primeira palavra <span class="hl">em destaque</span> + NOME DA FERRAMENTA/TEMA + RESULTADO CONCRETO — quebrar em frases curtas com &lt;br&gt;, uma por linha]</h1>
+    <h1 class="capa-title">[NÚMERO em dígito, ex: <span class="hl">5</span>, primeira palavra + NOME DA FERRAMENTA/TEMA (usar <span class="hl-claude">hl-claude</span> se for "Claude" especificamente) + RESULTADO CONCRETO — quebrar em frases curtas com &lt;br&gt;, uma por linha]</h1>
     <p class="capa-friction">[linha de atrito entre parênteses — ver "7 elementos obrigatórios da capa"]</p>
     <p class="capa-reduction">[linha de redução de fricção — ex: "Sem código · 10 minutos"]</p>
     <p class="capa-gate">[CTA nível 1 — a palavra do gate, ex: Comenta "PALAVRA"]</p>

@@ -72,7 +72,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 - `.progress-bar`: barra fixa no rodapé, `.progress-fill` verde `#0E9957` crescendo por slide: `(número do slide ÷ total de slides) × 100%` — ex. num carrossel de 7, o slide 3 mostra 42.8%, não um valor fixo de tabela
 - `.slide-arrow`: seta de continuidade no canto inferior direito (exceto capa e CTA final)
 - Destaque de palavra-chave sempre com `<span class="hl">`, cor `#0E9957`
-- **Exceção obrigatória**: toda vez que a palavra "Claude" aparecer em destaque (título, CTA, gate-reminder, em qualquer slide), usar `<span class="hl-claude">`, cor `#D97757` (laranja de marca do Claude/Anthropic) — nunca o verde do projeto nesse caso específico
+- **Exceção obrigatória**: quando a palavra "Claude" aparecer destacada **no título da capa** (`capa-title`), usar `<span class="hl-claude">`, cor `#D97757` (laranja de marca do Claude/Anthropic) em vez do verde. **Só no título** — CTA (`capa-gate`/`cta-gate`), `gate-reminder` e qualquer outro lugar continuam no verde padrão do projeto, mesmo mencionando "Claude"
 
 ---
 
@@ -81,7 +81,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 Toda capa de carrossel precisa ter os 7 elementos abaixo, **nesta ordem vertical**. Sem eles, a capa não para o scroll. **A capa nunca pode ser 100% texto** — precisa de pelo menos um elemento figurativo (asterisco grande de fundo, print de tela, ou foto recortada).
 
 1. **Cabeçalho fino** (`.top-header`, já padrão em todo slide): `Eduardo Rolim · @oeduardo.1 · Mês Ano ®`
-2. **Elemento gráfico grande ao fundo** (`capa-bg-asterisk`): o asterisco/logo da marca ocupando boa parte do canto (~660px), **opacidade alta (~0.9)** — precisa ser bem visível, não um watermark apagado — posicionado no espaço vazio da capa (ex: canto superior direito) sem cobrir o texto. É o elemento figurativo obrigatório quando não há foto/print maior
+2. **Elemento gráfico grande ao fundo** (`capa-bg-asterisk`): o asterisco/logo da marca no canto (~480px), **opacidade alta (~0.9)** — precisa ser bem visível, não um watermark apagado — posicionado no espaço vazio da capa (ex: canto superior direito), **sem encostar nas palavras do título**. É o elemento figurativo obrigatório quando não há foto/print maior
 3. **Título** (`capa-title`): **NÚMERO em dígito** (preferir "5" a "cinco") como primeira palavra em destaque (`hl`, verde) + **NOME DA FERRAMENTA/TEMA** + **RESULTADO CONCRETO**. Número seco é mais forte que "mais de X" — nunca usar "mais de" antes do número se o valor exato já é impactante sozinho
 4. **Linha de atrito** (`capa-friction`, entre parênteses, direto embaixo do título, preto, corpo médio — maior que a linha de redução, menor que o título) — cria a tensão que faz a pessoa continuar. Benefício puro, sem atrito, NÃO é linha de atrito. Tipos válidos:
    - **Acesso proibido/secreto**: "que quase ninguém ativou", "que deveriam ser proibidas"
@@ -181,8 +181,8 @@ Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progre
     }
     .slide-capa .top-header { color: rgba(0,0,0,0.40); }
     .capa-bg-asterisk {
-      position: absolute; top: -50px; right: -70px;
-      width: 660px; height: 660px; object-fit: contain;
+      position: absolute; top: -20px; right: -60px;
+      width: 480px; height: 480px; object-fit: contain;
       opacity: 0.9; z-index: 5;
     }
     .capa-content {

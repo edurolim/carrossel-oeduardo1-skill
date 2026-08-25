@@ -12,34 +12,28 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 ## Identidade Visual
 
 ### Paleta de Cores
-- **Fundo capa/CTA**: Fotos reais de pessoas/cenas como background, com overlay escuro sutil
-- **Acento primário**: Verde `#0E9957` para palavras-chave de destaque
-- **Acento secundário**: Verde `#2C7050` para subtítulos e detalhes
-- **Textos**: Branco puro `#ffffff` para títulos principais
-- **Subtítulos**: Branco com opacidade `rgba(255,255,255,0.85)` ou verde `#3CD3A4`
-- **Overlay sobre fotos**: `rgba(0,0,0,0.4)` a `rgba(0,0,0,0.6)` — a foto deve ser visível
-- **Fundo slides internos**: `#292A25` (Cinza sólido)
-- **Fundo slide de impacto**: `#0E9957` (Verde primário) — usar em 1-2 slides por carrossel
+- **Acento primário**: verde `#0E9957` — palavras-chave de destaque (`.hl`), pills de CTA, números
+- **Fundo verde**: `#1A6047` — slides 100% verdes (quebram o ritmo do carrossel)
+- **Preto**: `#0d0d0d` — texto sobre branco, e títulos Impact sobre o fundo verde
+- **Branco**: `#ffffff` — fundo padrão e texto sobre o verde
+- **Laranja Claude**: `#D97757` — exclusivo pra palavra "Claude" no título da capa (ver "Regras de Design")
+- **Máximo 3 cores por slide.** Nunca inventar cor fora dessas
+- Nos slides verdes o `.hl` verde sumiria no fundo: a regra `.slide-verde .hl` troca automaticamente pra branco. O destaque ali é feito com `<strong>`, não com cor
 
 ### Tipografia
-- **Títulos (capa/CTA)**: IMPACT REGULAR, tamanho 52-72px, caixa alta
-- **Subtítulos (capa/CTA)**: Inter, peso 500-600, tamanho 22-28px
-- **Texto narrativo (slides internos)**: Inter, peso 400-700, tamanho 28-38px, sem caixa alta — capitalize natural
-- **Destaques inline (slides internos)**: Inter bold + italic, cor `#0E9957` ou `#2C7050`
-- **Text-shadow na capa/CTA**: `2px 2px 8px rgba(0,0,0,0.8)` em todo texto sobre foto
-- **Slides internos**: sem text-shadow (fundo sólido não precisa)
-- **Estilo capa/CTA**: texto direto sobre a foto, sem cards nem glassmorphism
-- **Estilo slides internos**: texto em Inter sobre fundo Cinza sólido `#292A25`, com foto contida no meio
+- **Títulos** (capa, verde, branco): Impact, caixa alta. Capa 132px; títulos de slide interno 76px
+- **Texto de corpo**: Inter 31px, peso 400, line-height 1.42 — com `<strong>` (peso 800) nos trechos que carregam a informação
+- **Cabeçalho/rodapé**: Space Grotesk 13px, uppercase, letter-spacing 1.2px
+- **Handle do CTA final**: Playfair Display 78px (única serifada do sistema, é assinatura)
+- **Gate/CTA**: Inter 800 — 44px na capa, 62px no CTA final
+- Sem text-shadow em lugar nenhum: todos os fundos são sólidos
 
 ### Elementos de Design
-- **SEM glassmorphism** — texto direto sobre a imagem na capa
-- **SEM cards flutuantes** na capa — conteúdo direto sobre a foto
-- **Capa**: fundo branco sólido é o padrão (logo pequeno + título alinhado à esquerda, ver "Layouts dos Slides"). Foto de fundo é opcional, só quando o carrossel pedir algo mais visual/narrativo — nesse caso a foto sempre liga ao assunto do título (pessoa só quando o tema for humano/comportamental — ver "Diretrizes de prompt")
-- **CTA**: sempre fundo branco, sem foto
-- **Overlay com gradiente**: `linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%)`
-- **Palavras-chave em verde** `#0E9957` no meio da frase para destaque
-- **Texto grande e bold** ocupando a maior parte do slide
-- **Numeração do slide** só a partir do slide 2: formato `1/9` no rodapé
+- **Cabeçalho fixo em todo slide**: `EDUARDO ROLIM · @OEDUARDO.1 · INTELIGÊNCIA ARTIFICIAL` (na capa) — nos slides internos o terceiro slot vira o `page-count` (`01/08`). Preto 42% em fundo branco, branco 62% em fundo verde (o override é automático via `.slide-verde .top-header`)
+- **Rodapé fixo nos slides internos**: `footer-handle` com ícone do Instagram + `@oeduardo.1`, sempre na mesma posição
+- **Sem glassmorphism, sem card flutuante, sem sombra decorativa** — o sistema é chapado: bloco de cor, tipografia grande, imagem retangular
+- **Imagens**: retangulares, cantos levemente arredondados (6px), sem overlay escuro. No slide verde ficam no topo; no branco, no centro entre título e texto
+- **Numeração**: `page-count` no canto superior direito, formato `01/08`. A capa nunca conta como página, a contagem começa no slide 2
 
 ---
 
@@ -93,7 +87,7 @@ Toda capa de carrossel precisa ter os 7 elementos abaixo, **nesta ordem vertical
 6. **CTA em 2 níveis** (`capa-gate` + `capa-gate-detail`): a palavra do gate isolada, grande, verde, sempre entre aspas (`Comenta "PALAVRA"`) + uma frase de apoio pequena e peso normal embaixo
 7. **Print real de tela, pequeno, canto inferior direito** (`capa-screenshot`) — mockup de UI (não precisa ser screenshot 100% real, mas tem que LER como print de produto: interface flat, sem fotografia cinematográfica)
 
-**Se a capa faz uma promessa numérica quantificável** (ex: "10 horas", "3x mais rápido"), o **slide 2** prova de onde vem esse número — nunca é o primeiro item da lista, é contexto/demonstração. Lista curta tipo recibo (`hours-list`/`hours-row`) com cada parte + total batendo com o número da capa. Sem essa prova, o número vira promessa vazia e o comentário que a capa gera é "prova?" em vez da palavra do gate.
+**Se a capa faz uma promessa numérica quantificável** (ex: "10 horas", "3x mais rápido"), o **slide 2** prova de onde vem esse número — nunca é o primeiro item da lista, é contexto/demonstração. Lista curta tipo recibo (`lista`/`lista-row`, no slide verde de contexto) com cada parte + total batendo com o número da capa. Sem essa prova, o número vira promessa vazia e o comentário que a capa gera é "prova?" em vez da palavra do gate.
 
 **Gate repetido no meio**: em carrosséis com CTA de comentário (gate word) e 7+ slides, repetir a palavra do gate num slide do meio (por volta do slide 5 ou 6, dentro de um `gate-reminder` — pill verde igual ao `capa-gate`, inserido no conteúdo do slide sem atrapalhar o texto principal). Quem sai do carrossel antes do fim precisa ter visto a palavra pelo menos duas vezes.
 
@@ -103,31 +97,40 @@ Toda capa de carrossel precisa ter os 7 elementos abaixo, **nesta ordem vertical
 
 ## Template EDUCATIVO — carrosséis de item numerado (X skills, X erros, X ferramentas, X passos)
 
-Categoria **Educativo** do Passo 0. Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progressiva), usar este padrão em vez do ciclo `split/tipo-c/tipo-a/tipo-d` da seção "Layouts dos Slides". Sequência (formato hook → contexto → itens → resumo → CTA):
+Categoria **Educativo** do Passo 0. Estrutura hook → contexto → itens → resumo → CTA.
 
-| # | Tipo | Conteúdo |
+**O princípio**: o carrossel tem que ler como uma **conversa leve e fluida**, não como um formulário. Isso significa: texto corrido em tom de fala com `<strong>` nos trechos que carregam a informação — **nunca bullet seco, nunca card com borda, nunca tabela de rótulos**. Cada slide termina puxando o próximo.
+
+**Alternância verde/branco obrigatória.** O carrossel inteiro no mesmo fundo cansa e some no feed. Alternar `slide-verde` e `slide-branco` a cada página quebra o ritmo e faz cada swipe parecer um começo novo:
+
+| # | Classe | Estrutura |
 |---|---|---|
-| 1 | `slide-capa` | HOOK: os 7 elementos da capa |
-| 2 | `slide-proof` | CONTEXTO: prova do número prometido na capa (`hours-list`) ou enquadramento curto — **nunca o primeiro item da lista** |
-| 3 a N-2 | `slide-item` | ITENS: um item por slide |
-| N-1 | `slide-item` + `summary-body` | RESUMO: todos os itens recapitulados numa tela só |
-| N | `slide-cta` | CTA: handle grande + CTA reforçado |
+| 1 | `slide-capa` | HOOK: os 7 elementos da capa (fundo branco) |
+| 2 | `slide-verde` | CONTEXTO: prova do número prometido na capa — nunca o primeiro item |
+| 3 | `slide-branco` | item 1 |
+| 4 | `slide-verde` | item 2 |
+| 5 | `slide-branco` | item 3 (+ `gate-reminder`, é o meio) |
+| 6 | `slide-verde` | item 4 |
+| 7 | `slide-branco` | item 5 |
+| 8 | `slide-verde` | RESUMO: todos os itens numa tela só |
+| 9 | `slide-cta` | CTA: handle grande + gate + reforço (fundo branco) |
 
-**Regras dos `slide-item` (slide 3 até N-2):**
-- Um item por slide, sempre dentro de `item-box` (borda preta 3px, cantos arredondados) — nunca dois itens no mesmo slide
-- Cada item tem ícone próprio (`item-icon-wrap`, fundo preto ou verde alternando — nunca mais de 2 cores de fundo de ícone no carrossel inteiro) e título (`item-title`)
-- **Contador do item dentro do card** (`item-head` com `item-tag` à esquerda e `item-count` à direita, formato `1/5`, `2/5`) — mostra ao leitor quanto falta e é o que segura o swipe até o fim. Não confundir com o `page-count` do topo: `item-count` conta ITENS, `page-count` conta PÁGINAS
-- **Zero parágrafo corrido** — só `item-bullets` (frases curtas, uma ideia por linha, nunca período com múltiplas orações encadeadas)
-- Indicador de progresso numérico no canto superior direito (`page-count`, formato `0X/0N`, substitui o slot de mês/ano no `.top-header` nos slides internos — a capa mantém mês/ano) — capa nunca conta como página, a contagem começa do slide 2
-- Handle no rodapé (`footer-handle`, ícone do Instagram + `@oeduardo.1`), **mesma posição em todos os slides internos**
-- **Pelo menos 2 `slide-item` com print de tela real** (`item-screenshot`) — mockup flat de UI, `object-fit: cover` com altura fixa (~280px) pra não estourar o box (imagens geradas em 4:5 são muito altas pra caber inteiras)
-- O item no **meio da sequência de itens** leva o `gate-reminder` (repetição do CTA — ver regra "Gate repetido no meio")
+**`slide-verde`** (fundo `#1A6047`) — de cima pra baixo: cabeçalho → **imagem no topo** (500px) → **título Impact PRETO** → texto branco. O título preto sobre o verde é a assinatura do formato, não usar branco.
 
-**Slide de RESUMO (N-1) — OBRIGATÓRIO no educativo:** recapitula TODOS os itens numa tela só (`summary-body` + `summary-list`/`summary-row`, cada linha = número verde + nome do item em bold + o que faz em texto leve). É o slide que a pessoa printa/salva, então o título deve pedir isso explicitamente (ex: "As 5 numa tela só. Salva essa."). **Não repetir a mesma informação do slide 2**: se o slide 2 mostrou os números/tempos, o resumo mostra a AÇÃO de cada item (o que faz), não os números de novo.
+**`slide-branco`** — de cima pra baixo: cabeçalho → **título Impact VERDE no topo** → **imagem no centro** (470px) → régua preta 2px → texto preto.
 
-**Último slide** (`slide-cta`): handle grande (`cta-handle-big`, Playfair Display) + `cta-gate` (a palavra do gate, grande e verde) + `cta-detail` + `cta-reinforce` (pill verde reforçando o mesmo CTA, redundância proposital)
+**Regras de conteúdo dos slides de item:**
+- Um item por slide, sempre
+- 1 a 2 parágrafos curtos por slide, em tom de conversa. `<strong>` só no que é informação dura (o formato do entregável, o número, o diferencial) — nunca a frase inteira em bold
+- **Contador de itens** (`item-count`, canto superior, formato `2/5`) — mostra quanto falta e segura o swipe. Não confundir com `page-count` do cabeçalho: `item-count` conta ITENS, `page-count` conta PÁGINAS
+- O item do **meio** leva o `gate-reminder` (pill com a palavra do gate). Em slide verde a pill inverte: fundo branco, texto verde-escuro
+- **Pelo menos 2 slides com print de tela real** quando a resposta do Passo 0 for "prints" ou "misto"
 
-**Quando usar Template Educativo vs. padrão narrativo**: conteúdo é uma lista numerada de itens (skills, erros, ferramentas, passos) → Template Educativo. Conteúdo é uma narrativa/notícia com desenvolvimento progressivo (ex: "Google reconstruiu o modelo do zero") → padrão fixo de 7 classes em "Layouts dos Slides".
+**Slide de RESUMO (N-1) — OBRIGATÓRIO:** todos os itens numa tela só, em `lista`/`lista-row` (número + nome + o que faz). É o slide que a pessoa printa, então o título pede isso explicitamente ("Salva essa antes de sair"). **Não repetir a informação do slide 2**: se lá foram os números, aqui é a ação de cada item.
+
+**Último slide** (`slide-cta`): handle grande (`cta-handle-big`, Playfair) + `cta-gate` + `cta-detail` + `cta-reinforce` (pill repetindo o mesmo CTA, redundância proposital).
+
+**Quando usar Template Educativo vs. padrão narrativo**: lista numerada de itens → Template Educativo. Narrativa/notícia com desenvolvimento progressivo → padrão fixo em "Layouts dos Slides".
 
 ---
 
@@ -143,6 +146,20 @@ Categoria **Educativo** do Passo 0. Quando o conteúdo é uma **lista de itens**
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #000; }
+
+    /* ===== TOKENS ===== */
+    :root {
+      --verde: #0E9957;         /* acento da marca */
+      --verde-fundo: #1A6047;   /* fundo dos slides verdes */
+      --preto: #0d0d0d;
+      --laranja-claude: #D97757;
+    }
+
+    /* destaque universal — regra GLOBAL, vale em qualquer slide */
+    .hl { color: var(--verde); }
+    .hl-claude { color: var(--laranja-claude); }
+    /* no fundo verde o acento verde sumiria: destaque vira branco */
+    .slide-verde .hl { color: #ffffff; }
 
     .top-header {
       position: absolute; top: 0; left: 0; right: 0;
@@ -246,113 +263,80 @@ Categoria **Educativo** do Passo 0. Quando o conteúdo é uma **lista de itens**
       padding: 14px 24px; border-radius: 100px; margin-top: 4px;
     }
 
-    /* SLIDE 2 — PROVA (demonstração do número prometido na capa) */
-    .slide-proof {
+    /* SLIDE VERDE — imagem no topo, título Impact PRETO, texto branco */
+    .slide-verde {
       width: 1080px; height: 1350px;
       position: relative; overflow: hidden;
-      background: #ffffff; display: flex; flex-direction: column;
-      page-break-after: always;
-    }
-    .proof-body {
-      flex: 1; padding: 130px 64px 100px;
-      display: flex; flex-direction: column; justify-content: center; gap: 28px;
-    }
-    .proof-divider { width: 56px; height: 4px; background: #0E9957; border-radius: 2px; }
-    .proof-title {
-      font-family: 'Inter', sans-serif;
-      font-size: 44px; font-weight: 800; line-height: 1.15; color: #0d0d0d;
-    }
-    .proof-title .hl { color: #0E9957; }
-    .hours-list { display: flex; flex-direction: column; margin-top: 10px; }
-    .hours-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.10);
-      font-family: 'Inter', sans-serif; font-size: 25px; font-weight: 600;
-      color: #0d0d0d;
-    }
-    .hours-row .hours-value { color: #0E9957; font-weight: 800; }
-    .hours-row.total {
-      border-bottom: none; border-top: 2px solid #0d0d0d;
-      margin-top: 6px; padding-top: 22px;
-      font-size: 30px; font-weight: 800;
-    }
-    .hours-row.total .hours-value { font-size: 32px; }
-
-    /* SLIDES 3 A N-1 — ITEM (Template Educativo: um item por slide) */
-    .slide-item {
-      width: 1080px; height: 1350px;
-      position: relative; overflow: hidden;
-      background: #ffffff; display: flex; flex-direction: column;
-      page-break-after: always;
-    }
-    .item-body {
-      flex: 1; padding: 130px 56px 100px;
+      background: var(--verde-fundo);
       display: flex; flex-direction: column; justify-content: center;
+      padding: 96px 44px 92px; page-break-after: always;
     }
-    .item-box {
-      border: 3px solid #0d0d0d; border-radius: 20px;
-      padding: 44px 40px; display: flex; flex-direction: column; gap: 24px;
+    .verde-img {
+      width: 100%; height: 500px; border-radius: 6px; overflow: hidden;
+      margin-bottom: 40px; flex-shrink: 0;
     }
-    .item-icon-wrap {
-      width: 64px; height: 64px; border-radius: 14px;
-      background: #0d0d0d;
-      display: flex; align-items: center; justify-content: center;
+    .verde-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .verde-title {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 76px; font-weight: 400; line-height: 0.94;
+      text-transform: uppercase; color: var(--preto);
     }
-    .item-icon-wrap.accent-bg { background: #0E9957; }
-    .item-icon-wrap svg { width: 32px; height: 32px; }
-    .item-head {
-      display: flex; justify-content: space-between; align-items: center;
+    .verde-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 31px; font-weight: 400; line-height: 1.42;
+      color: rgba(255,255,255,0.94); margin-top: 26px;
     }
-    .item-tag {
-      font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 500;
-      color: rgba(0,0,0,0.45); text-transform: uppercase; letter-spacing: 1.5px;
-    }
-    /* contador de ITENS dentro do card (1/5, 2/5) — nao confundir com page-count do topo */
-    .item-count {
-      font-family: 'Inter', sans-serif; font-size: 30px; font-weight: 800;
-      color: rgba(0,0,0,0.16);
-    }
+    .verde-text strong { font-weight: 800; color: #ffffff; }
+    .verde-text + .verde-text { margin-top: 18px; }
 
-    /* SLIDE DE RESUMO (N-1) — recap de todos os itens numa tela so */
-    .summary-body {
-      flex: 1; padding: 130px 56px 100px;
-      display: flex; flex-direction: column; justify-content: center; gap: 26px;
+    /* SLIDE BRANCO — título Impact VERDE no topo, imagem no centro, texto embaixo */
+    .slide-branco {
+      width: 1080px; height: 1350px;
+      position: relative; overflow: hidden; background: #ffffff;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 96px 44px 92px; page-break-after: always;
     }
-    .summary-divider { width: 56px; height: 4px; background: #0E9957; border-radius: 2px; }
-    .summary-title {
+    .branco-title {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 76px; font-weight: 400; line-height: 0.94;
+      text-transform: uppercase; color: var(--verde);
+    }
+    .branco-img {
+      width: 100%; height: 470px; border-radius: 6px; overflow: hidden;
+      margin: 38px 0; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.07);
+    }
+    .branco-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .branco-rule { border: none; border-top: 2px solid var(--preto); margin-bottom: 26px; }
+    .branco-text {
       font-family: 'Inter', sans-serif;
-      font-size: 46px; font-weight: 800; line-height: 1.14; color: #0d0d0d;
+      font-size: 31px; font-weight: 400; line-height: 1.42; color: var(--preto);
     }
-    .summary-title .hl { color: #0E9957; }
-    .summary-list { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
-    .summary-row {
-      display: flex; align-items: baseline; gap: 16px;
-      padding: 15px 0; border-bottom: 1px solid rgba(0,0,0,0.10);
-      font-family: 'Inter', sans-serif;
+    .branco-text strong { font-weight: 800; }
+    .branco-text + .branco-text { margin-top: 18px; }
+
+    /* contador de ITENS (2/5) — nao confundir com page-count de PAGINAS no cabecalho */
+    .item-count {
+      font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 800;
+      color: rgba(0,0,0,0.18); position: absolute; top: 96px; right: 44px; z-index: 15;
     }
-    .summary-row .num {
-      font-size: 26px; font-weight: 800; color: #0E9957; flex-shrink: 0; min-width: 34px;
+    .slide-verde .item-count { color: rgba(255,255,255,0.34); }
+
+    /* lista usada no slide de contexto (numeros) e no slide de resumo (acoes) */
+    .lista { display: flex; flex-direction: column; margin-top: 26px; }
+    .lista-row {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 18px;
+      padding: 17px 0; border-bottom: 1px solid rgba(255,255,255,0.22);
+      font-family: 'Inter', sans-serif; font-size: 29px; font-weight: 600;
+      color: rgba(255,255,255,0.94);
     }
-    .summary-row .what { font-size: 25px; font-weight: 800; color: #0d0d0d; flex-shrink: 0; }
-    .summary-row .does { font-size: 23px; font-weight: 400; color: rgba(0,0,0,0.62); }
-    .item-title {
-      font-family: 'Inter', sans-serif; font-size: 40px; font-weight: 800;
-      color: #0d0d0d; line-height: 1.15;
+    .lista-row .val { font-weight: 800; color: #ffffff; flex-shrink: 0; }
+    .lista-row .does { font-weight: 400; color: rgba(255,255,255,0.72); font-size: 26px; }
+    .lista-row .left { display: flex; align-items: baseline; gap: 14px; }
+    .lista-row .num { font-weight: 800; color: #ffffff; min-width: 38px; flex-shrink: 0; font-size: 27px; }
+    .lista-row.total {
+      border-bottom: none; border-top: 2px solid #ffffff;
+      margin-top: 8px; padding-top: 22px; font-size: 34px; font-weight: 800; color: #fff;
     }
-    .item-title .hl { color: #0E9957; }
-    .item-bullets { display: flex; flex-direction: column; gap: 14px; }
-    .item-bullet {
-      font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 600;
-      color: #0d0d0d; display: flex; gap: 10px; align-items: flex-start;
-    }
-    .item-bullet .dot { color: #0E9957; flex-shrink: 0; }
-    .item-bullet .hl { color: #0E9957; font-weight: 800; }
-    .item-screenshot {
-      margin-top: 6px; border-radius: 12px; overflow: hidden;
-      border: 1px solid rgba(0,0,0,0.08);
-    }
-    /* imagens geradas em 4:5 são muito altas pra caber no box inteiras — trava altura fixa */
-    .item-screenshot img { width: 100%; height: 280px; object-fit: cover; object-position: center 40%; display: block; }
 
     /* SPLIT */
     .slide-split {
@@ -713,61 +697,59 @@ Categoria **Educativo** do Passo 0. Quando o conteúdo é uma **lista de itens**
 
 <!-- ===== TEMPLATE LISTA — exemplos alternativos (carrosséis de item numerado) ===== -->
 
-<!-- SLIDE 2 do Template Educativo — PROVA (demonstração do número da capa, nunca o 1º item) -->
-<div class="slide-proof">
+<!-- SLIDE 2 do Template Educativo — CONTEXTO em VERDE (prova do numero da capa, nunca o 1o item) -->
+<div class="slide-verde">
   <div class="top-header">
     <span>Eduardo Rolim</span><span>@oeduardo.1</span><span class="page-count">01/0N</span>
   </div>
-  <div class="proof-body">
-    <div class="proof-divider"></div>
-    <p class="proof-title">De onde vêm as <span class="hl">[número da capa]</span></p>
-    <div class="hours-list">
-      <div class="hours-row"><span>[item 1]</span><span class="hours-value">[Xh]</span></div>
-      <div class="hours-row"><span>[item 2]</span><span class="hours-value">[Xh]</span></div>
-      <div class="hours-row total"><span>TOTAL</span><span class="hours-value">[bate com o número da capa]</span></div>
-    </div>
+  <h2 class="verde-title">[titulo Impact preto, 2-3 linhas curtas]</h2>
+  <p class="verde-text">[frase de contexto em tom de conversa, com <strong>o dado duro em bold</strong>]</p>
+  <div class="lista">
+    <div class="lista-row"><span>[item]</span><span class="val">[valor]</span></div>
+    <div class="lista-row total"><span>Total</span><span class="val">[bate com o numero da capa]</span></div>
   </div>
-  <div class="footer-handle"><span>@oeduardo.1</span></div>
+  <div class="footer-handle">[svg instagram]<span>@oeduardo.1</span></div>
 </div>
 
-<!-- SLIDE 3 a N-1 do Template Educativo — ITEM (um por slide, dentro de item-box) -->
-<div class="slide-item">
+<!-- SLIDE DE ITEM em BRANCO — titulo no topo, imagem no centro, texto embaixo -->
+<div class="slide-branco">
   <div class="top-header">
     <span>Eduardo Rolim</span><span>@oeduardo.1</span><span class="page-count">0X/0N</span>
   </div>
-  <div class="item-body">
-    <div class="item-box">
-      <div class="item-icon-wrap accent-bg"><svg><!-- ícone do item, 24x24 --></svg></div>
-      <div class="item-head">
-        <span class="item-tag">[Skill/Item N]</span>
-        <span class="item-count">[X/N itens, ex: 1/5]</span>
-      </div>
-      <p class="item-title">[título curto com <span class="hl">palavra-chave</span>]</p>
-      <div class="item-bullets">
-        <div class="item-bullet"><span class="dot">•</span><span>[frase curta, zero parágrafo corrido]</span></div>
-        <div class="item-bullet"><span class="dot">•</span><span>[frase curta]</span></div>
-      </div>
-      <div class="item-screenshot"><img src="img/screenshot_N.jpg" alt="[só em pelo menos 2 slides de item]"></div>
-      <!-- <div class="gate-reminder">[só no item do meio da sequência]</div> -->
-    </div>
-  </div>
-  <div class="footer-handle"><span>@oeduardo.1</span></div>
+  <span class="item-count">[X/5]</span>
+  <h2 class="branco-title">[titulo Impact verde, 2 linhas]</h2>
+  <div class="branco-img"><img src="img/NOME.jpg" alt=""></div>
+  <hr class="branco-rule">
+  <p class="branco-text">[1o paragrafo em tom de conversa, <strong>com o que importa em bold</strong>]</p>
+  <p class="branco-text">[2o paragrafo puxando o proximo slide]</p>
+  <!-- <div class="gate-reminder">[so no item do meio]</div> -->
+  <div class="footer-handle">[svg instagram]<span>@oeduardo.1</span></div>
 </div>
 
-<!-- SLIDE N-1 do Template Educativo — RESUMO (obrigatório: todos os itens numa tela só) -->
-<div class="slide-item">
+<!-- SLIDE DE ITEM em VERDE — imagem no topo, titulo preto, texto branco -->
+<div class="slide-verde">
   <div class="top-header">
     <span>Eduardo Rolim</span><span>@oeduardo.1</span><span class="page-count">0X/0N</span>
   </div>
-  <div class="summary-body">
-    <div class="summary-divider"></div>
-    <p class="summary-title">[titulo que PEDE o salvamento, ex: "As 5 numa <span class="hl">tela so</span>. Salva essa."]</p>
-    <div class="summary-list">
-      <div class="summary-row"><span class="num">1</span><span class="what">[nome curto]</span><span class="does">[o que faz, texto leve]</span></div>
-      <div class="summary-row"><span class="num">2</span><span class="what">[nome curto]</span><span class="does">[o que faz]</span></div>
-    </div>
+  <span class="item-count">[X/5]</span>
+  <div class="verde-img"><img src="img/NOME.jpg" alt=""></div>
+  <h2 class="verde-title">[titulo Impact preto, 2 linhas]</h2>
+  <p class="verde-text">[paragrafo com <strong>bold no que importa</strong>]</p>
+  <div class="footer-handle">[svg instagram]<span>@oeduardo.1</span></div>
+</div>
+
+<!-- SLIDE N-1 do Template Educativo — RESUMO em VERDE (obrigatorio: tudo numa tela so) -->
+<div class="slide-verde">
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span class="page-count">0X/0N</span>
   </div>
-  <div class="footer-handle"><span>@oeduardo.1</span></div>
+  <h2 class="verde-title">[titulo curto, ex: "As 5 numa<br>tela so"]</h2>
+  <p class="verde-text">[frase que PEDE o salvamento, ex: "Salva essa antes de sair."]</p>
+  <div class="lista">
+    <div class="lista-row"><span class="left"><span class="num">1</span><span>[nome curto]</span></span><span class="does">[o que faz]</span></div>
+    <div class="lista-row"><span class="left"><span class="num">2</span><span>[nome curto]</span></span><span class="does">[o que faz]</span></div>
+  </div>
+  <div class="footer-handle">[svg instagram]<span>@oeduardo.1</span></div>
 </div>
 
 <!-- SLIDE N do Template Educativo — CTA final (handle grande + gate + reforço) -->
@@ -823,6 +805,16 @@ Usar `AskUserQuestion` com as 5 opções:
 | **Notícia viral** | Fato recente, notícia quente, movimento de empresa | Padrão narrativo (ver "Layouts dos Slides") |
 
 Cada categoria tem um padrão visual/estrutural próprio. Enquanto uma categoria estiver marcada como *a definir*, perguntar a Eduardo qual template usar em vez de escolher por conta própria.
+
+**Na MESMA pergunta de abertura, perguntar também como serão as imagens:**
+
+| Opção | O que é |
+|---|---|
+| **Geradas por IA** | Fotos editoriais via Gemini (ver Passo 2). Para conceito, emoção, metáfora |
+| **Prints de tela** | Mockups de interface. Para provar que a ferramenta faz o que promete |
+| **Misto** | Foto de IA nos slides de conceito, print nos slides que mostram a ferramenta rodando |
+
+Misto é o caso mais comum. Quando for misto, decidir slide a slide: **slide que mostra a ferramenta funcionando pede print; slide que vende a ideia pede foto.** Nunca assumir — perguntar sempre, junto com a categoria, antes de gerar qualquer imagem.
 
 ### Passo 1: Receber o Conteúdo
 
@@ -957,12 +949,12 @@ O prompt de cada imagem deve ser construído especificamente para o conteúdo do
 
 ### Passo 3: Gerar o HTML Completo
 
-Criar o arquivo `carrossel.html` seguindo o template base desta skill. Substituir todos os `URL_IMAGEM_AQUI` pelas imagens geradas (salvas localmente ou base64 inline).
+Criar o arquivo `carrossel.html` seguindo o template base desta skill. As imagens entram como caminho relativo `img/NOME.jpg` (a pasta `img/` fica ao lado do `carrossel.html`).
 
 **Ordem de montagem:**
 1. Ler todos os slides enviados pelo Eduardo
-2. Atribuir a variante visual correta a cada slide (capa, editorial A/B/C, impacto D, CTA)
-3. Identificar as 1-2 palavras-chave por slide para aplicar `.highlight` em verde
+2. Atribuir a classe correta a cada slide, conforme o template da categoria escolhida no Passo 0 — nunca inventar nome de variante fora das classes que existem no `<style>`
+3. Identificar as 1-2 palavras-chave por slide para aplicar `<span class="hl">` (verde). Em slide verde o `.hl` vira branco automaticamente: ali o destaque é `<strong>`
 4. Montar o HTML completo com os textos exatos enviados
 
 ### Passo 4: Capturar Screenshots com Playwright MCP
@@ -990,9 +982,13 @@ async (page) => {
     const num = String(i + 1).padStart(2, '0');
     const path = `/caminho/output/NOME/slide_${num}.png`;
 
-    const classes = await slides[i].evaluate(el => el.className);
-    const isAccent = classes.includes('accent-bg');
-    const bgColor = isAccent ? '#0E9957' : '#292A25';
+    // le a cor de fundo REAL do slide em vez de adivinhar pela classe.
+    // (versao antiga testava 'accent-bg' na raiz do slide — classe que so existe
+    // em elemento interno, entao o teste era sempre falso e pintava tudo com um
+    // cinza que nem existe mais no CSS)
+    const bgColor = await slides[i].evaluate(
+      el => getComputedStyle(el).backgroundColor
+    );
 
     await page.evaluate(c => {
       document.documentElement.style.background = c;

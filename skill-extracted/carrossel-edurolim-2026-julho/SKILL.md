@@ -49,7 +49,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 | # | Tipo (classe) | Fundo | Conteúdo |
 |---|---|---|---|
-| 1 | `slide-capa` | branco sólido (padrão) | logo (se houver) + título (número + ferramenta/tema) + linha de atrito + CTA com a palavra do gate — ver "4 elementos obrigatórios da capa" |
+| 1 | `slide-capa` | branco sólido (padrão) | os 7 elementos obrigatórios — ver "7 elementos obrigatórios da capa" |
 | 2 | `slide-split` | 50% texto preto / 50% foto | tag + título + 3 bullets |
 | 3 | `slide-mini-cta` | branco | CTA fixo obrigatório (ver Passo 1) — só entra em carrosséis com 8+ slides |
 | 4 | `slide-tipo-c` | branco | título + fórmula/destaque opcional |
@@ -60,7 +60,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 | 9 | `slide-cta` | branco | nome + CTA final + fonte |
 
 **LIMITES DE CARACTERES — OBRIGATÓRIO (evita overflow/corte de texto):**
-- `capa-title`: sem limite rígido de caracteres, mas **quebrar em frases/palavras curtas com `<br>`, uma por linha** (Impact **104px**, grande o bastante pra dominar a tela, alinhado à esquerda — mesma fonte de sempre, só mudou alinhamento e tamanho) — cada linha deve ser curta o bastante pra ficar 100% legível de relance. Se o texto 1 vier como frase corrida longa, o trabalho é *quebrar em linhas escaneáveis*, não forçar numa linha só
+- `capa-title`: sem limite rígido de caracteres, mas **quebrar em frases/palavras curtas com `<br>`, uma por linha** (Impact **96px**, grande o bastante pra dominar a tela, alinhado à esquerda — mesma fonte de sempre, só mudou alinhamento e tamanho; caiu de 104px pra 96px pra abrir espaço pros outros elementos obrigatórios da capa: linha de atrito, linha de redução, gate em 2 níveis, screenshot) — cada linha deve ser curta o bastante pra ficar 100% legível de relance. Se o texto 1 vier como frase corrida longa, o trabalho é *quebrar em linhas escaneáveis*, não forçar numa linha só
 - **Bloco inteiro da capa (logo + título + pretitle) é centralizado verticalmente no frame de 1350px** (`.capa-content` com `justify-content: center`, não ancorado no topo nem embaixo) — nunca deixar sobrando um bloco grande de espaço vazio abaixo do texto
 - `capa-friction`: máx. **60 caracteres** (linha curta entre parênteses, cola direto embaixo do título)
 - `split-title` / `td-title` / `tc-title` / `ta-title`: máx. **90 caracteres**, 2-3 linhas
@@ -75,23 +75,54 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 ---
 
-## 4 elementos obrigatórios da capa — REGRA GERAL, TODA CAPA
+## 7 elementos obrigatórios da capa — REGRA GERAL, TODA CAPA
 
-Toda capa de carrossel precisa ter os 4 elementos abaixo. Sem um deles, a capa não para o scroll.
+Toda capa de carrossel precisa ter os 7 elementos abaixo, **nesta ordem vertical**. Sem eles, a capa não para o scroll. **A capa nunca pode ser 100% texto** — precisa de pelo menos um elemento figurativo (asterisco grande de fundo, print de tela, ou foto recortada).
 
-1. **NÚMERO como primeira palavra do título** (`capa-title`) — ex: "5 SKILLS...", "3 ERROS...", "10 HORAS...". Número seco é mais forte que "mais de X" — nunca usar "mais de" antes do número se o valor exato já é impactante sozinho
-2. **NOME DA FERRAMENTA/TEMA** dentro do título — deixa claro do que se trata antes mesmo da linha de atrito
-3. **Linha de atrito** (`capa-friction`, entre parênteses, direto embaixo do título, preto, corpo médio — maior que o CTA, menor que o título) — cria a tensão que faz a pessoa continuar. Benefício puro, sem atrito, NÃO é linha de atrito. Tipos válidos:
+1. **Cabeçalho fino** (`.top-header`, já padrão em todo slide): `Eduardo Rolim · @oeduardo.1 · Mês Ano ®`
+2. **Elemento gráfico grande ao fundo** (`capa-bg-asterisk`): o asterisco/logo da marca em 25-30% do frame, opacidade reduzida (~0.10-0.15), posicionado atrás do texto sem atrapalhar a leitura — é o elemento figurativo obrigatório quando não há foto/print maior
+3. **Título** (`capa-title`): **NÚMERO por extenso ou dígito** como primeira palavra em destaque (`hl`, verde) + **NOME DA FERRAMENTA/TEMA** + **RESULTADO CONCRETO**. Número seco é mais forte que "mais de X" — nunca usar "mais de" antes do número se o valor exato já é impactante sozinho
+4. **Linha de atrito** (`capa-friction`, entre parênteses, direto embaixo do título, preto, corpo médio — maior que a linha de redução, menor que o título) — cria a tensão que faz a pessoa continuar. Benefício puro, sem atrito, NÃO é linha de atrito. Tipos válidos:
    - **Acesso proibido/secreto**: "que quase ninguém ativou", "que deveriam ser proibidas"
    - **Grátis quando deveria ser pago**
    - **Contra a ferramenta querida**: desafia algo que o público já ama/confia
    - **Substituição de trabalho humano**
    - **Tempo ou desempenho absurdo**
-4. **CTA com a palavra do gate em destaque** (`capa-btn`, pill verde, embaixo da linha de atrito) — a palavra exata que a pessoa vai comentar, sempre entre aspas (ex: `Comenta "PALAVRA"`)
+5. **Linha de redução de fricção** (`capa-reduction`, corpo pequeno, cinza, uppercase) — remove a objeção prática antes que ela apareça. Ex: "Sem código · 10 minutos pra configurar", "De graça", "Sem programar"
+6. **CTA em 2 níveis** (`capa-gate` + `capa-gate-detail`): a palavra do gate isolada, grande, verde, sempre entre aspas (`Comenta "PALAVRA"`) + uma frase de apoio pequena e peso normal embaixo
+7. **Print real de tela, pequeno, canto inferior direito** (`capa-screenshot`) — mockup de UI (não precisa ser screenshot 100% real, mas tem que LER como print de produto: interface flat, sem fotografia cinematográfica)
 
-**Se a capa faz uma promessa numérica quantificável** (ex: "10 horas", "3x mais rápido"), o **slide 2** deve provar de onde vem esse número — lista curta tipo recibo (`hours-list`/`hours-row`, ver Template HTML Base) com cada parte + total batendo com o número da capa. Sem essa prova, o número vira promessa vazia e o comentário que a capa gera é "prova?" em vez da palavra do gate.
+**Se a capa faz uma promessa numérica quantificável** (ex: "10 horas", "3x mais rápido"), o **slide 2** prova de onde vem esse número — nunca é o primeiro item da lista, é contexto/demonstração. Lista curta tipo recibo (`hours-list`/`hours-row`) com cada parte + total batendo com o número da capa. Sem essa prova, o número vira promessa vazia e o comentário que a capa gera é "prova?" em vez da palavra do gate.
 
-**Gate repetido no meio**: em carrosséis com CTA de comentário (gate word) e 7+ slides, repetir a palavra do gate num slide do meio (por volta do slide 5 ou 6, dentro de um `gate-reminder` — pill verde igual ao `capa-btn`, inserido no conteúdo do slide sem atrapalhar o texto principal). Quem sai do carrossel antes do fim precisa ter visto a palavra pelo menos duas vezes.
+**Gate repetido no meio**: em carrosséis com CTA de comentário (gate word) e 7+ slides, repetir a palavra do gate num slide do meio (por volta do slide 5 ou 6, dentro de um `gate-reminder` — pill verde igual ao `capa-gate`, inserido no conteúdo do slide sem atrapalhar o texto principal). Quem sai do carrossel antes do fim precisa ter visto a palavra pelo menos duas vezes.
+
+**Paleta**: verde `#0E9957` + preto sobre branco. Máximo 3 cores por slide.
+
+---
+
+## Template Lista — carrosséis de item numerado (X skills, X erros, X ferramentas, X passos)
+
+Quando o conteúdo é uma **lista de itens** (não uma narrativa/notícia progressiva), usar este padrão em vez do ciclo `split/tipo-c/tipo-a/tipo-d` da seção "Layouts dos Slides". Sequência:
+
+| # | Tipo | Conteúdo |
+|---|---|---|
+| 1 | `slide-capa` | os 7 elementos acima |
+| 2 | `slide-proof` | contexto curto ou demonstração do número prometido na capa (`hours-list`) — nunca o primeiro item da lista |
+| 3 a N-1 | `slide-item` | um item por slide |
+| N | `slide-cta` | handle grande + CTA reforçado |
+
+**Regras dos `slide-item` (slide 3 até o penúltimo):**
+- Um item por slide, sempre dentro de `item-box` (borda preta 3px, cantos arredondados) — nunca dois itens no mesmo slide
+- Cada item tem ícone próprio (`item-icon-wrap`, fundo preto ou verde alternando — nunca mais de 2 cores de fundo de ícone no carrossel inteiro) e título (`item-title`)
+- **Zero parágrafo corrido** — só `item-bullets` (frases curtas, uma ideia por linha, nunca período com múltiplas orações encadeadas)
+- Indicador de progresso numérico no canto superior direito (`page-count`, formato `0X/0N`, substitui o slot de mês/ano no `.top-header` nos slides de item — a capa mantém mês/ano, os demais mostram página) — capa nunca conta como página, a contagem começa do slide 2
+- Handle no rodapé (`footer-handle`, ícone do Instagram + `@oeduardo.1`), **mesma posição em todos os slides de item**
+- **Pelo menos 2 `slide-item` com print de tela real** (`item-screenshot`) — mockup flat de UI, `object-fit: cover` com altura fixa (~280px) pra não estourar o box (imagens geradas em 4:5 são muito altas pra caber inteiras)
+- O item no **meio da sequência de itens** leva o `gate-reminder` (repetição do CTA — ver regra "Gate repetido no meio")
+
+**Último slide** (`slide-cta`): handle grande (`cta-handle-big`, Playfair Display) + `cta-gate` (a palavra do gate, grande e verde) + `cta-detail` + `cta-reinforce` (pill verde reforçando o mesmo CTA, redundância proposital)
+
+**Quando usar Template Lista vs. padrão narrativo**: conteúdo é uma lista numerada de itens (skills, erros, ferramentas, passos) → Template Lista. Conteúdo é uma narrativa/notícia com desenvolvimento progressivo (ex: "Google reconstruiu o modelo do zero") → padrão fixo de 7 classes em "Layouts dos Slides".
 
 ---
 
@@ -127,13 +158,32 @@ Toda capa de carrossel precisa ter os 4 elementos abaixo. Sem um deles, a capa n
       z-index: 25; opacity: 0.55;
     }
 
-    /* CAPA — logo pequeno no topo, título alinhado à esquerda, fundo branco (padrão desde ago/2026) */
+    /* CABEÇALHO/RODAPÉ auxiliares — Template Lista */
+    .page-count {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px; font-weight: 500;
+      color: rgba(0,0,0,0.40); letter-spacing: 1px;
+    }
+    .footer-handle {
+      position: absolute; bottom: 32px; left: 48px; z-index: 20;
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600;
+      color: #0d0d0d;
+    }
+    .footer-handle svg { width: 20px; height: 20px; fill: #0d0d0d; }
+
+    /* CAPA — 7 elementos obrigatórios, fundo branco (padrão desde ago/2026) */
     .slide-capa {
       width: 1080px; height: 1350px;
       position: relative; overflow: hidden;
       background: #ffffff; page-break-after: always;
     }
     .slide-capa .top-header { color: rgba(0,0,0,0.40); }
+    .capa-bg-asterisk {
+      position: absolute; top: -120px; right: -160px;
+      width: 720px; height: 720px; object-fit: contain;
+      opacity: 0.12; z-index: 0;
+    }
     .capa-content {
       position: absolute; top: 0; left: 0; right: 0; bottom: 0;
       padding: 0 64px;
@@ -146,47 +196,126 @@ Toda capa de carrossel precisa ter os 4 elementos abaixo. Sem um deles, a capa n
     }
     .capa-title {
       font-family: Impact, 'Arial Narrow', sans-serif;
-      font-size: 104px; font-weight: 400;
+      font-size: 96px; font-weight: 400;
       line-height: 1.0; text-transform: uppercase;
       color: #0d0d0d;
     }
     .capa-title .hl { color: #0E9957; }
     .capa-friction {
       font-family: 'Inter', sans-serif;
-      font-size: 34px; font-weight: 800; line-height: 1.4;
-      color: #0d0d0d; max-width: 820px;
+      font-size: 32px; font-weight: 800; line-height: 1.35;
+      color: #0d0d0d; max-width: 780px;
       margin-top: 22px;
     }
-    .capa-btn {
+    .capa-reduction {
       font-family: 'Inter', sans-serif;
-      font-size: 20px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1.5px;
-      color: #ffffff; background: #0E9957;
-      padding: 18px 40px; border-radius: 100px; margin-top: 30px;
-      display: inline-flex; align-items: center;
+      font-size: 20px; font-weight: 600; line-height: 1.4;
+      color: rgba(0,0,0,0.48); text-transform: uppercase; letter-spacing: 0.6px;
+      margin-top: 14px;
     }
-    .gate-reminder {
-      display: inline-flex; align-items: center;
+    .capa-gate {
       font-family: 'Inter', sans-serif;
-      font-size: 18px; font-weight: 700;
+      font-size: 44px; font-weight: 800; color: #0E9957;
+      margin-top: 32px; line-height: 1.1;
+    }
+    .capa-gate-detail {
+      font-family: 'Inter', sans-serif;
+      font-size: 22px; font-weight: 400; color: #0d0d0d;
+      margin-top: 8px;
+    }
+    .capa-screenshot {
+      position: absolute; bottom: 46px; right: 46px;
+      width: 190px; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+      border: 1px solid rgba(0,0,0,0.08);
+      z-index: 10;
+    }
+    .capa-screenshot img { width: 100%; display: block; }
+    .gate-reminder {
+      display: inline-flex; align-items: center; align-self: flex-start;
+      font-family: 'Inter', sans-serif;
+      font-size: 17px; font-weight: 700;
       text-transform: uppercase; letter-spacing: 1px;
       color: #ffffff; background: #0E9957;
-      padding: 14px 26px; border-radius: 100px; margin-top: 24px;
+      padding: 14px 24px; border-radius: 100px; margin-top: 4px;
     }
-    .hours-list { display: flex; flex-direction: column; }
+
+    /* SLIDE 2 — PROVA (demonstração do número prometido na capa) */
+    .slide-proof {
+      width: 1080px; height: 1350px;
+      position: relative; overflow: hidden;
+      background: #ffffff; display: flex; flex-direction: column;
+      page-break-after: always;
+    }
+    .proof-body {
+      flex: 1; padding: 130px 64px 100px;
+      display: flex; flex-direction: column; justify-content: center; gap: 28px;
+    }
+    .proof-divider { width: 56px; height: 4px; background: #0E9957; border-radius: 2px; }
+    .proof-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 44px; font-weight: 800; line-height: 1.15; color: #0d0d0d;
+    }
+    .proof-title .hl { color: #0E9957; }
+    .hours-list { display: flex; flex-direction: column; margin-top: 10px; }
     .hours-row {
       display: flex; justify-content: space-between; align-items: center;
       padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.10);
-      font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 600;
+      font-family: 'Inter', sans-serif; font-size: 25px; font-weight: 600;
       color: #0d0d0d;
     }
     .hours-row .hours-value { color: #0E9957; font-weight: 800; }
     .hours-row.total {
       border-bottom: none; border-top: 2px solid #0d0d0d;
       margin-top: 6px; padding-top: 22px;
-      font-size: 32px; font-weight: 800;
+      font-size: 30px; font-weight: 800;
     }
-    .hours-row.total .hours-value { font-size: 34px; }
+    .hours-row.total .hours-value { font-size: 32px; }
+
+    /* SLIDES 3 A N-1 — ITEM (Template Lista: um item por slide) */
+    .slide-item {
+      width: 1080px; height: 1350px;
+      position: relative; overflow: hidden;
+      background: #ffffff; display: flex; flex-direction: column;
+      page-break-after: always;
+    }
+    .item-body {
+      flex: 1; padding: 130px 56px 100px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .item-box {
+      border: 3px solid #0d0d0d; border-radius: 20px;
+      padding: 44px 40px; display: flex; flex-direction: column; gap: 24px;
+    }
+    .item-icon-wrap {
+      width: 64px; height: 64px; border-radius: 14px;
+      background: #0d0d0d;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .item-icon-wrap.accent-bg { background: #0E9957; }
+    .item-icon-wrap svg { width: 32px; height: 32px; }
+    .item-tag {
+      font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 500;
+      color: rgba(0,0,0,0.45); text-transform: uppercase; letter-spacing: 1.5px;
+    }
+    .item-title {
+      font-family: 'Inter', sans-serif; font-size: 40px; font-weight: 800;
+      color: #0d0d0d; line-height: 1.15;
+    }
+    .item-title .hl { color: #0E9957; }
+    .item-bullets { display: flex; flex-direction: column; gap: 14px; }
+    .item-bullet {
+      font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 600;
+      color: #0d0d0d; display: flex; gap: 10px; align-items: flex-start;
+    }
+    .item-bullet .dot { color: #0E9957; flex-shrink: 0; }
+    .item-bullet .hl { color: #0E9957; font-weight: 800; }
+    .item-screenshot {
+      margin-top: 6px; border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    /* imagens geradas em 4:5 são muito altas pra caber no box inteiras — trava altura fixa */
+    .item-screenshot img { width: 100%; height: 280px; object-fit: cover; object-position: center 40%; display: block; }
 
     /* SPLIT */
     .slide-split {
@@ -378,21 +507,38 @@ Toda capa de carrossel precisa ter os 4 elementos abaixo. Sem um deles, a capa n
       font-size: 20px; font-weight: 300; line-height: 1.6;
       color: rgba(0,0,0,0.50); margin-top: 24px;
     }
+
+    /* CTA final — Template Lista (handle grande + gate + reforço) */
+    .cta-handle-big {
+      font-family: 'Playfair Display', serif;
+      font-size: 76px; font-weight: 400; color: #0d0d0d; line-height: 1;
+    }
+    .cta-reinforce {
+      display: inline-flex; align-items: center; align-self: flex-start;
+      font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: #ffffff; background: #0E9957;
+      padding: 20px 44px; border-radius: 100px; margin-top: 34px;
+    }
   </style>
 </head>
 <body>
 
-<!-- SLIDE 1 — CAPA (textos 1+2) -->
+<!-- SLIDE 1 — CAPA (7 elementos obrigatórios, nesta ordem) -->
 <div class="slide-capa">
+  <img class="capa-bg-asterisk" src="img/logo_N.png" alt="">
   <div class="top-header">
     <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Mês Ano ®</span>
   </div>
   <div class="capa-content">
-    <img class="capa-logo-small" src="img/logo_N.png" alt="[logo do tema/ferramenta, se houver — omitir a tag inteira se não houver logo relevante]">
-    <h1 class="capa-title">[NÚMERO como primeira palavra + NOME DA FERRAMENTA/TEMA — quebrar em frases curtas com &lt;br&gt;, uma por linha, <span class="hl">2-3 palavras-chave</span> em destaque espalhadas pelas linhas]</h1>
-    <p class="capa-friction">[linha de atrito entre parênteses — ver "4 elementos obrigatórios da capa"]</p>
-    <div class="capa-btn">[CTA curto com a palavra do gate, ex: Comenta "PALAVRA"]</div>
+    <img class="capa-logo-small" src="img/logo_N.png" alt="[logo do tema/ferramenta, se houver — omitir a tag inteira se não houver logo relevante e usar só o capa-bg-asterisk como elemento figurativo]">
+    <h1 class="capa-title">[NÚMERO como primeira palavra <span class="hl">em destaque</span> + NOME DA FERRAMENTA/TEMA + RESULTADO CONCRETO — quebrar em frases curtas com &lt;br&gt;, uma por linha]</h1>
+    <p class="capa-friction">[linha de atrito entre parênteses — ver "7 elementos obrigatórios da capa"]</p>
+    <p class="capa-reduction">[linha de redução de fricção — ex: "Sem código · 10 minutos"]</p>
+    <p class="capa-gate">[CTA nível 1 — a palavra do gate, ex: Comenta "PALAVRA"]</p>
+    <p class="capa-gate-detail">[CTA nível 2 — frase de apoio pequena]</p>
   </div>
+  <div class="capa-screenshot"><img src="img/screenshot_N.jpg" alt="[print/mockup de UI, pequeno, canto inferior direito]"></div>
   <div class="progress-bar"><div class="progress-fill" style="width:11.1%"></div></div>
 </div>
 
@@ -528,6 +674,59 @@ Toda capa de carrossel precisa ter os 4 elementos abaixo. Sem um deles, a capa n
   <div class="progress-bar" style="background:rgba(0,0,0,0.08);"><div class="progress-fill" style="width:100%"></div></div>
 </div>
 
+<!-- ===== TEMPLATE LISTA — exemplos alternativos (carrosséis de item numerado) ===== -->
+
+<!-- SLIDE 2 do Template Lista — PROVA (demonstração do número da capa, nunca o 1º item) -->
+<div class="slide-proof">
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span class="page-count">01/0N</span>
+  </div>
+  <div class="proof-body">
+    <div class="proof-divider"></div>
+    <p class="proof-title">De onde vêm as <span class="hl">[número da capa]</span></p>
+    <div class="hours-list">
+      <div class="hours-row"><span>[item 1]</span><span class="hours-value">[Xh]</span></div>
+      <div class="hours-row"><span>[item 2]</span><span class="hours-value">[Xh]</span></div>
+      <div class="hours-row total"><span>TOTAL</span><span class="hours-value">[bate com o número da capa]</span></div>
+    </div>
+  </div>
+  <div class="footer-handle"><span>@oeduardo.1</span></div>
+</div>
+
+<!-- SLIDE 3 a N-1 do Template Lista — ITEM (um por slide, dentro de item-box) -->
+<div class="slide-item">
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span class="page-count">0X/0N</span>
+  </div>
+  <div class="item-body">
+    <div class="item-box">
+      <div class="item-icon-wrap accent-bg"><svg><!-- ícone do item, 24x24 --></svg></div>
+      <span class="item-tag">[Skill/Item N]</span>
+      <p class="item-title">[título curto com <span class="hl">palavra-chave</span>]</p>
+      <div class="item-bullets">
+        <div class="item-bullet"><span class="dot">•</span><span>[frase curta, zero parágrafo corrido]</span></div>
+        <div class="item-bullet"><span class="dot">•</span><span>[frase curta]</span></div>
+      </div>
+      <div class="item-screenshot"><img src="img/screenshot_N.jpg" alt="[só em pelo menos 2 slides de item]"></div>
+      <!-- <div class="gate-reminder">[só no item do meio da sequência]</div> -->
+    </div>
+  </div>
+  <div class="footer-handle"><span>@oeduardo.1</span></div>
+</div>
+
+<!-- SLIDE N do Template Lista — CTA final (handle grande + gate + reforço) -->
+<div class="slide-cta">
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span class="page-count">0N/0N</span>
+  </div>
+  <div class="cta-body">
+    <span class="cta-handle-big">@oeduardo.1</span>
+    <p class="cta-gate">[palavra do gate — ex: Comenta "PALAVRA"]</p>
+    <p class="cta-detail">[o que a pessoa recebe]</p>
+    <div class="cta-reinforce">[mesmo CTA repetido em pill — redundância proposital]</div>
+  </div>
+</div>
+
 </body>
 </html>
 ```
@@ -561,7 +760,7 @@ Eduardo envia **N textos numerados** (texto 1 a texto N — N é variável, não
 
 #### Algoritmo de distribuição (qualquer quantidade de texto):
 
-1. **Slide 1 = sempre CAPA** (`slide-capa`): texto 1 → `capa-title` (número + ferramenta/tema); texto 2 → `capa-friction` (linha de atrito, ver "4 elementos obrigatórios da capa"); `capa-btn` sempre presente com a palavra do gate
+1. **Slide 1 = sempre CAPA** (`slide-capa`): texto 1 → `capa-title` (número + ferramenta/tema + resultado concreto); texto 2 → `capa-friction` (linha de atrito, ver "7 elementos obrigatórios da capa"); `capa-reduction`, `capa-gate`/`capa-gate-detail` e `capa-screenshot` sempre presentes
 2. **Último slide = sempre CTA** (`slide-cta`): penúltimo texto → `cta-gate` (a palavra do gate, isolada e em destaque) + `cta-detail` (complemento); último texto → `cta-source`
 3. **MINI-CTA** (`slide-mini-cta`, fixo, não consome texto do usuário): incluir **somente se o total de slides for 8 ou mais**. Carrosséis de 7 slides ou menos pulam esse slide — vai direto de capa pro primeiro slide de conteúdo.
 4. **Slides do meio**: todo texto que sobrar entre a capa e o CTA (descontando os 2 já usados em cada) é distribuído nos slides de conteúdo, ciclando pelos 4 tipos "variados" **nesta ordem fixa, repetindo do início se precisar de mais**: `slide-split → slide-tipo-c → slide-tipo-a → slide-tipo-d`

@@ -72,7 +72,7 @@ Você é um agente especializado em **produzir** carrosséis profissionais para 
 
 ## 7 elementos obrigatórios da capa — CAPA SOBRE FUNDO BRANCO
 
-**Escopo**: vale pra capa do Template Educativo e de qualquer categoria que use capa em fundo branco. A capa do **Template Notícia é a exceção** — ela é foto full-bleed com título centralizado na base, e segue as regras da própria seção, não estas.
+**Escopo**: vale pra capa do Template Educativo e de qualquer categoria que use capa em fundo branco. A capa do **Template Notícia/Cultura é a exceção** — ela é foto full-bleed com título centralizado na base, e segue as regras da própria seção, não estas.
 
 A capa branca precisa ter os 7 elementos abaixo, **nesta ordem vertical**. Sem eles, a capa não para o scroll. **A capa nunca pode ser 100% texto** — precisa de pelo menos um elemento figurativo (asterisco grande de fundo, print de tela, ou foto recortada).
 
@@ -138,9 +138,9 @@ Categoria **Educativo** do Passo 0. Estrutura hook → contexto → itens → re
 
 ---
 
-## Template NOTÍCIA — fato recente, notícia quente, movimento de empresa
+## Template NOTÍCIA / CULTURA — narrativa editorial
 
-Categoria **Notícia viral** do Passo 0. É o oposto do educativo: **não tem título de slide**. O texto grande em bold É o conteúdo, e a imagem entra no meio dele como prova jornalística.
+Serve a **duas categorias** do Passo 0: **Notícia viral** (fato recente, movimento de empresa) e **Cultura** (comportamento, tendência, leitura de mercado). As duas são narrativa editorial: um fato/observação que se desenrola slide a slide, sem lista e sem passo a passo. É o oposto do educativo: **não tem título de slide**. O texto grande em bold É o conteúdo, e a imagem entra no meio dele como prova jornalística.
 
 **Estrutura de cada slide interno: texto → imagem → texto** (sanduíche). O primeiro bloco de texto entrega o fato, a imagem prova, o segundo bloco vira a chave pro próximo slide. Nunca começar um slide interno com imagem.
 
@@ -159,6 +159,8 @@ Categoria **Notícia viral** do Passo 0. É o oposto do educativo: **não tem t�
 **Contraste no escuro**: o verde da marca `#0E9957` não tem contraste suficiente em fundo preto. Existe um token `--verde-claro: #2FD37E` — mesma cor ajustada — usado **só** nos slides escuros. Em fundo branco, sempre o `--verde` normal.
 
 **Imagens** — fotojornalísticas, `border-radius: 8px`, altura fixa 430px com `object-fit: cover`. Diferente do educativo, aqui nunca é mockup de UI: é foto de cena real. Quando a resposta do Passo 0 for "prints", este template é o menos indicado — avisar Eduardo.
+
+**Notícia vs. Cultura — o que muda no uso:** a estrutura é a mesma, o que muda é o que ocupa o lugar do fato. Em **notícia**, o slide 1 é o acontecimento (o que houve, quando, quem). Em **cultura**, o slide 1 é o comportamento ou a tendência que já está acontecendo e ninguém nomeou ainda — o gancho é o reconhecimento ("é isso mesmo que eu venho sentindo"), não a novidade. No slide escuro em Playfair, notícia coloca o dado duro; cultura coloca a frase que nomeia o fenômeno.
 
 **Sem contador de itens e sem page-count** — notícia não é lista, não tem "quanto falta". O cabeçalho mantém os 3 slots fixos (`EDUARDO ROLIM · @OEDUARDO.1 · INTELIGÊNCIA ARTIFICIAL`) em todos os slides.
 
@@ -574,7 +576,7 @@ Categoria **Notícia viral** do Passo 0. É o oposto do educativo: **não tem t�
       padding: 20px 44px; border-radius: 100px; margin-top: 34px;
     }
 
-    /* ============ TEMPLATE NOTÍCIA ============ */
+    /* ============ TEMPLATE NOTÍCIA / CULTURA ============ */
     /* CAPA de noticia — foto full-bleed + titulo centralizado na base */
     .n-capa {
       width: 1080px; height: 1350px; position: relative; overflow: hidden;
@@ -890,7 +892,7 @@ Categoria **Notícia viral** do Passo 0. É o oposto do educativo: **não tem t�
   </div>
 </div>
 
-<!-- ===== TEMPLATE NOTÍCIA — exemplos ===== -->
+<!-- ===== TEMPLATE NOTÍCIA / CULTURA — exemplos ===== -->
 
 <!-- CAPA de noticia: foto full-bleed + titulo centralizado na base -->
 <div class="n-capa">
@@ -972,9 +974,9 @@ Usar `AskUserQuestion` com as 5 opções:
 |---|---|---|
 | **Educativo** | Ensina algo prático, lista numerada de itens (X skills, X erros, X ferramentas, X passos) | Template Educativo (ver seção própria) |
 | **Opinião** | Posicionamento/tese do Eduardo sobre um tema | *a definir* |
-| **Cultura** | Comportamento, tendência, leitura de mercado | *a definir* |
+| **Cultura** | Comportamento, tendência, leitura de mercado | Template Notícia/Cultura (mesmo do editorial) |
 | **Case** | História real de um cliente/experimento, com antes e depois | *a definir* |
-| **Notícia viral** | Fato recente, notícia quente, movimento de empresa | Template Notícia (ver seção própria) |
+| **Notícia viral** | Fato recente, notícia quente, movimento de empresa | Template Notícia/Cultura (ver seção própria) |
 
 Cada categoria tem um padrão visual/estrutural próprio. Enquanto uma categoria estiver marcada como *a definir*, perguntar a Eduardo qual template usar em vez de escolher por conta própria.
 

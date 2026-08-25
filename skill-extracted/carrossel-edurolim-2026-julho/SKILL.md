@@ -192,6 +192,37 @@ Categoria **Opinião** do Passo 0. Não informa nem ensina: **defende uma tese**
 
 **Sem gate word e sem pill.** Opinião converte por concordância e compartilhamento, não por comentário de palavra-chave. O fechamento é a própria tese + handle.
 
+## Template CASE — história real de cliente
+
+Categoria **Case** do Passo 0. É o único template em que a credibilidade importa mais que a estética: tudo aqui existe pra provar que a história é real.
+
+**Espinha:** resultado → disclaimer → quem é → método nomeado → passos com prova → punchline → update temporal → honestidade final
+
+| # | Classe | Papel |
+|---|---|---|
+| 1 | `c-capa` | **O resultado** como protagonista: número gigante + prazo + uma linha de contexto |
+| 2 | `c-slide` + `c-badge` | **Disclaimer**: quebra a expectativa de "virada da noite pro dia" |
+| 3 | `c-slide` + `c-nome` | **Quem é**: foto + situação inicial, com o detalhe que dói |
+| 4 | `c-slide` + `c-diagrama` | **Método nomeado** com diagrama circular de 4 etapas |
+| 5 a N-3 | `c-slide` + `c-passo-head` | **Passos numerados**, um por slide, cada um com print de prova |
+| N-2 | `c-escuro` | **Punchline**: por que o método quase sempre falha |
+| N-1 | `c-slide` + `c-tempo` | **Update temporal**: "um ano depois", a prova de que durou |
+| N | `c-insight` | **Honestidade final** na cor da marca |
+
+**O número da capa é o herói** (`c-numero`, Impact 158px): resultado + unidade, com o prazo logo abaixo (`c-prazo`). Gráfico crescente ao fundo em `opacity: 0.5` — sugere a curva sem competir com o texto. **Nunca inventar número**: se Eduardo não deu o dado, perguntar, não estimar.
+
+**O disclaimer é obrigatório e vem no slide 2**, antes de qualquer resultado. "Não é história de virada da noite pro dia, [cliente] penou X anos." Sem ele o case soa como propaganda e o leitor desconfia do resto. É a peça que compra o direito de contar o sucesso depois.
+
+**Método nomeado** (`c-frame-title` + `c-diagrama`): dar um nome ao processo (ex: "Método MAPA") transforma experiência em ativo — é o que faz o case virar autoridade em vez de anedota. O diagrama é SVG inline: círculo tracejado + 4 setas nos pontos cardeais + 4 `c-etapa` posicionadas em volta. **Cuidado de layout já calibrado**: raio 132 no viewBox 560. Aumentar o raio faz as setas colidirem com o texto das etapas.
+
+**Passos com prova** (`c-passo-num` gigante + `c-passo-img`): cada passo leva um print. Aqui o print importa mais que foto bonita — é o que sustenta a credibilidade. Sempre com número concreto no corpo ("34 tarefas na mão dela, 28 não precisavam estar").
+
+**Update temporal** (`c-tempo`): "um ano depois". Separa case real de resultado de sorte — qualquer um mostra o pico, poucos mostram que sustentou.
+
+**Insight final honesto** (`c-insight`, fundo verde): a pergunta "foi fácil?" com um "não" gigante em Impact. Case que termina prometendo facilidade queima a confiança que o disclaimer construiu no slide 2.
+
+**Sem gate word.** Case converte por credibilidade: o fechamento é a honestidade + handle.
+
 ## Template HTML Base
 
 ```html
@@ -823,6 +854,151 @@ Categoria **Opinião** do Passo 0. Não informa nem ensina: **defende uma tese**
       font-family: 'Playfair Display', serif;
       font-size: 40px; color: rgba(255,255,255,0.9); margin-top: 56px;
     }
+
+    /* ============ TEMPLATE CASE ============ */
+    .c-escuro .top-header, .c-insight .top-header { color: rgba(255,255,255,0.72); }
+    .c-slide {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      background: #ffffff; page-break-after: always;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 104px 56px 96px;
+    }
+    /* ===== 1. CAPA — o resultado é o protagonista ===== */
+    .c-capa { justify-content: flex-start; padding-top: 118px; }
+    .c-capa-graf {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 620px;
+      opacity: 0.5; z-index: 0;
+    }
+    .c-capa-graf img { width: 100%; height: 100%; object-fit: cover; object-position: bottom; }
+    .c-capa-inner { position: relative; z-index: 5; }
+    .c-numero {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 158px; line-height: 1.0; font-weight: 400;
+      text-transform: uppercase; color: var(--verde); letter-spacing: -2px;
+    }
+    .c-numero .unidade { color: var(--preto); }
+    .c-prazo {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 86px; line-height: 0.94; text-transform: uppercase;
+      color: var(--preto); margin-top: 6px;
+    }
+    .c-capa-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 32px; font-weight: 700; line-height: 1.35;
+      color: rgba(0,0,0,0.68); margin-top: 30px; max-width: 720px;
+    }
+
+    /* ===== 2. DISCLAIMER — quebra a expectativa de sucesso fácil ===== */
+    .c-badge {
+      display: inline-flex; align-self: flex-start; align-items: center;
+      font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: #ffffff; background: var(--preto);
+      padding: 12px 24px; border-radius: 6px; margin-bottom: 40px;
+    }
+    .c-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 46px; font-weight: 800; line-height: 1.22;
+      color: var(--preto); letter-spacing: -0.5px;
+    }
+    .c-text + .c-text { margin-top: 30px; }
+    .c-text .hl { color: var(--verde); }
+    .c-text .fraco { color: rgba(0,0,0,0.45); }
+
+    /* ===== 3. CLIENTE — quem é o sujeito do case ===== */
+    .c-img { width: 100%; border-radius: 8px; overflow: hidden; margin: 34px 0; flex-shrink: 0; }
+    .c-img img { width: 100%; height: 470px; object-fit: cover; display: block; }
+    .c-nome {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 92px; line-height: 0.96; text-transform: uppercase; color: var(--preto);
+    }
+    .c-nome .hl { color: var(--verde); }
+    .c-corpo {
+      font-family: 'Inter', sans-serif;
+      font-size: 31px; font-weight: 500; line-height: 1.42;
+      color: rgba(0,0,0,0.75);
+    }
+    .c-corpo strong { font-weight: 800; color: var(--preto); }
+    .c-corpo + .c-corpo { margin-top: 16px; }
+
+    /* ===== 4. FRAMEWORK — o método nomeado ===== */
+    .c-frame-title {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 76px; line-height: 0.96; text-transform: uppercase;
+      color: var(--preto); margin-bottom: 8px;
+    }
+    .c-frame-nome { color: var(--verde); }
+    .c-frame-sub {
+      font-family: 'Inter', sans-serif; font-size: 27px; font-weight: 600;
+      color: rgba(0,0,0,0.6); margin-bottom: 30px;
+    }
+    .c-diagrama { position: relative; width: 100%; height: 560px; }
+    .c-diagrama svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .c-etapa {
+      position: absolute; width: 250px; text-align: center;
+      font-family: 'Inter', sans-serif;
+    }
+    .c-etapa .n {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--verde); color: #fff; font-size: 24px; font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .c-etapa .nome {
+      font-size: 30px; font-weight: 800; color: var(--preto); letter-spacing: -0.3px;
+    }
+    .c-etapa .oq { font-size: 21px; font-weight: 500; color: rgba(0,0,0,0.6); margin-top: 4px; }
+    .e-topo   { top: 6px;   left: 50%; transform: translateX(-50%); }
+    .e-dir    { top: 50%;   right: 0;  transform: translateY(-50%); }
+    .e-baixo  { bottom: 6px; left: 50%; transform: translateX(-50%); }
+    .e-esq    { top: 50%;   left: 0;   transform: translateY(-50%); }
+
+    /* ===== 5-7. PASSO — número gigante + print de prova ===== */
+    .c-passo-head { display: flex; align-items: baseline; gap: 22px; }
+    .c-passo-num {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 116px; line-height: 0.86; color: var(--verde);
+    }
+    .c-passo-nome {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 72px; line-height: 0.94; text-transform: uppercase; color: var(--preto);
+    }
+    .c-passo-img { width: 100%; border-radius: 8px; overflow: hidden; margin-top: 30px;
+      border: 1px solid rgba(0,0,0,0.08); flex-shrink: 0; }
+    .c-passo-img img { width: 100%; height: 400px; object-fit: cover; display: block; }
+
+    /* ===== 8. PUNCHLINE (escuro) ===== */
+    .c-escuro { background: var(--preto); }
+    .c-escuro .c-text { color: #ffffff; }
+    .c-escuro .c-text .hl { color: var(--verde-claro); }
+    .c-escuro .c-text .fraco { color: rgba(255,255,255,0.5); }
+
+    /* ===== 9. DEPOIS — prova de que durou ===== */
+    .c-tempo {
+      font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--verde);
+      margin-bottom: 18px;
+    }
+
+    /* ===== 10. INSIGHT — honestidade sobre o esforço ===== */
+    .c-insight { background: var(--verde); }
+    .c-pergunta {
+      font-family: 'Inter', sans-serif; font-size: 40px; font-weight: 700;
+      color: rgba(255,255,255,0.82);
+    }
+    .c-resposta {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: 130px; line-height: 1.0; text-transform: uppercase;
+      color: #ffffff; margin: 10px 0 34px;
+    }
+    .c-insight-text {
+      font-family: 'Inter', sans-serif; font-size: 40px; font-weight: 800;
+      line-height: 1.26; color: #ffffff; letter-spacing: -0.4px;
+    }
+    .c-insight-handle {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px; color: rgba(255,255,255,0.9); margin-top: 46px;
+    }
   </style>
 </head>
 <body>
@@ -1156,6 +1332,90 @@ Categoria **Opinião** do Passo 0. Não informa nem ensina: **defende uma tese**
   <p class="o-insight-handle">@oeduardo.1</p>
 </div>
 
+<!-- ===== TEMPLATE CASE — exemplos ===== -->
+
+<!-- ===== 1 — CAPA: o resultado é o protagonista ===== -->
+<div class="c-slide c-capa">
+  <div class="c-capa-graf"><img src="img/grafico.jpg" alt=""></div>
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span>
+  </div>
+  <div class="c-capa-inner">
+    <h1 class="c-numero">40 horas<br><span class="unidade">por mês</span></h1>
+    <p class="c-prazo">de volta em 60 dias</p>
+    <p class="c-capa-sub">A operação que a IA destravou numa agência de 11 pessoas, sem demitir ninguém.</p>
+  </div>
+</div>
+
+<!-- ===== 4 — FRAMEWORK NOMEADO ===== -->
+<div class="c-slide">
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span>
+  </div>
+  <h2 class="c-frame-title">Não foi sorte.<br>Foi o <span class="c-frame-nome">Método MAPA</span></h2>
+  <p class="c-frame-sub">Quatro etapas, nessa ordem. Pular uma quebra a seguinte.</p>
+  <div class="c-diagrama">
+    <svg viewBox="0 0 560 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="280" cy="280" r="132" stroke="#0E9957" stroke-width="3"
+              stroke-dasharray="14 12" opacity="0.55"/>
+      <path d="M412 280 l-13 -13 M412 280 l-13 13" stroke="#0E9957" stroke-width="4" stroke-linecap="round"/>
+      <path d="M280 412 l13 -13 M280 412 l-13 -13" stroke="#0E9957" stroke-width="4" stroke-linecap="round"/>
+      <path d="M148 280 l13 13 M148 280 l13 -13" stroke="#0E9957" stroke-width="4" stroke-linecap="round"/>
+      <path d="M280 148 l-13 13 M280 148 l13 13" stroke="#0E9957" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <div class="c-etapa e-topo"><span class="n">1</span><p class="nome">Mapear</p><p class="oq">o que só passa por você</p></div>
+    <div class="c-etapa e-dir"><span class="n">2</span><p class="nome">Automatizar</p><p class="oq">o que é repetitivo</p></div>
+    <div class="c-etapa e-baixo"><span class="n">3</span><p class="nome">Padronizar</p><p class="oq">pro time repetir sozinho</p></div>
+    <div class="c-etapa e-esq"><span class="n">4</span><p class="nome">Acompanhar</p><p class="oq">e corrigir todo mês</p></div>
+  </div>
+</div>
+
+<!-- ===== 5 — PASSO 1 ===== -->
+<div class="c-slide">
+  <div class="top-header">
+    <span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span>
+  </div>
+  <div class="c-passo-head"><span class="c-passo-num">1</span><span class="c-passo-nome">Mapear</span></div>
+  <p class="c-corpo">Duas semanas anotando <strong>toda decisão que passou pela Marina</strong>. Nada de achismo, papel e caneta.</p>
+  <p class="c-corpo">Resultado: 34 tarefas na mão dela. <strong>28 não precisavam estar.</strong></p>
+  <div class="c-passo-img"><img src="img/ui_mapear.jpg" alt=""></div>
+</div>
+
+<!-- DISCLAIMER (slide 2, obrigatorio antes de qualquer resultado) -->
+<div class="c-slide">
+  <div class="top-header"><span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span></div>
+  <span class="c-badge">Antes de tudo</span>
+  <p class="c-text"><span class="fraco">[nega a virada da noite pro dia]</span></p>
+  <p class="c-text">[quanto tempo o cliente penou, com <span class="hl">o numero em destaque</span>]</p>
+  <p class="c-text">[o que mudou o jogo]</p>
+</div>
+
+<!-- CLIENTE (quem e) / UPDATE TEMPORAL (mesma estrutura, troca o c-tempo) -->
+<div class="c-slide">
+  <div class="top-header"><span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span></div>
+  <p class="c-tempo">[so no update: "Um ano depois"]</p>
+  <h2 class="c-nome">[nome ou virada, com <span class="hl">destaque</span>]</h2>
+  <div class="c-img"><img src="img/cliente.jpg" alt=""></div>
+  <p class="c-corpo">[contexto. <strong>O detalhe concreto que doi.</strong>]</p>
+</div>
+
+<!-- PUNCHLINE (escuro): por que o metodo quase sempre falha -->
+<div class="c-slide c-escuro">
+  <div class="top-header"><span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span></div>
+  <p class="c-text"><span class="fraco">[a concessao]</span></p>
+  <p class="c-text">[a condicao que quase ninguem cumpre, com <span class="hl">destaque</span>]</p>
+</div>
+
+<!-- INSIGHT final: honestidade, nunca promessa de facilidade -->
+<div class="c-slide c-insight">
+  <div class="top-header"><span>Eduardo Rolim</span><span>@oeduardo.1</span><span>Inteligência Artificial</span></div>
+  <p class="c-pergunta">Foi fácil?</p>
+  <p class="c-resposta">Não</p>
+  <p class="c-insight-text">[o que exigiu de verdade]</p>
+  <p class="c-insight-text" style="margin-top:22px">[o convite realista]</p>
+  <p class="c-insight-handle">@oeduardo.1</p>
+</div>
+
 </body>
 </html>
 ```
@@ -1192,7 +1452,7 @@ Usar `AskUserQuestion` com as 5 opções:
 | **Educativo** | Ensina algo prático, lista numerada de itens (X skills, X erros, X ferramentas, X passos) | Template Educativo (ver seção própria) |
 | **Opinião** | Posicionamento/tese do Eduardo sobre um tema | Template Opinião (ver seção própria) |
 | **Cultura** | Comportamento, tendência, leitura de mercado | Template Notícia/Cultura (mesmo do editorial) |
-| **Case** | História real de um cliente/experimento, com antes e depois | *a definir* |
+| **Case** | História real de um cliente/experimento, com antes e depois | Template Case (ver seção própria) |
 | **Notícia viral** | Fato recente, notícia quente, movimento de empresa | Template Notícia/Cultura (ver seção própria) |
 
 Cada categoria tem um padrão visual/estrutural próprio. Enquanto uma categoria estiver marcada como *a definir*, perguntar a Eduardo qual template usar em vez de escolher por conta própria.
